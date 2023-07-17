@@ -1,0 +1,30 @@
+---
+title: "Upload CSV file for item ingestion"
+api: "POST https://api-staging.luladelivery.store/inventory/ingestion/csv"
+description: "This endpoint takes a CSV file and updates your inventory for the store. We upload the CSV file contanining the inventory items and the store gets updated with the items."
+---
+
+### Body
+<ParamField body="file" type="file" required>
+</ParamField>
+<ParamField query="store_id" type="string" required>
+</ParamField>
+### Response
+
+<RequestExample>
+
+```bash Bash
+curl --location --request POST 'https://api-staging.luladelivery.store/inventory/ingestion/csv?store_id={?}' \
+-F "file=@path/to/csv/file;type=text/csv"
+```
+
+</RequestExample>
+
+
+<ResponseExample>
+
+```json Response
+{}
+```
+
+</ResponseExample>

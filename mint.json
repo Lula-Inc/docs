@@ -2,64 +2,46 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Documentation Starter Kit",
   "logo": {
-    "dark": "/logo/dark.png",
-    "light": "/logo/light.png"
+    "dark": "/logo/lulaconvinence-logo.png",
+    "light": "/logo/lulaconvinence-logo.png"
   },
-  "favicon": "/favicon.png",
+  "favicon": "/logo/lulaconvinence-dark.png",
   "colors": {
     "primary": "#0069ED",
     "light": "#4D9CFF",
     "dark": "#0050B4"
-  },
-  "topbarLinks": [
-    {
-      "name": "Documentation",
-      "url": "https://mintlify.com/docs"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://github.com/mintlify/starter"
   },
   "anchors": [
     {
       "name": "API Reference",
       "icon": "rectangle-terminal",
       "url": "api-reference"
-    },
-    {
-      "name": "Changelog",
-      "icon": "list",
-      "url": "https://mintlify.com"
-    },
-    {
-      "name": "Community",
-      "icon": "discord",
-      "url": "https://mintlify.com/community"
     }
   ],
   "navigation": [
     {
       "group": "Home",
-      "pages": ["introduction", "features"]
+      "pages": ["introduction"]
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
+      "pages": [
+        "api-reference/csvItemsIngestion",
+        "api-reference/jsonItemsIngestion"
+      ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Endpoints",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/uploadJSON",
+        "api-reference/endpoint/postItemsForIngestion",
+        "api-reference/endpoint/uploadCSV"
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/lulaconvenience",
+    "github": "https://github.com/Lula-Inc",
+    "linkedin": "https://www.linkedin.com/company/lula-convenience/"
   }
 }
