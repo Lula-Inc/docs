@@ -1,0 +1,71 @@
+---
+title: "Post items for ingestion"
+api: "POST https://api-staging.luladelivery.store/inventory/ingestion/"
+description: "This endpoint takes a JSON body and updates your inventory for the store. We post the JSON body contanining the inventory items and the store gets updated with the items."
+---
+
+### Body ToDo
+<ParamField body="file" type="file" required>
+</ParamField>
+<ParamField query="store_id" type="string" required>
+</ParamField>
+### Response
+<ResponseField name="id" type="number">
+  The id of the job which ingests the JSON file.
+</ResponseField>
+<ResponseField name="store_id" type="string">
+  The store id for which the JSON file has been uploaded.
+</ResponseField>
+<ResponseField name="original_file_path" type="string">
+  The S3 url where the JSON file has been uploaded.
+</ResponseField>
+<ResponseField name="status" type="string">
+  The status of the job.
+</ResponseField>
+<ResponseField name="created_by" type="string">
+  The user by which the job was created.
+</ResponseField>
+<ResponseField name="updated_by" type="string">
+  The user by which the job was updated.
+</ResponseField>
+<ResponseField name="updated_at" type="datetime">
+  The timestamp at which the  job is updated.
+</ResponseField>
+<ResponseField name="created_at" type="datetime">
+  The timestamp at which job was created.
+</ResponseField>
+<ResponseField name="validate_file_path" type="string">
+  ToDo
+</ResponseField>
+<ResponseField name="oneschema_embed_id" type="number">
+  Not applicable
+</ResponseField>
+<RequestExample>
+
+```bash Request example
+curl --location --request POST 'https://api-staging.luladelivery.store/inventory/ingestion/' \
+--header 'Content-Type: application/json' \
+--data '[{"name": "12 Dove Relaxing Lavender Oil Chamomile Body Wash","category": "Personal Care", "size": "24 oz", "quantity": 10, "price": 899, "external_id": "10001", "description": "Get clean and fresh", "brand": "Dove", "unit_count": "1", "location": "3A"}]'
+```
+
+</RequestExample>
+
+
+<ResponseExample>
+
+```json Response example
+{
+    "id": 330,
+    "store_id": "7e3154b3-9460-4c68-802c-0f7122cb7a58",
+    "original_file_path": "s3://lula-inventory-service-staging/Upsert/Input_files/Json_files/7e3154b3-9460-4c68-802c-0f7122cb7a58/9f1bacb2-55cc-4abe-8aac-12e6e54a74d8.json",
+    "status": "pending",
+    "created_by": "unknown",
+    "updated_by": "unknown",
+    "updated_at": "2023-07-15T12:53:27.693Z",
+    "created_at": "2023-07-15T12:53:27.693Z",
+    "validate_file_path": null,
+    "oneschema_embed_id": null
+}
+```
+
+</ResponseExample>
