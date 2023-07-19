@@ -5,11 +5,11 @@
     "dark": "/logo/lulaconvinence-logo.png",
     "light": "/logo/lulaconvinence-logo.png"
   },
-  "favicon": "/logo/lulaconvinence-dark.png",
+  "favicon": "lula-favicon.jpeg",
   "colors": {
-    "primary": "#0069ED",
+    "primary": "#EE00FF",
     "light": "#4D9CFF",
-    "dark": "#0050B4"
+    "dark": "#EE00FF"
   },
   "anchors": [
     {
