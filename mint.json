@@ -8,7 +8,7 @@
   "favicon": "lula-favicon.jpeg",
   "colors": {
     "primary": "#EE00FF",
-    "light": "#4D9CFF",
+    "light": "#EE00FF",
     "dark": "#EE00FF"
   },
   "anchors": [
