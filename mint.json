@@ -35,7 +35,8 @@
       "pages": [
         "api-reference/endpoint/uploadJSON",
         "api-reference/endpoint/postItemsForIngestion",
-        "api-reference/endpoint/uploadCSV"
+        "api-reference/endpoint/uploadCSV",
+        "api-reference/endpoint/getJob"
       ]
     }
   ],

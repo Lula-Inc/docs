@@ -9,6 +9,13 @@
 </ResponseField>
 <ResponseField name="status" type="string">
     The status of the job.
+
+    - importing: The job's CSV is filed is being imported (only applies to CSV ingestion)
+    - pending: The job is in the queue and will start being processed soon
+    - processing: The job is being processed
+    - validation_failed: The job finished but at least one item failed validation
+    - success: The job finished and all items were successfully created, updated or removed
+    - error: An unexpected error occurred when processing the job. Please contact us
 </ResponseField>
 <ResponseField name="created_by" type="string">
     The user by which the job was created.
