@@ -21,7 +21,7 @@
   "navigation": [
     {
       "group": "Home",
-      "pages": ["introduction"]
+      "pages": ["introduction", "migrating_v1_v2"]
     },
     {
       "group": "API Documentation",

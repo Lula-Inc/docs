@@ -1,0 +1,17 @@
+---
+title: Migrating from v1 to v2
+description: 'This page describes the changes needed to migrate from our v1 API to v2 API'
+---
+
+----
+
+Replace `https://lsm.luladelivery.store/api/v2/stores/{store_id}/inventory` by `https://api-prod.luladelivery.store/inventory/ingestion?store_id={store_id}`.
+
+Change the request method from `PUT` to `POST`.
+
+Changes in the JSON payload:
+
+ - `count` was renamed to `quantity`;
+ - `description (string)` and `active (boolean)` were added.
+
+Response code changed from `202 Accepted` to `201 Created`.
