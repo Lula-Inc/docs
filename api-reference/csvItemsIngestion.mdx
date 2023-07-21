@@ -3,7 +3,7 @@ title: "CSV Item Ingestion"
 description: "CSV support for item ingestion"
 ---
 
-## Reference
+## CSV File Reference
 Here are the accepted and required CSV fields:
 
 | Column Header | Description                           | Required |
@@ -11,13 +11,69 @@ Here are the accepted and required CSV fields:
 | external_id | ID from your source system, used to update existing items, can be a UPC/SKU | * |
 | name | Name of the product                          | * |
 | size | Size of the product (e.g 12 oz), if size is not applicable use "NA" | * |
-| price | price of the item in cents (e.g. 799) | * |
+| price | Price of the item in cents (e.g. 799), must be less than 349999 | * |
 | category | Used for grouping item on marketplace (see list of categories below)  | * |
 | upc | The 12-digit UPC/GTIN |  |
-| image | Whether the user joined the community |  |
-| quantity | Whether the user joined the community | * |
-| unit_count | Whether the user joined the community |  |
-| description | Whether the user joined the community |  |
-| brand | Whether the user joined the community |  |
-| location | Whether the user joined the community |  |
-| active | Whether the user joined the community | * |
+| image | An image URL for the item |  |
+| quantity | >0 to set in-stock | * |
+| unit_count | The number of items (e.g 6 pack) |  |
+| description | A brief description of the product, less than 350 characters |  |
+| brand | the product brand |  |
+| location | where to find item in store |  |
+| active | 1 = active, 0 = inactive, use to hide/show the product | * |
+
+---
+title: "Lula Sample CSV"
+url: "https://lula-brand.s3.amazonaws.com/Lula_Sample_CSV.csv"
+---
+
+## Categories List
+List of all categories and the order with which they are presented on the marketplace. If a category is not used it will not appear. Note, Tobacco products are restricted from the delivery marketplaces.
+
+| Categories | Order |
+| ---------- | ----- |
+| Featured Favorites | 1 |
+| Thin crust pizza | 2 |
+| Original crust pizza | 3 |
+| Pizza | 4 |
+| Wings | 5 |
+| Wing Bites | 6 |
+| Chicken | 7 |
+| Sandwiches | 8 |
+| Sides | 9 |
+| Breakfast | 10 |
+| Quick Meals | 11 |
+| Deli Items | 12 |
+| Fresh Food | 13 |
+| Prepared Foods | 14 |
+| Hot Foods | 15 |
+| Beer | 16 |
+| Single Beer | 17 |
+| Wine | 18 |
+| Alcohol | 19 |
+| Seltzer | 20 |
+| Energy Drinks & Electrolytes | 21 |
+| Soda | 22 |
+| Water | 23 |
+| Coffee | 24 |
+| Juice and Tea | 25 |
+| Fountain | 26 |
+| Beverages | 27 |
+| Snacks | 28 |
+| Candy | 29 |
+| Bakery | 30 |
+| Ice Cream | 31 |
+| Grocery | 32 |
+| Frozen | 33 |
+| Milk | 34 |
+| Medicine | 35 |
+| Health | 36 |
+| Personal Care | 37 |
+| Bath & Beauty | 38 |
+| Cleaning | 39 |
+| Household | 40 |
+| Automotive | 41 |
+| Baby | 42 |
+| Pet Care | 43 |
+| Others | 44 |
+| Tobacco | 45 |
