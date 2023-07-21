@@ -1,17 +1,26 @@
 ---
-title: Migrating from v1 to v2
-description: 'This page describes the changes needed to migrate from our v1 API to v2 API'
+title: Migrating from Item Ingest v1 to Item Ingest v2
+description: 'Highlighting the main changes between our v1 and v2 APIs'
 ---
 
-----
+## Main Updates
+Here's a quick table defining the updates between the v1 and v2 APIs
 
-Replace `https://lsm.luladelivery.store/api/v2/stores/{store_id}/inventory` by `https://api-prod.luladelivery.store/inventory/ingestion?store_id={store_id}`.
+### Endpoint Updates
+| v1 API | v2 API |
+| ------ | ------ |
+| `https://lsm.luladelivery.store/api/v2/stores/{store_id}/inventory` | `https://api-prod.luladelivery.store/inventory/ingestion?store_id={store_id}` |
+| `PUT` | `POST` |
 
-Change the request method from `PUT` to `POST`.
+### JSON Payload Updates
+| v1 API | v2 API |
+| ------ | ------ |
+| `count` | `quantity` |
+| N/A | `description (string)` added |
+| N/A | `active (boolean)` added |
 
-Changes in the JSON payload:
+### API Response
+| v1 API | v2 API |
+| ------ | ------ |
+| `202 Accepted` | `201 Created` |
 
- - `count` was renamed to `quantity`;
- - `description (string)` and `active (boolean)` were added.
-
-Response code changed from `202 Accepted` to `201 Created`.
