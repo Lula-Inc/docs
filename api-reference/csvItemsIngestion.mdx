@@ -1,4 +1,23 @@
 ---
 title: "CSV Item Ingestion"
-description: "The csv items are ingested into the system by uploading through an API."
+description: "CSV support for item ingestion"
 ---
+
+## Reference
+Here are the accepted and required CSV fields:
+
+| Column Header | Description                           | Required |
+| -------- | ------------------------------------- | ------- |
+| external_id | ID from your source system, used to update existing items, can be a UPC/SKU | * |
+| name | Name of the product                          | * |
+| size | Size of the product (e.g 12 oz), if size is not applicable use "NA" | * |
+| price | price of the item in cents (e.g. 799) | * |
+| category | Used for grouping item on marketplace (see list of categories below)  | * |
+| upc | The 12-digit UPC/GTIN |  |
+| image | Whether the user joined the community |  |
+| quantity | Whether the user joined the community | * |
+| unit_count | Whether the user joined the community |  |
+| description | Whether the user joined the community |  |
+| brand | Whether the user joined the community |  |
+| location | Whether the user joined the community |  |
+| active | Whether the user joined the community | * |
