@@ -5,7 +5,7 @@
     "dark": "/logo/lula-commerce-logo-white.png",
     "light": "/logo/lula-commerce-logo-primary.png"
   },
-  "favicon": "lula-favicon.jpeg",
+  "favicon": "lula-commerce-favicon.png",
   "colors": {
     "primary": "#EE00FF",
     "light": "#EE00FF",
@@ -41,7 +41,6 @@
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/lulaconvenience",
     "github": "https://github.com/Lula-Inc",
     "linkedin": "https://www.linkedin.com/company/lula-convenience/"
   }
