@@ -7,9 +7,9 @@
   },
   "favicon": "lula-commerce-favicon.png",
   "colors": {
-    "primary": "#EE00FF",
-    "light": "#EE00FF",
-    "dark": "#EE00FF"
+    "primary": "#2C023B",
+    "light": "#D09CE8",
+    "dark": "#DE4990"
   },
   "anchors": [
     {
