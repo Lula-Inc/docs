@@ -1,0 +1,88 @@
+---
+title: "Create Product"
+api: "POST /inventory-service-v2/companies/:companyId/products"
+description: "Create a new product for a company."
+---
+
+Creates a new product for the specified company.
+
+### Endpoint
+
+`POST /inventory-service-v2/companies/:companyId/products`
+
+### Path Parameters
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of the company.
+</ParamField>
+
+### Request Body
+
+The request body must be a JSON object with the following fields:
+
+<ResponseField name="external_id" type="string" required>
+  Product identification in your internal system.
+</ResponseField>
+
+<ResponseField name="upc" type="string" required>
+  Product UPC.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Product name.
+</ResponseField>
+
+<ResponseField name="size" type="string" required>
+  Product size.
+</ResponseField>
+
+<ResponseField name="quantity" type="number" required>
+  Product quantity (must be a positive number).
+</ResponseField>
+
+<ResponseField name="price" type="number" required>
+  Product price (minimum 0).
+</ResponseField>
+
+<ResponseField name="description" type="string" required>
+  Product description.
+</ResponseField>
+
+<ResponseField name="image_url" type="string" required>
+  Product image URL.
+</ResponseField>
+
+<ResponseField name="category" type="string" required>
+  Product category.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Product brand (optional).
+</ResponseField>
+
+<ResponseField name="location" type="string">
+  Product location (optional).
+</ResponseField>
+
+<ResponseField name="unit_count" type="string" required>
+  Product unit count.
+</ResponseField>
+
+### Example Request
+
+<Snippet>
+{
+  "external_id": "1234_5678",
+  "upc": "49000012521",
+  "name": "Coca Cola Classic",
+  "size": "12 oz",
+  "quantity": 99,
+  "price": 265,
+  "description": "Classic Coca Cola in a can.",
+  "image_url": "https://go-upc.s3.amazonaws.com/images/68916944.jpeg",
+  "category": "Soda",
+  "brand": "Coca Cola",
+  "location": "Counter",
+  "unit_count": "12 Pack"
+}
+</Snippet>

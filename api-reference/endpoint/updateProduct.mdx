@@ -1,0 +1,86 @@
+---
+title: "Update Product"
+api: "PATCH /inventory-service-v2/companies/:companyId/products/:upc"
+description: "Update a single product for a company by UPC."
+---
+
+Updates a single product for the specified company using the product's UPC.
+
+### Endpoint
+
+`PATCH /inventory-service-v2/companies/:companyId/products/:upc`
+
+### Path Parameters
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of the company.
+</ParamField>
+
+<ParamField path="upc" type="string" required>
+  The UPC of the product to update.
+</ParamField>
+
+### Request Body
+
+The request body must be a JSON object containing the fields to update.  
+All fields are optional, but at least one must be provided.
+
+<ResponseField name="external_id" type="string">
+  Product identification in your internal system.
+</ResponseField>
+
+<ResponseField name="upc" type="string">
+  Product UPC.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Product name.
+</ResponseField>
+
+<ResponseField name="size" type="string">
+  Product size.
+</ResponseField>
+
+<ResponseField name="quantity" type="number">
+  Product quantity.
+</ResponseField>
+
+<ResponseField name="price" type="number">
+  Product price.
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Product description.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  Product image URL.
+</ResponseField>
+
+<ResponseField name="category" type="string">
+  Product category.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Product brand.
+</ResponseField>
+
+<ResponseField name="location" type="string">
+  Product location.
+</ResponseField>
+
+<ResponseField name="unit_count" type="string">
+  Product unit count.
+</ResponseField>
+
+### Example Request
+
+<Snippet>
+{
+  "name": "Coca Cola Classic (Updated)",
+  "quantity": 120,
+  "price": 270,
+  "description": "Updated description for Coca Cola Classic.",
+  "location": "Front Counter"
+}
+</Snippet>

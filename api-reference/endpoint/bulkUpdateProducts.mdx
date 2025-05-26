@@ -1,0 +1,101 @@
+---
+title: "Bulk Update Products"
+api: "PATCH /inventory-service-v2/companies/:companyId/products/bulk-update"
+description: "Update multiple products for a company in a single request."
+---
+
+Updates multiple products for the specified company.
+
+### Endpoint
+
+`PATCH /inventory-service-v2/companies/:companyId/products/bulk-update`
+
+### Path Parameters
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of the company.
+</ParamField>
+
+### Request Body
+
+The request body must be a JSON object with a `products` array, where each item contains the fields to update for a product.  
+All fields are optional for each product, but at least one must be provided.
+
+<ResponseField name="products" type="array of UpdateProductDto" required>
+  Array of product objects to update.
+</ResponseField>
+
+#### Product Object Fields
+
+<ResponseField name="external_id" type="string">
+  Product identification in your internal system.
+</ResponseField>
+
+<ResponseField name="upc" type="string">
+  Product UPC.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Product name.
+</ResponseField>
+
+<ResponseField name="size" type="string">
+  Product size.
+</ResponseField>
+
+<ResponseField name="quantity" type="number">
+  Product quantity.
+</ResponseField>
+
+<ResponseField name="price" type="number">
+  Product price.
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Product description.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  Product image URL.
+</ResponseField>
+
+<ResponseField name="category" type="string">
+  Product category.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Product brand.
+</ResponseField>
+
+<ResponseField name="location" type="string">
+  Product location.
+</ResponseField>
+
+<ResponseField name="unit_count" type="string">
+  Product unit count.
+</ResponseField>
+
+### Example Request
+
+<Snippet>
+{
+  "products": [
+    {
+      "upc": "49000012521",
+      "name": "Coca Cola Classic (Updated)",
+      "quantity": 120,
+      "price": 270,
+      "description": "Updated description for Coca Cola Classic.",
+      "location": "Front Counter"
+    },
+    {
+      "upc": "49000012522",
+      "name": "Pepsi (Updated)",
+      "quantity": 60,
+      "price": 255,
+      "description": "Updated description for Pepsi.",
+      "location": "Fridge"
+    }
+  ]
+}
+</Snippet>
