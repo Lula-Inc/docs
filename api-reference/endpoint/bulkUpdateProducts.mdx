@@ -1,6 +1,6 @@
 ---
 title: "Bulk Update Products"
-api: "PATCH /inventory-service-v2/companies/:companyId/products/bulk-update"
+api: "PATCH /companies/:companyId/products/bulk-update"
 description: "Update multiple products for a company in a single request."
 ---
 
@@ -8,7 +8,7 @@ Updates multiple products for the specified company.
 
 ### Endpoint
 
-`PATCH /inventory-service-v2/companies/:companyId/products/bulk-update`
+`PATCH /companies/:companyId/products/bulk-update`
 
 ### Path Parameters
 
@@ -18,14 +18,11 @@ Updates multiple products for the specified company.
 
 ### Request Body
 
-The request body must be a JSON object with a `products` array, where each item contains the fields to update for a product.  
-All fields are optional for each product, but at least one must be provided.
-
-<ResponseField name="products" type="array of UpdateProductDto" required>
+<ParamField body="products" type="array of objects" required>
   Array of product objects to update.
-</ResponseField>
+</ParamField>
 
-#### Product Object Fields
+### Product Object Fields
 
 <ResponseField name="external_id" type="string">
   Product identification in your internal system.
@@ -75,27 +72,39 @@ All fields are optional for each product, but at least one must be provided.
   Product unit count.
 </ResponseField>
 
-### Example Request
+### Request Example
 
-<Snippet>
+```json Example Request
 {
   "products": [
     {
+      "external_id": "prod-001",
       "upc": "49000012521",
       "name": "Coca Cola Classic (Updated)",
+      "size": "500ml",
       "quantity": 120,
       "price": 270,
       "description": "Updated description for Coca Cola Classic.",
-      "location": "Front Counter"
+      "image_url": "https://example.com/coke.jpg",
+      "category": "Beverages",
+      "brand": "Coca Cola",
+      "location": "Front Counter",
+      "unit_count": "24"
     },
     {
+      "external_id": "prod-002",
       "upc": "49000012522",
       "name": "Pepsi (Updated)",
+      "size": "500ml",
       "quantity": 60,
       "price": 255,
       "description": "Updated description for Pepsi.",
-      "location": "Fridge"
+      "image_url": "https://example.com/pepsi.jpg",
+      "category": "Beverages",
+      "brand": "Pepsi",
+      "location": "Fridge",
+      "unit_count": "12"
     }
   ]
 }
-</Snippet>
+```

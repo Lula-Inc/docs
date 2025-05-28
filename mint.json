@@ -27,7 +27,8 @@
       "group": "API Documentation",
       "pages": [
         "api-reference/csvItemsIngestion",
-        "api-reference/jsonItemsIngestion"
+        "api-reference/jsonItemsIngestion",
+        "api-reference/jsonInventoryItems"
       ]
     },
     {
@@ -36,7 +37,13 @@
         "api-reference/endpoint/uploadJSON",
         "api-reference/endpoint/postItemsForIngestion",
         "api-reference/endpoint/uploadCSV",
-        "api-reference/endpoint/getJob"
+        "api-reference/endpoint/getJob",
+        "api-reference/endpoint/bulkUpdateProducts",
+        "api-reference/endpoint/createBulkProducts",
+        "api-reference/endpoint/createProduct",
+        "api-reference/endpoint/postBulkCsv",
+        "api-reference/endpoint/postInventoryForCompany",
+        "api-reference/endpoint/updateProduct"
       ]
     }
   ],

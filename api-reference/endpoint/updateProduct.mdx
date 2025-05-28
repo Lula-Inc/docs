@@ -1,6 +1,6 @@
 ---
 title: "Update Product"
-api: "PATCH /inventory-service-v2/companies/:companyId/products/:upc"
+api: "PATCH /companies/:companyId/products/:upc"
 description: "Update a single product for a company by UPC."
 ---
 
@@ -8,7 +8,9 @@ Updates a single product for the specified company using the product's UPC.
 
 ### Endpoint
 
-`PATCH /inventory-service-v2/companies/:companyId/products/:upc`
+`PATCH /companies/:companyId/products/:upc`
+
+---
 
 ### Path Parameters
 
@@ -20,10 +22,13 @@ Updates a single product for the specified company using the product's UPC.
   The UPC of the product to update.
 </ParamField>
 
+---
+
 ### Request Body
 
-The request body must be a JSON object containing the fields to update.  
-All fields are optional, but at least one must be provided.
+<ResponseField name="product" type="object">
+
+<Expandable title="Toggle updatable product fields">
 
 <ResponseField name="external_id" type="string">
   Product identification in your internal system.
@@ -73,9 +78,15 @@ All fields are optional, but at least one must be provided.
   Product unit count.
 </ResponseField>
 
+</Expandable>
+
+</ResponseField>
+
+---
+
 ### Example Request
 
-<Snippet>
+```json Example Request
 {
   "name": "Coca Cola Classic (Updated)",
   "quantity": 120,
@@ -83,4 +94,4 @@ All fields are optional, but at least one must be provided.
   "description": "Updated description for Coca Cola Classic.",
   "location": "Front Counter"
 }
-</Snippet>
+```

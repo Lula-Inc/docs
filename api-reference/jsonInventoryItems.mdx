@@ -7,55 +7,48 @@ description: "JSON support for inventory item ingestion"
 
 Here are the accepted and required JSON fields for inventory items:
 
-| Field       | Description                                                                 | Required |
-| ----------- | --------------------------------------------------------------------------- | -------- |
-| external_id | ID from your source system, used to update existing items, can be a UPC/SKU | \*       |
-| name        | Name of the product                                                         | \*       |
-| size        | Size of the product (e.g. 12 oz), if size is not applicable use "NA"        | \*       |
-| price       | Price of the item in cents (e.g. 799), must be less than 349999             | \*       |
-| category    | Used for grouping item on marketplace (see list of categories below)        | \*       |
-| upc         | The 12-digit UPC/GTIN                                                       |          |
-| image_url   | An image URL for the item                                                   |          |
-| quantity    | >0 to set in-stock                                                          | \*       |
-| unit_count  | The number of items (e.g. 6 pack)                                           |          |
-| description | A brief description of the product, less than 350 characters                |          |
-| brand       | The product brand                                                           |          |
-| location    | Where to find item in store                                                 |          |
-| active      | true = active, false = inactive, use to hide/show the product               | \*       |
+### Fields
+
+<ResponseField name="external_id" type="string" required>
+  ID from your source system, used to update existing items.
+</ResponseField>
+
+<ResponseField name="quantity" type="number" required>
+  Quantity of the product in inventory.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Inventory status (optional).
+</ResponseField>
+
+<ResponseField name="price" type="number" required>
+  Product price.
+</ResponseField>
+
+<ResponseField name="location" type="string">
+  Product location (optional).
+</ResponseField>
+
+<ResponseField name="product_id" type="number">
+  Internal product ID (optional).
+</ResponseField>
 
 ### Example JSON
 
-<Snippet>
+```json Example
 [
   {
     "external_id": "1234_5678",
-    "name": "Coca Cola Classic",
-    "size": "12 oz",
-    "price": 265,
-    "category": "Soda",
-    "upc": "49000012521",
-    "image_url": "https://go-upc.s3.amazonaws.com/images/68916944.jpeg",
     "quantity": 99,
-    "unit_count": "12 Pack",
-    "description": "Classic Coca Cola in a can.",
-    "brand": "Coca Cola",
-    "location": "Counter",
-    "active": true
+    "status": "active",
+    "price": 265,
+    "location": "Aisle 3",
+    "product_id": 101
   },
   {
     "external_id": "9876_5432",
-    "name": "Pepsi",
-    "size": "12 oz",
-    "price": 250,
-    "category": "Soda",
-    "upc": "49000012522",
-    "image_url": "https://go-upc.s3.amazonaws.com/images/68916945.jpeg",
     "quantity": 50,
-    "unit_count": "12 Pack",
-    "description": "Classic Pepsi in a can.",
-    "brand": "Pepsi",
-    "location": "Fridge",
-    "active": true
+    "price": 250
   }
 ]
-</Snippet>
+```

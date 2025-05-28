@@ -1,14 +1,16 @@
 ---
-title: "Bulk Create or Upsert Products"
-api: "POST /inventory-service-v2/companies/:companyId/products/bulk"
-description: "Create or update multiple products for a company in a single request."
+title: "Create Bulk Products"
+api: "POST /companies/:companyId/products/bulk"
+description: "Create multiple products for a company in a single request."
 ---
 
-Creates or updates multiple products for the specified company.
+Creates multiple products for the specified company.
 
 ### Endpoint
 
-`POST /inventory-service-v2/companies/:companyId/products/bulk`
+`POST /companies/:companyId/products/bulk`
+
+---
 
 ### Path Parameters
 
@@ -16,9 +18,19 @@ Creates or updates multiple products for the specified company.
   The unique identifier of the company.
 </ParamField>
 
+---
+
 ### Request Body
 
-The request body must be a JSON array of product objects, each with the following fields:
+<ParamField body="products" type="array of objects" required>
+  An array of product objects to create or update.
+</ParamField>
+
+### Product Object Fields
+
+<ResponseField name="products" type="array of objects">
+
+<Expandable title="Toggle product object fields">
 
 <ResponseField name="external_id" type="string" required>
   Product identification in your internal system.
@@ -68,9 +80,15 @@ The request body must be a JSON array of product objects, each with the followin
   Product unit count.
 </ResponseField>
 
+</Expandable>
+
+</ResponseField>
+
+---
+
 ### Example Request
 
-<Snippet>
+```json Example Request
 [
   {
     "external_id": "1234_5678",
@@ -101,4 +119,4 @@ The request body must be a JSON array of product objects, each with the followin
     "unit_count": "12 Pack"
   }
 ]
-</Snippet>
+```

@@ -1,6 +1,6 @@
 ---
 title: "Create Product"
-api: "POST /inventory-service-v2/companies/:companyId/products"
+api: "POST /companies/:companyId/products"
 description: "Create a new product for a company."
 ---
 
@@ -8,7 +8,9 @@ Creates a new product for the specified company.
 
 ### Endpoint
 
-`POST /inventory-service-v2/companies/:companyId/products`
+`POST /companies/:companyId/products`
+
+---
 
 ### Path Parameters
 
@@ -16,9 +18,13 @@ Creates a new product for the specified company.
   The unique identifier of the company.
 </ParamField>
 
+---
+
 ### Request Body
 
-The request body must be a JSON object with the following fields:
+<ResponseField name="product" type="object">
+
+<Expandable title="Toggle product fields">
 
 <ResponseField name="external_id" type="string" required>
   Product identification in your internal system.
@@ -68,9 +74,15 @@ The request body must be a JSON object with the following fields:
   Product unit count.
 </ResponseField>
 
+</Expandable>
+
+</ResponseField>
+
+---
+
 ### Example Request
 
-<Snippet>
+```json Example Request
 {
   "external_id": "1234_5678",
   "upc": "49000012521",
@@ -85,4 +97,4 @@ The request body must be a JSON object with the following fields:
   "location": "Counter",
   "unit_count": "12 Pack"
 }
-</Snippet>
+```

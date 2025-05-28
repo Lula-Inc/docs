@@ -1,6 +1,6 @@
 ---
 title: "Upsert Inventory for Store"
-api: "POST /inventory-service-v2/companies/:companyId/store/:storeId/inventory"
+api: "POST /companies/:companyId/store/:storeId/inventory"
 description: "Create or update inventory items for a specific store within a company."
 ---
 
@@ -8,7 +8,9 @@ Creates or updates inventory items for the specified store and company.
 
 ### Endpoint
 
-`POST /inventory-service-v2/companies/:companyId/store/:storeId/inventory`
+`POST /companies/:companyId/store/:storeId/inventory`
+
+---
 
 ### Path Parameters
 
@@ -20,9 +22,13 @@ Creates or updates inventory items for the specified store and company.
   The unique identifier of the store.
 </ParamField>
 
+---
+
 ### Request Body
 
-The request body must be a JSON array of inventory objects, each with the following fields:
+<ResponseField name="inventory_items" type="array" required>
+
+<ResponseField name="inventory_item" type="object">
 
 <ResponseField name="external_id" type="string" required>
   Product identification in your internal system.
@@ -48,9 +54,15 @@ The request body must be a JSON array of inventory objects, each with the follow
   Internal product ID (optional).
 </ResponseField>
 
+</ResponseField>
+
+</ResponseField>
+
+---
+
 ### Example Request
 
-<Snippet>
+```json Example Request
 [
   {
     "external_id": "1234_5678",
@@ -66,4 +78,4 @@ The request body must be a JSON array of inventory objects, each with the follow
     "price": 250
   }
 ]
-</Snippet>
+```
