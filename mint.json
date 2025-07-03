@@ -27,17 +27,24 @@
       "group": "API Documentation",
       "pages": [
         "api-reference/csvItemsIngestion",
-        "api-reference/jsonItemsIngestion"
+        "api-reference/jsonItemsIngestion",
+        "api-reference/jsonInventoryItems"
       ]
     },
     {
-      "group": "Endpoints",
+      "group": "Jobs",
+      "pages": ["api-reference/endpoint/getJob"]
+    },
+    {
+      "group": "Products",
       "pages": [
-        "api-reference/endpoint/uploadJSON",
-        "api-reference/endpoint/postItemsForIngestion",
-        "api-reference/endpoint/uploadCSV",
-        "api-reference/endpoint/getJob"
+        "api-reference/endpoint/upsert-products-csv",
+        "api-reference/endpoint/upsert-products-json"
       ]
+    },
+    {
+      "group": "Inventory",
+      "pages": ["api-reference/endpoint/postInventoryForCompany"]
     }
   ],
   "footerSocials": {

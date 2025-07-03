@@ -1,0 +1,63 @@
+---
+title: "Upsert Products Using CSV"
+api: "POST /companies/:companyId/products/bulk/csv"
+description: "Upload a CSV file to create or update multiple products for a company in a single request."
+---
+
+Creates or updates multiple products for the specified company by uploading a CSV file.
+
+### Endpoint
+
+`POST /companies/:companyId/products/bulk/csv`
+
+---
+
+### Path Parameters
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of the company.
+</ParamField>
+
+---
+
+### Request Body
+
+<ParamField body="file" type="file" required>
+  The CSV file containing product data.
+  <Warning>
+    CSV file is required. If not provided, a 400 Bad Request is returned.
+  </Warning>
+</ParamField>
+
+---
+
+### CSV Columns
+
+The CSV file should contain columns matching the following fields:
+
+- `external_id` (string, required): Product identification in your internal system.
+- `upc` (string, required): Product UPC.
+- `name` (string, required): Product name.
+- `size` (string, required): Product size.
+- `quantity` (number, required): Product quantity (must be a positive number).
+- `price` (number, required): Product price (minimum 0).
+- `description` (string, required): Product description.
+- `image_url` (string, required): Product image URL.
+- `category` (string, required): Product category.
+- `brand` (string, optional): Product brand.
+- `location` (string, optional): Product location.
+- `unit_count` (string, required): Product unit count.
+
+---
+
+### Example CSV
+
+<Snippet>
+  external_id,upc,name,size,quantity,price,description,image_url,category,brand,location,unit_count
+  1234_5678,49000012521,Coca Cola Classic,12 oz,99,265,"Classic Coca Cola in a
+  can.","https://go-upc.s3.amazonaws.com/images/68916944.jpeg",Soda,Coca
+  Cola,Counter,12 Pack 9876_5432,49000012522,Pepsi,12 oz,50,250,"Classic Pepsi
+  in a
+  can.","https://go-upc.s3.amazonaws.com/images/68916945.jpeg",Soda,Pepsi,Fridge,12
+  Pack
+</Snippet>

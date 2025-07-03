@@ -1,0 +1,145 @@
+---
+title: "Upsert Products Using JSON"
+api: "POST https://api-staging.luladelivery.store/companies/:companyId/products/bulk"
+description: "Create or update multiple products for a company in a single request."
+---
+
+Creates or updates multiple products for the specified company.  
+**Note:** The request body should be a **raw array of product objects** — not wrapped inside any parent object.
+
+---
+
+### Endpoint
+
+`POST /companies/:companyId/products/bulk`
+
+---
+
+### Path Parameters
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of the company.
+</ParamField>
+
+---
+
+### Request Body
+
+The request body must be a **raw array** of product objects — **not wrapped inside a key like `products`**.
+
+Each product object should include the following fields:
+- `external_id` (string, required)
+- `upc` (string, required)
+- `name` (string, required)
+- `size` (string, required)
+- `quantity` (number, required)
+- `price` (number, required)
+- `description` (string, required)
+- `image_url` (string, required)
+- `category` (string, required)
+- `brand` (string, optional)
+- `location` (string, optional)
+- `unit_count` (string, required)
+- `active` (boolean, optional)
+
+Refer to the [Product Object Fields](#product-object-fields) section below for more detail.
+---
+
+### Product Object Fields
+
+<Expandable title="Product Object Fields">
+
+<ResponseField name="external_id" type="string" required>
+  A unique identifier for the product in your internal system.
+</ResponseField>
+
+<ResponseField name="upc" type="string" required>
+  Universal Product Code (UPC) of the product.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Name of the product.
+</ResponseField>
+
+<ResponseField name="size" type="string" required>
+  Size description of the product (e.g., "15 pieces").
+</ResponseField>
+
+<ResponseField name="quantity" type="number" required>
+  Quantity of the product. Must be a positive number.
+</ResponseField>
+
+<ResponseField name="price" type="number" required>
+  Price of the product. Must be greater than or equal to 0.
+</ResponseField>
+
+<ResponseField name="description" type="string" required>
+  A brief description of the product.
+</ResponseField>
+
+<ResponseField name="image_url" type="string" required>
+  URL of the product image.
+</ResponseField>
+
+<ResponseField name="category" type="string" required>
+  Category to which the product belongs.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Brand of the product (optional).
+</ResponseField>
+
+<ResponseField name="location" type="string">
+  Location of the product within the store or warehouse (optional).
+</ResponseField>
+
+<ResponseField name="unit_count" type="string" required>
+  The number of units in the product package (e.g., "12-pack").
+</ResponseField>
+
+<ResponseField name="active" type="boolean">
+  Indicates whether the product is active (optional).
+</ResponseField>
+
+</Expandable>
+
+---
+
+### Example Request
+
+```bash
+curl --request POST \
+  --url https://api-staging.luladelivery.store/companies/:companyId/products/bulk \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "external_id": "22000006660",
+      "name": "Wrigley's Gum Slim Pack",
+      "price": 179,
+      "quantity": 1,
+      "category": "Candy",
+      "upc": "022000006660",
+      "image_url": "https://menu-item-images-bucket.s3.amazonaws.com/resized/7ff6bdd404ed31cfb89c07f2bb51043c.png",
+      "description": "15 pieces",
+      "brand": "",
+      "location": "",
+      "active": true,
+      "size": "15 pieces",
+      "unit_count": ""
+    },
+    {
+      "external_id": "22000017871",
+      "name": "Wrigley's Extra Long Lasting Flavor Sugar Free Spearmint",
+      "price": 399,
+      "quantity": 1,
+      "category": "Candy",
+      "upc": "022000017871",
+      "image_url": "https://menu-item-images-bucket.s3.amazonaws.com/resized/4ff745159f0d5e535d408b707acb7fa9.png",
+      "description": "35 count",
+      "brand": "",
+      "location": "",
+      "active": true,
+      "size": "35 count",
+      "unit_count": ""
+    }
+  ]'
