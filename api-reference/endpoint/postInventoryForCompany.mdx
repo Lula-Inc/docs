@@ -1,6 +1,6 @@
 ---
 title: "Upsert Inventory for Store"
-api: "POST /companies/:companyId/store/:storeId/inventory"
+api: "POST https://api-staging.luladelivery.store/companies/:companyId/store/:storeId/inventory"
 description: "Create or update inventory items for a specific store within a company."
 ---
 
@@ -8,7 +8,7 @@ Creates or updates inventory items for the specified store and company.
 
 ### Endpoint
 
-`POST /companies/:companyId/store/:storeId/inventory`
+`POST https://api-staging.luladelivery.store/companies/:companyId/store/:storeId/inventory`
 
 ---
 
@@ -62,20 +62,40 @@ Creates or updates inventory items for the specified store and company.
 
 ### Example Request
 
-```json Example Request
-[
-  {
-    "external_id": "1234_5678",
-    "quantity": 99,
-    "status": "active",
-    "price": 265,
-    "location": "Aisle 3",
-    "product_id": 101
+<RequestExample>
+
+```bash Example Request
+curl --location --request POST 'https://api-staging.luladelivery.store/companies/123/store/456/inventory' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <your-token>' \
+--data-raw '[
+   {
+    "external_id": "22000017901",
+    "quantity": 50,
+    "status": "inactive",
+    "price": 99.8,
+    "location": "WAREHOUSE-CDT"
   },
   {
-    "external_id": "9876_5432",
+    "external_id": "28400324434",
     "quantity": 50,
-    "price": 250
-  }
-]
+    "status": "active",
+    "price": 9,
+    "location": "WAREHOUSE-CDT"
+  },
+]'
 ```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "created": 1,
+  "updated": 1,
+  "failed": []
+}
+```
+
+</ResponseExample>

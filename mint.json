@@ -32,19 +32,19 @@
       ]
     },
     {
-      "group": "Endpoints",
+      "group": "Jobs",
+      "pages": ["api-reference/endpoint/getJob"]
+    },
+    {
+      "group": "Products",
       "pages": [
-        "api-reference/endpoint/uploadJSON",
-        "api-reference/endpoint/postItemsForIngestion",
-        "api-reference/endpoint/uploadCSV",
-        "api-reference/endpoint/getJob",
-        "api-reference/endpoint/bulkUpdateProducts",
-        "api-reference/endpoint/createBulkProducts",
-        "api-reference/endpoint/createProduct",
-        "api-reference/endpoint/postBulkCsv",
-        "api-reference/endpoint/postInventoryForCompany",
-        "api-reference/endpoint/updateProduct"
+        "api-reference/endpoint/upsert-products-csv",
+        "api-reference/endpoint/upsert-products-json"
       ]
+    },
+    {
+      "group": "Inventory",
+      "pages": ["api-reference/endpoint/postInventoryForCompany"]
     }
   ],
   "footerSocials": {

@@ -1,6 +1,6 @@
 ---
 title: "Create Product"
-api: "POST /companies/:companyId/products"
+api: "POST https://api-staging.luladelivery.store/companies/:companyId/products"
 description: "Create a new product for a company."
 ---
 
@@ -8,7 +8,7 @@ Creates a new product for the specified company.
 
 ### Endpoint
 
-`POST /companies/:companyId/products`
+`POST https://api-staging.luladelivery.store/companies/:companyId/products`
 
 ---
 
@@ -82,8 +82,13 @@ Creates a new product for the specified company.
 
 ### Example Request
 
-```json Example Request
-{
+<RequestExample>
+
+```bash Example Request
+curl --location --request POST 'https://api-staging.luladelivery.store/companies/123/products' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <your-token>' \
+--data-raw '{
   "external_id": "1234_5678",
   "upc": "49000012521",
   "name": "Coca Cola Classic",
@@ -96,5 +101,34 @@ Creates a new product for the specified company.
   "brand": "Coca Cola",
   "location": "Counter",
   "unit_count": "12 Pack"
+}'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "success": true,
+  "product": {
+    "id": 12345,
+    "external_id": "1234_5678",
+    "upc": "49000012521",
+    "name": "Coca Cola Classic",
+    "size": "12 oz",
+    "quantity": 99,
+    "price": 265,
+    "description": "Classic Coca Cola in a can.",
+    "image_url": "https://go-upc.s3.amazonaws.com/images/68916944.jpeg",
+    "category": "Soda",
+    "brand": "Coca Cola",
+    "location": "Counter",
+    "unit_count": "12 Pack",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
+  }
 }
 ```
+
+</ResponseExample>
