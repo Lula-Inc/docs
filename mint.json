@@ -24,10 +24,6 @@
       "pages": ["introduction", "migrating_v1_v2"]
     },
     {
-      "group": "New Group",
-      "pages": ["new-page"]
-    },
-    {
       "group": "API Documentation",
       "pages": [
         "api-reference/csvItemsIngestion",
