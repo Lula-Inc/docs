@@ -1,0 +1,153 @@
+---
+title: "Get Store Inventory"
+api: "GET {{micro_service_base_url}}/inventory/v2/{{store_id}}/inventory"
+description: "This endpoint retrieves the complete inventory for a specific store, including product details, pricing, quantities, and category information."
+playground : "simple"
+---
+
+This endpoint returns a paginated list of all products in your store's inventory with comprehensive details including pricing, stock levels, and category information.
+
+### Query Parameters
+
+<ParamField query="limit" type="number" default={20}>
+  Maximum number of items to return per page
+</ParamField>
+
+<ParamField query="offset" type="number" default={0}>
+  Number of items to skip for pagination
+</ParamField>
+
+<ParamField query="active" type="boolean" default={true}>
+  Filter by product active status
+</ParamField>
+
+<ParamField query="min_price" type="number" default={0}>
+  Minimum price filter (in cents)
+</ParamField>
+
+<ParamField query="max_price" type="number" default={9999}>
+  Maximum price filter (in cents)
+</ParamField>
+
+<ParamField query="order" type="string" default="createdAt">
+  Field to order results by
+</ParamField>
+
+<ParamField query="sort_dir" type="string" default="DESC">
+  Sort direction. Values: "ASC" or "DESC"
+</ParamField>
+
+### Response
+
+<ResponseField name="inventory" type="array">
+  Array of inventory items
+
+  <Expandable title="Inventory Item Object">
+    <ResponseField name="id" type="string">
+      Internal item ID
+    </ResponseField>
+
+    <ResponseField name="image" type="string">
+      Product image URL
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      Product name
+    </ResponseField>
+
+    <ResponseField name="description" type="string">
+      Product description
+    </ResponseField>
+
+    <ResponseField name="size" type="string">
+      Product size
+    </ResponseField>
+
+    <ResponseField name="category" type="object">
+      Product category information
+      
+      <Expandable title="Category Object">
+        <ResponseField name="id" type="string">Category ID</ResponseField>
+        <ResponseField name="name" type="string">Category name</ResponseField>
+        <ResponseField name="category_order" type="string">Category display order</ResponseField>
+        <ResponseField name="createdAt" type="string">Creation timestamp</ResponseField>
+        <ResponseField name="updatedAt" type="string">Last update timestamp</ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="price" type="string">
+      Product price
+    </ResponseField>
+
+    <ResponseField name="upc" type="string">
+      Product UPC code
+    </ResponseField>
+
+    <ResponseField name="quantity" type="number">
+      Available quantity
+    </ResponseField>
+
+    <ResponseField name="external_id" type="string">
+      External product identifier
+    </ResponseField>
+
+    <ResponseField name="store_id" type="string">
+      Store identifier
+    </ResponseField>
+
+    <ResponseField name="is_editable" type="boolean">
+      Whether the product can be edited
+    </ResponseField>
+
+    <ResponseField name="dsp_item_price" type="number">
+      Display item price
+    </ResponseField>
+
+    <ResponseField name="is_added_to_doordash" type="boolean">
+      Whether product is available on DoorDash
+    </ResponseField>
+
+    <ResponseField name="is_added_to_ubereats" type="boolean">
+      Whether product is available on Uber Eats
+    </ResponseField>
+
+    <ResponseField name="is_added_to_grub_hub" type="boolean">
+      Whether product is available on Grub Hub
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+[
+  {
+    "id": "58",
+    "image": "https://lula-inventory-service-staging.s3.amazonaws.com/images/1000019/Candy/1014132_1749556811814.webp",
+    "name": "Wrigley's 5 Rain Spearmint Mega Pack",
+    "description": "35 sticks",
+    "size": "",
+    "category": {
+      "id": "ae8c7e12-4372-4266-9859-42d07559131b",
+      "name": "Candy",
+      "category_order": "2100",
+      "createdAt": "2021-10-21T15:15:12.217Z",
+      "updatedAt": "2021-10-21T15:15:12.217Z"
+    },
+    "price": "99.80",
+    "upc": "22000017901",
+    "quantity": 50,
+    "external_id": "22000017901",
+    "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+    "is_editable": true,
+    "dsp_item_price": 129.74,
+    "is_added_to_doordash": false,
+    "is_added_to_ubereats": false,
+    "is_added_to_grub_hub": false
+  }
+]
+```
+
+<Tip>
+Use the limit and offset parameters to implement pagination for large inventories. The active parameter helps filter between active and inactive products.
+</Tip>

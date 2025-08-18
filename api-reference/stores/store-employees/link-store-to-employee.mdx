@@ -1,0 +1,276 @@
+---
+title: "Link Store to Employee"
+api: "POST https://api-staging.luladelivery.store/stores/store-employees/"
+description: "This endpoint links multiple stores to a new employee, creating employee relationships across multiple store locations simultaneously. This is useful for employees who work across multiple stores or for managers overseeing multiple locations."
+playground : "simple"
+---
+
+This endpoint creates employee relationships between a new employee and multiple stores in a single operation. It's particularly useful for multi-store employees, area managers, or support staff who need access to multiple store locations.
+
+### Request Body
+
+<ParamField body="store_ids" type="array" required>
+    Array of store IDs to link the employee to
+    
+    Example: ["b2b56ffb-e198-49f3-a1bc-f36ac70f9501", "d7c17a59-01e1-48f2-a326-2bbd3c888205"]
+</ParamField>
+
+<ParamField body="employee_id" type="string" required>
+    The unique employee identifier (UUID format) for this employee
+    
+    Example: "30523fd1-e108-41d0-a02d-f5907336f2e4"
+</ParamField>
+
+<ParamField body="company_id" type="number" required>
+    The company ID that owns the stores being linked
+    
+    Example: 1000022
+</ParamField>
+
+<ParamField body="user_id" type="number" required>
+    The user ID of the employee being linked to stores
+    
+    Example: 1000305
+</ParamField>
+
+### Request Example
+
+```json
+{
+    "store_ids": [
+        "b2b56ffb-e198-49f3-a1bc-f36ac70f9501",
+        "d7c17a59-01e1-48f2-a326-2bbd3c888205",
+        "449235c1-3d04-4519-998b-40d2a621e5e0"
+    ],
+    "employee_id": "30523fd1-e108-41d0-a02d-f5907336f2e4",
+    "company_id": 1000022,
+    "user_id": 1000305
+}
+```
+
+### Response
+
+<ResponseField name="count" type="number">
+    Number of stores successfully linked to the employee
+</ResponseField>
+
+<ResponseField name="successful_links" type="array">
+    Array of successfully created store-employee relationships
+    
+    <Expandable title="Link Details">
+        <ResponseField name="store_id" type="string">
+            Store ID that was successfully linked
+        </ResponseField>
+        
+        <ResponseField name="employee_id" type="string">
+            Employee ID used for the link
+        </ResponseField>
+        
+        <ResponseField name="access_level" type="string">
+            Access level granted for this store
+        </ResponseField>
+        
+        <ResponseField name="linked_at" type="string">
+            When the link was created
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+<ResponseField name="failed_links" type="array">
+    Array of stores that failed to link with error details
+    
+    <Expandable title="Failed Link Details">
+        <ResponseField name="store_id" type="string">
+            Store ID that failed to link
+        </ResponseField>
+        
+        <ResponseField name="error" type="string">
+            Reason for the failure
+        </ResponseField>
+        
+        <ResponseField name="error_code" type="string">
+            Error code for programmatic handling
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "count": 2,
+    "successful_links": [
+        {
+            "store_id": "b2b56ffb-e198-49f3-a1bc-f36ac70f9501",
+            "employee_id": "30523fd1-e108-41d0-a02d-f5907336f2e4",
+            "access_level": "store_employee",
+            "linked_at": "2024-11-15T10:30:00.000Z"
+        },
+        {
+            "store_id": "d7c17a59-01e1-48f2-a326-2bbd3c888205",
+            "employee_id": "30523fd1-e108-41d0-a02d-f5907336f2e4",
+            "access_level": "store_employee",
+            "linked_at": "2024-11-15T10:30:01.000Z"
+        }
+    ],
+    "failed_links": [
+        {
+            "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+            "error": "Store not found or not accessible",
+            "error_code": "STORE_NOT_FOUND"
+        }
+    ]
+}
+```
+
+### Multi-Store Employee Types
+
+<Accordion title="Common Multi-Store Employee Roles">
+    <ResponseField name="Area Manager" type="role">
+        Manages operations across multiple store locations
+        
+        <Info>Typically needs manager-level access to all assigned stores</Info>
+    </ResponseField>
+    
+    <ResponseField name="Regional Supervisor" type="role">
+        Oversees store performance and compliance across a region
+        
+        <Note>May need administrative access for reporting and auditing</Note>
+    </ResponseField>
+    
+    <ResponseField name="Floating Employee" type="role">
+        Works at different stores as needed for coverage
+        
+        <Tip>Usually assigned basic employee access to maintain flexibility</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Support Specialist" type="role">
+        Provides technical or operational support across multiple locations
+        
+        <Warning>Access should be limited to specific functions they support</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Trainer" type="role">
+        Conducts training programs at multiple store locations
+        
+        <Info>May need temporary elevated access for training purposes</Info>
+    </ResponseField>
+</Accordion>
+
+### Batch Operation Benefits
+
+<Accordion title="Advantages of Multi-Store Linking">
+    <ResponseField name="Efficiency" type="benefit">
+        Create multiple employee relationships in a single API call
+        
+        <Note>Reduces API calls and improves performance</Note>
+    </ResponseField>
+    
+    <ResponseField name="Consistency" type="benefit">
+        Ensures consistent access levels across all linked stores
+        
+        <Info>Reduces configuration errors and access inconsistencies</Info>
+    </ResponseField>
+    
+    <ResponseField name="Atomic Operations" type="benefit">
+        Either all stores link successfully or the operation fails safely
+        
+        <Tip>Prevents partial failures that could cause access issues</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Audit Trail" type="benefit">
+        Creates comprehensive audit log for multi-store employee setup
+        
+        <Warning>Important for compliance and security tracking</Warning>
+    </ResponseField>
+</Accordion>
+
+### Validation and Error Handling
+
+<Accordion title="Operation Validation">
+    <ResponseField name="Company Ownership" type="validation">
+        All store_ids must belong to the specified company_id
+        
+        <Warning>Cross-company linking is not permitted for security</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Store Accessibility" type="validation">
+        All stores must be active and accessible to the requesting user
+        
+        <Note>Inactive or restricted stores will be skipped</Note>
+    </ResponseField>
+    
+    <ResponseField name="Employee ID Uniqueness" type="validation">
+        Employee ID must be unique across the system
+        
+        <Info>Prevents conflicts and ensures proper identification</Info>
+    </ResponseField>
+    
+    <ResponseField name="User Existence" type="validation">
+        User ID must correspond to an existing, active user
+        
+        <Tip>Verify user exists before attempting multi-store linking</Tip>
+    </ResponseField>
+</Accordion>
+
+### Use Cases
+
+<Accordion title="When to Use This Endpoint">
+    <ResponseField name="New Manager Onboarding" type="use-case">
+        Set up area managers or regional supervisors with access to multiple stores
+        
+        <Note>Common during leadership team expansion</Note>
+    </ResponseField>
+    
+    <ResponseField name="Seasonal Staffing" type="use-case">
+        Create flexible staff assignments for busy periods
+        
+        <Info>Allows employees to work at multiple locations as needed</Info>
+    </ResponseField>
+    
+    <ResponseField name="Support Team Setup" type="use-case">
+        Grant technical or operational support teams access to multiple stores
+        
+        <Tip>Useful for maintenance, training, or technical support roles</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Franchise Operations" type="use-case">
+        Set up franchise owners or operators with access to all their locations
+        
+        <Warning>Ensure proper authorization for franchise relationships</Warning>
+    </ResponseField>
+</Accordion>
+
+### Error Recovery
+
+<Accordion title="Handling Partial Failures">
+    <ResponseField name="Review Failed Links" type="recovery">
+        Check failed_links array to identify stores that didn't link successfully
+        
+        <Note>Common failures include inactive stores or permission issues</Note>
+    </ResponseField>
+    
+    <ResponseField name="Retry Individual Stores" type="recovery">
+        Use single-store linking endpoint for failed stores after resolving issues
+        
+        <Tip>May require different access levels or additional permissions</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Verify Successful Links" type="recovery">
+        Confirm that successful links provide the expected access
+        
+        <Info>Test access to ensure employee can perform required functions</Info>
+    </ResponseField>
+</Accordion>
+
+<Info>
+**Partial Success Handling:** This endpoint can succeed partially - some stores may link successfully while others fail. Always check both the count and failed_links array.
+</Info>
+
+<Warning>
+**Company Security:** All stores must belong to the same company for security reasons. Cross-company employee access requires separate authorization processes.
+</Warning>
+
+<Note>
+**Performance Consideration:** While efficient for multiple stores, very large store lists may take longer to process. Consider batching for extremely large operations.
+</Note>

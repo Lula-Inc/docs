@@ -1,0 +1,195 @@
+---
+title: "Offboard Company"
+api: "PUT https://api-staging.luladelivery.store/stores/company/{company_id}/offboard"
+description: "This endpoint initiates the offboarding process for a company. Offboarding is a controlled process that safely transitions a company out of active service while preserving important data and ensuring proper closure of operations."
+playground : "simple"
+---
+
+This endpoint starts the offboarding process for a company, which is a safer alternative to permanent deletion. Offboarding allows for a controlled wind-down of operations while maintaining data integrity and compliance requirements.
+
+### What is Offboarding?
+
+Offboarding is a structured process that:
+- Gracefully transitions the company out of active service
+- Preserves historical data for compliance and reporting
+- Ensures proper closure of ongoing operations
+- Maintains audit trails for business purposes
+- Allows for potential reactivation if needed
+
+<Info>
+**Offboarding vs Deletion:** Unlike deletion, offboarding preserves all company data while marking the company as no longer active. This approach is recommended for compliance and business continuity.
+</Info>
+
+### Path Parameters
+
+<ParamField path="company_id" type="string" required>
+    The unique identifier of the company to offboard
+</ParamField>
+
+### Offboarding Process
+
+<Accordion title="Automated Offboarding Steps">
+    <ResponseField name="Status Update" type="process">
+        Company status is automatically changed to "Off Boarding"
+    </ResponseField>
+    
+    <ResponseField name="Store Management" type="process">
+        All associated stores are marked for offboarding
+        
+        <Note>Stores may be deactivated or marked as "Off Boarding" depending on configuration</Note>
+    </ResponseField>
+    
+    <ResponseField name="Order Processing" type="process">
+        System prevents new orders while allowing existing orders to complete
+    </ResponseField>
+    
+    <ResponseField name="Inventory Freeze" type="process">
+        Inventory updates are disabled to prevent new stock changes
+    </ResponseField>
+    
+    <ResponseField name="User Access" type="process">
+        User accounts are disabled or restricted to view-only access
+    </ResponseField>
+    
+    <ResponseField name="Integration Cleanup" type="process">
+        Third-party integrations are paused or disconnected safely
+    </ResponseField>
+    
+    <ResponseField name="Data Preservation" type="process">
+        All historical data, reports, and configurations are preserved
+    </ResponseField>
+</Accordion>
+
+### Post-Offboarding Effects
+
+<Accordion title="System Changes After Offboarding">
+    <ResponseField name="Company Status" type="changed">
+        Status automatically set to "Off Boarding"
+    </ResponseField>
+    
+    <ResponseField name="Store Operations" type="disabled">
+        All stores become unavailable for new orders
+    </ResponseField>
+    
+    <ResponseField name="API Access" type="restricted">
+        Most write operations are disabled, read operations may be restricted
+    </ResponseField>
+    
+    <ResponseField name="Customer Visibility" type="hidden">
+        Company and stores are hidden from customer-facing applications
+    </ResponseField>
+    
+    <ResponseField name="Admin Access" type="limited">
+        Admin users get read-only access for reporting and data export
+    </ResponseField>
+    
+    <ResponseField name="Billing" type="adjusted">
+        Billing cycles may be adjusted or terminated based on configuration
+    </ResponseField>
+</Accordion>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+    Indicates whether the offboarding process was successfully initiated
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "success": true
+}
+```
+
+### Reactivation Process
+
+<Accordion title="Reversing Offboarding">
+    <ResponseField name="Contact Support" type="required">
+        Reactivation typically requires manual intervention from support team
+    </ResponseField>
+    
+    <ResponseField name="Business Review" type="process">
+        Business requirements and conditions may need to be reviewed
+    </ResponseField>
+    
+    <ResponseField name="System Validation" type="process">
+        System integrity and data consistency checks are performed
+    </ResponseField>
+    
+    <ResponseField name="Gradual Restoration" type="process">
+        Services are restored incrementally to ensure stability
+    </ResponseField>
+</Accordion>
+
+### Best Practices
+
+<Accordion title="Offboarding Recommendations">
+    <ResponseField name="Communication" type="best-practice">
+        Notify all stakeholders before initiating offboarding
+        
+        <Tip>Send advance notice to customers, partners, and internal teams</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Data Export" type="best-practice">
+        Export critical business data before offboarding
+        
+        <Tip>Generate reports for sales, inventory, and customer data</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Order Completion" type="best-practice">
+        Allow time for pending orders to complete naturally
+        
+        <Warning>Offboarding with pending orders may affect customer experience</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Financial Settlement" type="best-practice">
+        Complete all financial transactions and settlements
+        
+        <Note>Ensure all payments, refunds, and fees are properly processed</Note>
+    </ResponseField>
+    
+    <ResponseField name="Integration Cleanup" type="best-practice">
+        Properly disconnect third-party services and integrations
+        
+        <Tip>Update webhook URLs and disable API keys to prevent errors</Tip>
+    </ResponseField>
+</Accordion>
+
+### Error Scenarios
+
+<Accordion title="Common Offboarding Errors">
+    <ResponseField name="Company Not Found" type="error">
+        The specified company_id does not exist
+        
+        **Status Code:** 404
+    </ResponseField>
+    
+    <ResponseField name="Already Offboarded" type="error">
+        Company is already in "Off Boarding" or "Churned" status
+        
+        **Status Code:** 409
+    </ResponseField>
+    
+    <ResponseField name="Active Orders" type="warning">
+        Company has active orders that may be affected
+        
+        **Status Code:** 200 (Success with warning)
+        
+        **Note:** Process continues but active orders are flagged for attention
+    </ResponseField>
+    
+    <ResponseField name="Insufficient Permissions" type="error">
+        User lacks permission to offboard companies
+        
+        **Status Code:** 403
+    </ResponseField>
+</Accordion>
+
+<Warning>
+**Timing Considerations:** Plan offboarding during low-activity periods to minimize impact on customers and operations. Consider timezone differences if serving multiple regions.
+</Warning>
+
+<Note>
+**Compliance:** Offboarding maintains compliance with data retention requirements while safely removing companies from active service. This approach is preferred over deletion for regulated industries.
+</Note>

@@ -1,0 +1,53 @@
+---
+title: "Delete Modifier Group"
+api: "DELETE {{micro_service_base_url}}/inventory/stores/{{store_id}}/modifier-groups/{{modifier_group_id}}"
+description: "This endpoint permanently deletes a modifier group and all its associated options and mappings. Use with caution as this action cannot be undone."
+playground : "simple"
+---
+
+This endpoint completely removes a modifier group from your store, including all its options and item mappings. Once deleted, customers will no longer see any customization options that were provided by this modifier group.
+
+<Warning>
+This action permanently deletes the modifier group and cannot be undone. Ensure you have backups if needed and verify that no active orders depend on this modifier group.
+</Warning>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store
+</ParamField>
+
+<ParamField path="modifier_group_id" type="string" required>
+  The unique identifier of the modifier group to delete
+</ParamField>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the deletion was successful
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Success message confirming the deletion
+</ResponseField>
+
+### Response Example
+
+```json
+{
+  "success": true,
+  "message": "Modifier group 1000000 deleted successfully"
+}
+```
+
+<Note>
+No request body is required for this endpoint. The modifier group ID in the URL path specifies which group to delete.
+</Note>
+
+<Info>
+Deleting a modifier group will also remove all associated options and item mappings. Consider exporting or backing up the configuration if you might need to recreate it later.
+</Info>
+
+<Tip>
+Before deleting, consider setting the modifier group status to "inactive" to test the impact on your menu without permanent deletion.
+</Tip>

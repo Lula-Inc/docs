@@ -1,0 +1,139 @@
+---
+title: "Create Modifier Group Options"
+api: "POST {{micro_service_base_url}}/inventory/stores/{{store_id}}/modifier-groups/{{modifier_group_id}}/options"
+description: "This endpoint adds new options to an existing modifier group. These options represent the individual choices customers can select within a modifier group."
+playground : "simple"
+---
+
+This endpoint creates new options within an existing modifier group. Each option represents a specific choice that customers can make when customizing their order, such as "Small", "Medium", "Large" for a size modifier group.
+
+<Info>
+Options must be associated with existing store items and modifier groups.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store
+</ParamField>
+
+<ParamField path="modifier_group_id" type="string" required>
+  The unique identifier of the modifier group
+</ParamField>
+
+### Body
+
+<ParamField body="options" type="array" required>
+  Array of modifier option objects to create
+
+  <Expandable title="Modifier Option Object">
+    <ParamField name="store_item_id" type="string" required>
+      ID of the store item to use as an option
+    </ParamField>
+
+    <ParamField name="modifier_group_id" type="string" required>
+      ID of the modifier group this option belongs to
+    </ParamField>
+
+    <ParamField name="price" type="number" required>
+      Additional price for this option (can be 0)
+    </ParamField>
+
+    <ParamField name="status" type="string" required>
+      Status of the option. Values: "active" or "inactive"
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Request Example
+
+```json
+[
+  {
+    "store_item_id": "3e3e0adb-5555-4832-9632-8bb71d861281",
+    "modifier_group_id": "{{modifier_group_id}}",
+    "price": 0,
+    "status": "active"
+  }
+]
+```
+
+### Response
+
+<ResponseField name="options" type="array">
+  Array of created modifier option objects
+
+  <Expandable title="Created Option Object">
+    <ResponseField name="createdAt" type="string">
+      Creation timestamp
+    </ResponseField>
+
+    <ResponseField name="updatedAt" type="string">
+      Last update timestamp
+    </ResponseField>
+
+    <ResponseField name="external_id" type="string">
+      External identifier for the option
+    </ResponseField>
+
+    <ResponseField name="id" type="string">
+      Internal option ID
+    </ResponseField>
+
+    <ResponseField name="store_item_id" type="string">
+      Associated store item ID
+    </ResponseField>
+
+    <ResponseField name="modifier_group_id" type="string">
+      Parent modifier group ID
+    </ResponseField>
+
+    <ResponseField name="price" type="string">
+      Option price
+    </ResponseField>
+
+    <ResponseField name="status" type="string">
+      Option status
+    </ResponseField>
+
+    <ResponseField name="precedence" type="number">
+      Display order precedence
+    </ResponseField>
+
+    <ResponseField name="default_qty" type="number">
+      Default quantity for this option
+    </ResponseField>
+
+    <ResponseField name="deletedAt" type="string">
+      Deletion timestamp (null if not deleted)
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+[
+  {
+    "createdAt": "2024-04-24T07:41:30.249Z",
+    "updatedAt": "2024-04-24T07:41:30.249Z",
+    "external_id": "ac873a62-7370-488f-9f09-d83d4ca932d8",
+    "id": "1000008",
+    "store_item_id": "3e3e0adb-5555-4832-9632-8bb71d861281",
+    "modifier_group_id": "1000000",
+    "price": "0.00",
+    "status": "active",
+    "precedence": 0,
+    "default_qty": 0,
+    "deletedAt": null
+  }
+]
+```
+
+<Tip>
+Set price to 0 for options that don't add extra cost. Use positive values for premium options or add-ons.
+</Tip>
+
+<Warning>
+Ensure the store_item_id exists in your inventory before creating the option.
+</Warning>

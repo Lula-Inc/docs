@@ -1,0 +1,181 @@
+---
+title: "Cancel Order"
+api: "POST {{orders_api_base_url}}/orders/cancel/"
+description: "Cancel an order and handle refunds, inventory adjustments, and platform notifications automatically."
+playground : "simple"
+---
+
+This endpoint cancels an order regardless of its current status and handles all necessary cleanup including customer notifications, refunds, inventory adjustments, and delivery platform communications.
+
+<Warning>
+Canceling orders frequently can negatively impact your store's rating on delivery platforms. Use this endpoint judiciously and consider alternative solutions when possible.
+</Warning>
+
+### Request Body
+
+<ParamField body="store_id" type="string" required>
+  The unique identifier of the store canceling the order
+</ParamField>
+
+<ParamField body="order_id" type="string" required>
+  The unique identifier of the order to cancel
+</ParamField>
+
+<ParamField body="reason" type="string" required>
+  Reason for cancellation. Must be one of the predefined reason codes.
+</ParamField>
+
+<ParamField body="description" type="string" optional>
+  Additional details about the cancellation reason
+</ParamField>
+
+<ParamField body="initiated_by" type="string" required>
+  Employee ID who initiated the cancellation
+</ParamField>
+
+### Cancellation Reason Codes
+
+<Accordion title="Available Reason Codes">
+
+**Store-Related Reasons:**
+- `OUT_OF_STOCK` - Required items are not available
+- `KITCHEN_CLOSED` - Kitchen is closed or unable to prepare
+- `EQUIPMENT_FAILURE` - Equipment malfunction preventing preparation
+- `STAFF_SHORTAGE` - Insufficient staff to fulfill order
+- `STORE_EMERGENCY` - Emergency situation at store
+
+**Customer-Related Reasons:**
+- `CUSTOMER_REQUEST` - Customer requested cancellation
+- `PAYMENT_ISSUE` - Payment could not be processed
+- `DELIVERY_ADDRESS_ISSUE` - Delivery address problems
+
+**Platform-Related Reasons:**
+- `PLATFORM_ERROR` - Technical issue with delivery platform
+- `DUPLICATE_ORDER` - Order was duplicated in system
+- `FRAUD_SUSPECTED` - Suspected fraudulent order
+
+**Other Reasons:**
+- `WEATHER_RELATED` - Severe weather preventing fulfillment
+- `OTHER` - Other reason (requires description)
+
+</Accordion>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the order was successfully canceled
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message or error details
+</ResponseField>
+
+<ResponseField name="order_id" type="string">
+  The canceled order's unique identifier
+</ResponseField>
+
+<ResponseField name="cancellation_id" type="string">
+  Unique identifier for the cancellation record
+</ResponseField>
+
+<ResponseField name="refund_amount" type="string">
+  Amount that will be refunded to customer
+</ResponseField>
+
+<ResponseField name="refund_status" type="string">
+  Status of the refund process
+</ResponseField>
+
+<ResponseField name="platform_notified" type="boolean">
+  Whether the delivery platform was successfully notified
+</ResponseField>
+
+<ResponseField name="customer_notified" type="boolean">
+  Whether the customer was successfully notified
+</ResponseField>
+
+### Request Example
+
+```json
+{
+  "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "reason": "OUT_OF_STOCK",
+  "description": "Main ingredient not available due to supply chain issue",
+  "initiated_by": "870a05c1-bbbf-48ab-a757-e28ae0a2b2a8"
+}
+```
+
+### Response Example
+
+```json
+{
+  "success": true,
+  "message": "Order successfully canceled and all parties notified",
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "cancellation_id": "c4f2d9e8-1a3b-4c5d-8e9f-2a3b4c5d6e7f",
+  "refund_amount": "41.02",
+  "refund_status": "processing",
+  "platform_notified": true,
+  "customer_notified": true
+}
+```
+
+<Accordion title="Cancellation Process Workflow">
+When an order is canceled, the following automated processes occur:
+
+1. **Order Status Update**: Status changed to "canceled"
+2. **Inventory Release**: Any reserved inventory is released back to available stock
+3. **Refund Initiation**: Automatic refund processing begins
+4. **Platform Notification**: Delivery platform is notified with reason
+5. **Customer Notification**: Customer receives cancellation notification
+6. **Analytics Update**: Cancellation metrics are updated for reporting
+7. **Audit Trail**: Complete cancellation record is created for compliance
+</Accordion>
+
+<Note>
+**Refund Timing**: Refunds typically process within 3-5 business days, but the exact timing depends on the customer's payment method and the delivery platform's policies.
+</Note>
+
+<Tip>
+**Best Practice**: When possible, contact the customer directly before canceling to explore alternatives or explain the situation. This can help maintain customer satisfaction even in difficult situations.
+</Tip>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Order Cannot Be Canceled**
+```json
+{
+  "success": false,
+  "message": "Order is already completed and cannot be canceled",
+  "error_code": "ORDER_NOT_CANCELABLE"
+}
+```
+
+**Invalid Reason Code**
+```json
+{
+  "success": false,
+  "message": "Invalid cancellation reason provided",
+  "error_code": "INVALID_REASON"
+}
+```
+
+**Platform Communication Failed**
+```json
+{
+  "success": true,
+  "message": "Order canceled but platform notification failed",
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "platform_notified": false,
+  "warning": "Manual platform notification may be required"
+}
+```
+
+</Accordion>
+
+<Warning>
+**Manual Follow-up**: If platform_notified is false, you may need to manually notify the delivery platform to avoid fulfillment conflicts.
+</Warning>

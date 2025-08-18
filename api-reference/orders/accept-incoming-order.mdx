@@ -1,0 +1,136 @@
+---
+title: "Accept Incoming Order"
+api: "PUT {{orders_api_base_url}}/orders/accept/"
+description: "Accept an incoming order from a delivery service platform and initiate the fulfillment process."
+playground : "simple"
+---
+
+This endpoint allows stores to formally accept incoming orders from delivery platforms like DoorDash, UberEats, and Grub Hub. Accepting an order initiates the fulfillment workflow and notifies the delivery platform that the order is being processed.
+
+<Info>
+Once an order is accepted, it cannot be rejected through normal processes. Use the cancel order endpoint if you need to cancel after acceptance.
+</Info>
+
+### Request Body
+
+<ParamField body="store_id" type="string" required>
+  The unique identifier of the store accepting the order
+</ParamField>
+
+<ParamField body="order_id" type="string" required>
+  The unique identifier of the order to accept
+</ParamField>
+
+<ParamField body="estimated_ready_time" type="string" optional>
+  Estimated time when the order will be ready for pickup/delivery (ISO 8601 format)
+</ParamField>
+
+<ParamField body="special_notes" type="string" optional>
+  Additional notes about the order preparation or any special considerations
+</ParamField>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the order was successfully accepted
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message or error details
+</ResponseField>
+
+<ResponseField name="order_id" type="string">
+  The accepted order's unique identifier
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  New order status after acceptance (typically "accepted" or "in_progress")
+</ResponseField>
+
+<ResponseField name="estimated_ready_time" type="string">
+  Confirmed estimated ready time (if provided)
+</ResponseField>
+
+<ResponseField name="fulfillment_id" type="string">
+  Unique identifier for the fulfillment tracking record created
+</ResponseField>
+
+### Request Example
+
+```json
+{
+  "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "estimated_ready_time": "2024-01-15T14:30:00Z",
+  "special_notes": "Extra care required for fragile items"
+}
+```
+
+### Response Example
+
+```json
+{
+  "success": true,
+  "message": "Order successfully accepted and fulfillment initiated",
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "status": "accepted",
+  "estimated_ready_time": "2024-01-15T14:30:00Z",
+  "fulfillment_id": "f60a1ebf-c9fd-4c5a-b25f-db5f59e03851"
+}
+```
+
+<Accordion title="Order Acceptance Workflow">
+When an order is accepted, the following happens automatically:
+
+1. **Status Update**: Order status changes from "pending" to "accepted"
+2. **Platform Notification**: The delivery platform (DoorDash, UberEats, etc.) is notified
+3. **Fulfillment Creation**: A new fulfillment record is created for tracking
+4. **Timer Start**: Preparation timer begins for performance metrics
+5. **Inventory Hold**: Items are reserved in inventory (if applicable)
+6. **Staff Notification**: Kitchen/preparation staff are notified of new order
+</Accordion>
+
+<Warning>
+**Time Sensitive**: Orders typically have acceptance windows (usually 10-15 minutes). Failing to accept within this window may result in automatic cancellation by the delivery platform.
+</Warning>
+
+<Tip>
+**Best Practice**: Always provide realistic estimated_ready_time values. Accurate timing improves customer satisfaction and delivery platform ratings.
+</Tip>
+
+<Note>
+If you don't provide an estimated_ready_time, the system will calculate one based on your store's historical preparation times and current order volume.
+</Note>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Order Already Processed**
+```json
+{
+  "success": false,
+  "message": "Order has already been accepted or is no longer available",
+  "error_code": "ORDER_ALREADY_PROCESSED"
+}
+```
+
+**Invalid Store**
+```json
+{
+  "success": false,
+  "message": "Store not authorized to accept this order",
+  "error_code": "UNAUTHORIZED_STORE"
+}
+```
+
+**Acceptance Window Expired**
+```json
+{
+  "success": false,
+  "message": "Order acceptance window has expired",
+  "error_code": "ACCEPTANCE_EXPIRED"
+}
+```
+
+</Accordion>

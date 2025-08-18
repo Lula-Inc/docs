@@ -1,0 +1,480 @@
+---
+title: "Create Promotion"
+api: "POST {{promotions_service_api_base_url}}/promotions/company/{{company_id}}/campaigns/{{campaign_id}}/promotions"
+description: "Create a new promotion within a specific campaign, including discount rules, eligibility criteria, and promotional mechanics."
+playground : "simple"
+---
+
+This endpoint creates promotional offers within campaigns, enabling businesses to offer discounts, special deals, and incentives to drive customer engagement and sales.
+
+<Info>
+Promotions are campaign-specific marketing tools that provide customers with discounts, special offers, or incentives. Each promotion operates within the context of a parent campaign.
+</Info>
+
+### Path Parameters
+
+<ParamField path="company_id" type="string" required>
+  The unique identifier of the company creating the promotion
+</ParamField>
+
+<ParamField path="campaign_id" type="string" required>
+  The unique identifier of the campaign that will contain this promotion
+</ParamField>
+
+### Request Body
+
+<ParamField body="promotion_name" type="string" required>
+  Display name for the promotion (e.g., "Spring Sale 20% Off")
+</ParamField>
+
+<ParamField body="promotion_type" type="string" required>
+  Type of promotion: "percentage_discount", "fixed_amount_discount", "buy_x_get_y", "free_shipping", "bundle_deal", "loyalty_bonus"
+</ParamField>
+
+<ParamField body="description" type="string" required>
+  Detailed description of the promotion offer
+</ParamField>
+
+<ParamField body="promotion_code" type="string" optional>
+  Unique promotional code customers can use (auto-generated if not provided)
+</ParamField>
+
+<ParamField body="discount_rules" type="object" required>
+  Discount calculation rules and parameters
+
+  <Expandable title="Discount Rules Object">
+    <ParamField body="discount_value" type="number" required>
+      The discount amount (percentage for percentage_discount, fixed amount for fixed_amount_discount)
+    </ParamField>
+
+    <ParamField body="max_discount_amount" type="number" optional>
+      Maximum discount amount for percentage-based discounts
+    </ParamField>
+
+    <ParamField body="min_purchase_amount" type="number" optional>
+      Minimum purchase amount required to apply the discount
+    </ParamField>
+
+    <ParamField body="applicable_categories" type="array" optional>
+      Product categories eligible for the discount
+    </ParamField>
+
+    <ParamField body="excluded_items" type="array" optional>
+      Specific items excluded from the promotion
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="eligibility_criteria" type="object" optional>
+  Customer and order eligibility requirements
+
+  <Expandable title="Eligibility Criteria">
+    <ParamField body="customer_segments" type="array" optional>
+      Customer segments eligible for the promotion
+    </ParamField>
+
+    <ParamField body="first_time_customers_only" type="boolean" optional default="false">
+      Restrict promotion to first-time customers
+    </ParamField>
+
+    <ParamField body="loyalty_tier_requirements" type="array" optional>
+      Required customer loyalty tiers
+    </ParamField>
+
+    <ParamField body="geographic_restrictions" type="array" optional>
+      Geographic regions where promotion is valid
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="usage_limits" type="object" optional>
+  Promotion usage restrictions and limits
+
+  <Expandable title="Usage Limits">
+    <ParamField body="total_usage_limit" type="integer" optional>
+      Maximum total number of times promotion can be used
+    </ParamField>
+
+    <ParamField body="per_customer_limit" type="integer" optional>
+      Maximum times a single customer can use the promotion
+    </ParamField>
+
+    <ParamField body="daily_usage_limit" type="integer" optional>
+      Maximum daily usage across all customers
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="schedule" type="object" required>
+  Promotion timing and availability schedule
+
+  <Expandable title="Schedule Object">
+    <ParamField body="start_date" type="string" required>
+      When the promotion becomes active (ISO 8601 format)
+    </ParamField>
+
+    <ParamField body="end_date" type="string" required>
+      When the promotion expires (ISO 8601 format)
+    </ParamField>
+
+    <ParamField body="time_restrictions" type="object" optional>
+      Time-based availability restrictions
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="display_settings" type="object" optional>
+  Visual presentation and marketing settings
+
+  <Expandable title="Display Settings">
+    <ParamField body="promotional_message" type="string" optional>
+      Marketing message displayed to customers
+    </ParamField>
+
+    <ParamField body="banner_text" type="string" optional>
+      Text for promotional banners
+    </ParamField>
+
+    <ParamField body="badge_style" type="string" optional>
+      Visual style for promotion badges
+    </ParamField>
+
+    <ParamField body="priority_level" type="integer" optional default="5">
+      Display priority (1-10, higher shows first)
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="auto_apply" type="boolean" optional default="false">
+  Whether to automatically apply the promotion without requiring a code
+</ParamField>
+
+<ParamField body="stackable" type="boolean" optional default="false">
+  Whether this promotion can be combined with other promotions
+</ParamField>
+
+### Request Example
+
+```json
+{
+  "promotion_name": "Spring Fresh 20% Off",
+  "promotion_type": "percentage_discount",
+  "description": "Get 20% off all fresh produce items during our Spring Fresh campaign",
+  "promotion_code": "SPRING20",
+  "discount_rules": {
+    "discount_value": 20,
+    "max_discount_amount": 50.00,
+    "min_purchase_amount": 25.00,
+    "applicable_categories": ["fresh_produce", "organic_items"],
+    "excluded_items": ["premium_organics"]
+  },
+  "eligibility_criteria": {
+    "customer_segments": ["regular_customers", "premium_members"],
+    "first_time_customers_only": false,
+    "loyalty_tier_requirements": ["bronze", "silver", "gold"],
+    "geographic_restrictions": ["northeast_region"]
+  },
+  "usage_limits": {
+    "total_usage_limit": 1000,
+    "per_customer_limit": 3,
+    "daily_usage_limit": 100
+  },
+  "schedule": {
+    "start_date": "2025-04-14T00:00:00.000Z",
+    "end_date": "2025-05-14T23:59:59.000Z",
+    "time_restrictions": {
+      "days_of_week": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "hours_of_day": {
+        "start": "08:00",
+        "end": "20:00"
+      }
+    }
+  },
+  "display_settings": {
+    "promotional_message": "Save 20% on Fresh Spring Produce!",
+    "banner_text": "SPRING20 - Fresh Savings All Month Long",
+    "badge_style": "seasonal_green",
+    "priority_level": 8
+  },
+  "auto_apply": false,
+  "stackable": true
+}
+```
+
+### Response
+
+<ResponseField name="promotion_id" type="string">
+  Unique identifier for the created promotion
+</ResponseField>
+
+<ResponseField name="campaign_id" type="string">
+  Parent campaign identifier
+</ResponseField>
+
+<ResponseField name="promotion_name" type="string">
+  Display name of the promotion
+</ResponseField>
+
+<ResponseField name="promotion_type" type="string">
+  Type of promotion created
+</ResponseField>
+
+<ResponseField name="promotion_code" type="string">
+  Promotional code (generated if not provided)
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current promotion status ("draft", "scheduled", "active", "paused", "expired")
+</ResponseField>
+
+<ResponseField name="discount_rules" type="object">
+  Complete discount configuration as created
+</ResponseField>
+
+<ResponseField name="eligibility_criteria" type="object">
+  Customer eligibility requirements
+</ResponseField>
+
+<ResponseField name="usage_limits" type="object">
+  Usage restrictions and current usage statistics
+</ResponseField>
+
+<ResponseField name="schedule" type="object">
+  Promotion timing and availability
+</ResponseField>
+
+<ResponseField name="display_settings" type="object">
+  Visual presentation configuration
+</ResponseField>
+
+<ResponseField name="performance_metrics" type="object">
+  Initial promotion tracking metrics
+
+  <Expandable title="Performance Metrics">
+    <ResponseField name="total_uses" type="integer">Current usage count</ResponseField>
+    <ResponseField name="unique_customers" type="integer">Number of unique customers who used promotion</ResponseField>
+    <ResponseField name="total_discount_given" type="number">Total discount amount provided</ResponseField>
+    <ResponseField name="conversion_rate" type="number">Promotion conversion rate</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  Timestamp when the promotion was created
+</ResponseField>
+
+<ResponseField name="created_by" type="string">
+  User who created the promotion
+</ResponseField>
+
+### Response Example
+
+```json
+{
+  "promotion_id": "promo_spring_001",
+  "campaign_id": "1000010",
+  "promotion_name": "Spring Fresh 20% Off",
+  "promotion_type": "percentage_discount",
+  "promotion_code": "SPRING20",
+  "status": "scheduled",
+  "discount_rules": {
+    "discount_value": 20,
+    "max_discount_amount": 50.00,
+    "min_purchase_amount": 25.00,
+    "applicable_categories": ["fresh_produce", "organic_items"],
+    "excluded_items": ["premium_organics"]
+  },
+  "eligibility_criteria": {
+    "customer_segments": ["regular_customers", "premium_members"],
+    "first_time_customers_only": false,
+    "loyalty_tier_requirements": ["bronze", "silver", "gold"],
+    "geographic_restrictions": ["northeast_region"]
+  },
+  "usage_limits": {
+    "total_usage_limit": 1000,
+    "per_customer_limit": 3,
+    "daily_usage_limit": 100,
+    "current_usage": {
+      "total_used": 0,
+      "today_used": 0,
+      "remaining_uses": 1000
+    }
+  },
+  "schedule": {
+    "start_date": "2025-04-14T00:00:00.000Z",
+    "end_date": "2025-05-14T23:59:59.000Z",
+    "time_restrictions": {
+      "days_of_week": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "hours_of_day": {
+        "start": "08:00",
+        "end": "20:00"
+      }
+    }
+  },
+  "display_settings": {
+    "promotional_message": "Save 20% on Fresh Spring Produce!",
+    "banner_text": "SPRING20 - Fresh Savings All Month Long",
+    "badge_style": "seasonal_green",
+    "priority_level": 8
+  },
+  "auto_apply": false,
+  "stackable": true,
+  "performance_metrics": {
+    "total_uses": 0,
+    "unique_customers": 0,
+    "total_discount_given": 0.00,
+    "conversion_rate": 0.00
+  },
+  "created_at": "2025-04-14T01:00:00.000Z",
+  "created_by": "marketing_admin_001"
+}
+```
+
+<Accordion title="Promotion Types and Strategies">
+
+**Percentage Discounts**
+- Most common promotion type
+- Easy for customers to understand
+- Can include maximum discount caps
+
+**Fixed Amount Discounts**
+- Specific dollar amount off purchase
+- Effective for higher-value items
+- Clear value proposition
+
+**Buy X Get Y Promotions**
+- Encourage bulk purchases
+- Drive inventory movement
+- Increase average order value
+
+**Free Shipping Offers**
+- Reduce cart abandonment
+- Increase online conversion rates
+- Often combined with minimum purchase requirements
+
+**Bundle Deals**
+- Cross-sell related products
+- Increase transaction value
+- Simplify customer decision-making
+
+**Loyalty Bonuses**
+- Reward repeat customers
+- Increase customer retention
+- Build long-term relationships
+
+</Accordion>
+
+<Note>
+**Promotion Codes**: If no promotion code is provided, the system will auto-generate a unique code based on the promotion name and type. Custom codes must be unique within the company.
+</Note>
+
+<Tip>
+**Performance Optimization**: Set appropriate usage limits to control promotion costs while maximizing customer engagement. Monitor performance metrics to optimize future promotions.
+</Tip>
+
+### Validation Rules
+
+<Accordion title="Promotion Validation Requirements">
+
+**Naming Requirements**
+- Promotion names must be unique within the campaign
+- Names should be descriptive and customer-friendly
+- Maximum length of 100 characters
+
+**Discount Rules Validation**
+- Percentage discounts must be between 0.01% and 100%
+- Fixed amounts must be positive values
+- Minimum purchase amounts must be greater than discount amounts
+
+**Schedule Validation**
+- Start date must be in the future or current date
+- End date must be after start date
+- Maximum promotion duration of 365 days
+
+**Usage Limits Validation**
+- All usage limits must be positive integers
+- Per-customer limits cannot exceed total usage limits
+- Daily limits should consider expected traffic
+
+**Code Validation**
+- Promotion codes must be alphanumeric
+- Minimum length of 4 characters, maximum of 20
+- Cannot contain profanity or reserved words
+
+</Accordion>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Invalid Discount Configuration**
+```json
+{
+  "error": "Invalid discount rules",
+  "message": "Discount percentage cannot exceed 100%",
+  "code": "INVALID_DISCOUNT_RULES"
+}
+```
+
+**Duplicate Promotion Code**
+```json
+{
+  "error": "Promotion code already exists",
+  "message": "The promotion code 'SPRING20' is already in use",
+  "code": "DUPLICATE_PROMOTION_CODE"
+}
+```
+
+**Invalid Schedule**
+```json
+{
+  "error": "Invalid promotion schedule",
+  "message": "End date must be after start date",
+  "code": "INVALID_SCHEDULE"
+}
+```
+
+**Campaign Not Found**
+```json
+{
+  "error": "Campaign not found",
+  "message": "The specified campaign does not exist or is not accessible",
+  "code": "CAMPAIGN_NOT_FOUND"
+}
+```
+
+</Accordion>
+
+<Warning>
+**Budget Considerations**: Carefully configure usage limits and maximum discount amounts to control promotional costs. Monitor usage patterns to prevent budget overruns.
+</Warning>
+
+### Best Practices
+
+<Accordion title="Promotion Creation Best Practices">
+
+**Strategic Planning**
+- Align promotions with business objectives
+- Consider seasonal trends and customer behavior
+- Set realistic but attractive discount levels
+
+**Technical Configuration**
+- Use meaningful promotion codes
+- Set appropriate usage limits
+- Configure proper eligibility criteria
+
+**Performance Monitoring**
+- Track key metrics from launch
+- Monitor usage patterns for optimization
+- Adjust limits based on performance
+
+**Customer Experience**
+- Write clear, compelling promotional messages
+- Ensure easy redemption process
+- Provide transparent terms and conditions
+
+**Legal Compliance**
+- Include necessary disclaimers
+- Comply with regional promotion regulations
+- Maintain fair and transparent practices
+
+</Accordion>

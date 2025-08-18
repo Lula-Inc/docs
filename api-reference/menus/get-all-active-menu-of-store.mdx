@@ -1,0 +1,262 @@
+---
+title: "Get All Active Menu of Store"
+api: "GET /stores/{{store_id}}/menu/"
+description: "Retrieve all active menus for a specific store, providing essential menu information for operational and customer-facing applications."
+playground : "simple"
+---
+
+This endpoint returns all active menus associated with a specific store, providing essential information for menu management and customer-facing applications.
+
+<Info>
+This endpoint focuses on active menus only, making it ideal for customer-facing applications and operational systems that need to display currently available menu options.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store to retrieve active menus for
+</ParamField>
+
+<Accordion title="Active Menu Criteria">
+
+**Menu Status Requirements**
+- Only menus with "active" status are returned
+- Inactive or archived menus are excluded from results
+- Deleted menus are not included in the response
+- Draft menus are filtered out of the results
+
+**Operational Considerations**
+- Active menus represent current customer offerings
+- These menus are available for order processing
+- Operating hours determine actual availability within active menus
+- Menu rules and item associations apply to active menus
+
+**Customer Experience**
+- Active menus are what customers see in applications
+- These menus drive ordering and checkout processes
+- Menu availability affects customer purchasing decisions
+- Real-time status ensures accurate customer information
+
+</Accordion>
+
+<Note>
+**Real-Time Data**: This endpoint provides real-time menu status information, ensuring customers and operational systems have access to current menu availability.
+</Note>
+
+<Tip>
+**Performance Optimization**: Since this endpoint filters for active menus only, it typically returns faster responses and is optimized for frequent access by customer-facing applications.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Common Use Cases for Active Menus">
+
+**Customer-Facing Applications**
+- Mobile app menu displays
+- Website menu listings
+- Point-of-sale system menu options
+- Kiosk menu presentations
+
+**Operational Systems**
+- Order management system integration
+- Inventory tracking and management
+- Staff training and reference materials
+- Kitchen display system coordination
+
+**Partner Integrations**
+- Delivery platform menu synchronization
+- Third-party ordering system integration
+- Marketing platform data feeds
+- Analytics and reporting systems
+
+**Administrative Functions**
+- Current menu status monitoring
+- Active menu performance tracking
+- Operational dashboard displays
+- Real-time business intelligence
+
+</Accordion>
+
+### Response Format
+
+<Accordion title="Expected Response Structure">
+
+**Menu Object Array**
+- Array of active menu objects
+- Each menu contains complete configuration data
+- Operating hours included for each menu
+- Item counts and statistics provided
+
+**Essential Menu Information**
+- Menu identification and naming
+- Current status and configuration
+- Operating schedule details
+- Item and category statistics
+
+**Metadata and Timestamps**
+- Creation and modification dates
+- User information for audit trails
+- External system integration IDs
+- Deletion and archival status
+
+</Accordion>
+
+### Integration Patterns
+
+<Accordion title="Common Integration Approaches">
+
+**Real-Time Menu Display**
+- Fetch active menus for immediate display
+- Update menu information based on current time
+- Filter by operating hours for current availability
+- Refresh data periodically for accuracy
+
+**Caching Strategies**
+- Cache active menu data for performance
+- Implement cache invalidation on menu updates
+- Balance data freshness with response speed
+- Consider user location and time zone factors
+
+**Error Handling**
+- Handle cases where no active menus exist
+- Provide fallback options for system failures
+- Implement graceful degradation for partial failures
+- Log errors for operational monitoring
+
+**Performance Optimization**
+- Minimize request frequency for high-traffic applications
+- Use appropriate data compression
+- Implement efficient data parsing
+- Monitor response times and optimize accordingly
+
+</Accordion>
+
+### Business Logic
+
+<Accordion title="Active Menu Business Rules">
+
+**Menu Activation Criteria**
+- Menu must have "active" status
+- Store must be operational and accessible
+- Menu configuration must be complete and valid
+- Operating hours must be properly configured
+
+**Time-Based Availability**
+- Active menus may still be time-restricted
+- Operating hours determine actual customer access
+- Special schedules may override default availability
+- Holiday and event schedules affect menu access
+
+**Priority and Default Handling**
+- Default menus take precedence in customer displays
+- Menu priority affects ordering in lists
+- Specialized menus may override default options
+- Business rules determine menu presentation order
+
+**Dynamic Updates**
+- Menu status changes are reflected immediately
+- Real-time updates ensure accurate customer information
+- System synchronization maintains consistency
+- Operational changes are propagated quickly
+
+</Accordion>
+
+### Error Scenarios
+
+<Accordion title="Common Error Handling">
+
+**No Active Menus**
+```json
+{
+  "message": "No active menus found for this store",
+  "data": [],
+  "store_id": "store-123"
+}
+```
+
+**Store Not Found**
+```json
+{
+  "error": "Store not found",
+  "message": "The specified store does not exist",
+  "store_id": "invalid-store-id"
+}
+```
+
+**Access Denied**
+```json
+{
+  "error": "Access denied",
+  "message": "Insufficient permissions to access store menus"
+}
+```
+
+**Service Unavailable**
+```json
+{
+  "error": "Service temporarily unavailable",
+  "message": "Menu service is currently experiencing issues"
+}
+```
+
+</Accordion>
+
+### Performance Considerations
+
+<Accordion title="Performance and Scalability">
+
+**Response Time Optimization**
+- Active menu filtering reduces response size
+- Database indexing on menu status improves query speed
+- Caching strategies reduce server load
+- Efficient data serialization minimizes transfer time
+
+**Scalability Factors**
+- High-frequency access patterns expected
+- Multiple concurrent requests from customer applications
+- Peak usage during meal times and promotional periods
+- Geographic distribution of requests
+
+**Resource Management**
+- Database connection pooling for concurrent access
+- Memory management for large menu datasets
+- Network bandwidth optimization for mobile clients
+- CPU resource allocation for real-time processing
+
+**Monitoring and Alerts**
+- Response time monitoring for performance tracking
+- Error rate tracking for service reliability
+- Usage pattern analysis for capacity planning
+- Alert systems for performance degradation
+
+</Accordion>
+
+### Data Consistency
+
+<Accordion title="Data Consistency and Reliability">
+
+**Real-Time Updates**
+- Menu status changes are immediately reflected
+- Operating hour modifications take effect instantly
+- Item availability updates are propagated quickly
+- System-wide synchronization ensures consistency
+
+**Cache Management**
+- Appropriate cache invalidation on menu changes
+- Consistent data across multiple application instances
+- Time-based cache expiration for data freshness
+- Geographic cache distribution for global applications
+
+**Synchronization Protocols**
+- Database replication ensures data availability
+- Event-driven updates maintain system consistency
+- Conflict resolution for concurrent modifications
+- Audit trails for change tracking and rollback
+
+**Quality Assurance**
+- Data validation ensures menu integrity
+- Automated testing verifies API reliability
+- Monitoring systems track data quality metrics
+- Error detection and correction mechanisms
+
+</Accordion>
