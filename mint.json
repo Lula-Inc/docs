@@ -29,9 +29,17 @@
         "documentation/Lula-Direct-SDK"
       ]
     },
+
     {
       "group": "API Reference",
       "pages": [
+        {
+          "group": "API Reference (Legacy)",
+          "pages": [
+            "api-reference/v1/csvItemsIngestion",
+            "api-reference/v1/jsonItemsIngestion"
+          ]
+        },
         {
           "group": "Companies",
           "pages": [
