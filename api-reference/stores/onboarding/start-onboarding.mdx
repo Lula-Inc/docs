@@ -1,0 +1,239 @@
+---
+title: "Start Onboarding"
+api: "PUT https://api-staging.luladelivery.store/stores/{store_id}/status"
+description: "This endpoint initiates the store onboarding process by opening the store on all delivery service platforms. This is a critical step that makes the store live and ready to accept orders from customers across UberEats, DoorDash, and GrubHub."
+playground : "simple"
+---
+
+This endpoint starts the store onboarding process by activating the store across all delivery platforms simultaneously. This operation transitions the store from setup/configuration mode to live operational status.
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+    The unique identifier of the store to start onboarding for
+</ParamField>
+
+### Request Body
+
+<ParamField body="dsp_name" type="string" required>
+    Must be set to "All" to activate all delivery service platforms
+</ParamField>
+
+<ParamField body="is_active" type="boolean" required>
+    Must be set to `true` to open the store
+</ParamField>
+
+<ParamField body="end_time" type="string" optional>
+    Optional end time for temporary activation. Format: ISO 8601 with timezone
+    
+    Example: "2024-11-15T23:59:00-07:00"
+</ParamField>
+
+### Request Example
+
+```json
+{
+    "dsp_name": "All",
+    "is_active": true,
+    "end_time": "2024-11-15T23:59:00-07:00"
+}
+```
+
+### Response
+
+<ResponseField name="success" type="boolean">
+    Indicates whether the onboarding activation was successful
+</ResponseField>
+
+<ResponseField name="status" type="object">
+    Detailed status information showing the result of activating each platform
+    
+    <Expandable title="Status Object">
+        <ResponseField name="current_pause" type="string">
+            Any current pause affecting all platforms (should be null after successful activation)
+        </ResponseField>
+        
+        <ResponseField name="is_close" type="boolean">
+            Overall store closure status (should be false after activation)
+        </ResponseField>
+        
+        <ResponseField name="UberEats" type="array">
+            UberEats activation results
+            
+            <Expandable title="Platform Status">
+                <ResponseField name="success" type="boolean">
+                    Whether UberEats activation was successful
+                </ResponseField>
+                
+                <ResponseField name="is_open" type="boolean">
+                    Whether the store is now open on UberEats
+                </ResponseField>
+                
+                <ResponseField name="status" type="string">
+                    Platform status: "ONLINE" if successfully activated
+                </ResponseField>
+                
+                <ResponseField name="status_changed_from" type="boolean">
+                    Whether the status was changed from previous state
+                </ResponseField>
+                
+                <ResponseField name="partner_store_id" type="string">
+                    UberEats-specific store identifier
+                </ResponseField>
+                
+                <ResponseField name="name" type="string">
+                    Store name as it appears on UberEats
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        
+        <ResponseField name="DoorDash" type="array">
+            DoorDash activation results with similar structure
+        </ResponseField>
+        
+        <ResponseField name="GrubHub" type="array">
+            GrubHub activation results with similar structure
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "success": true,
+    "status": {
+        "current_pause": null,
+        "is_close": false,
+        "UberEats": [
+            {
+                "success": true,
+                "is_open": true,
+                "status": "ONLINE",
+                "end_time": null,
+                "current_pause": null,
+                "description": [
+                    {
+                        "status": "ONLINE"
+                    }
+                ],
+                "id": "37fa9980-33ba-4419-92c2-a6e5144fdc82",
+                "partner_store_id": "15be0357-9b4d-4f05-9a5a-9485b5f783e5",
+                "name": "Lula Convenience Store",
+                "status_changed_from": true
+            }
+        ],
+        "DoorDash": [
+            {
+                "success": true,
+                "is_open": true,
+                "status": "ONLINE",
+                "end_time": null,
+                "current_pause": null,
+                "description": [],
+                "id": "1704fecd-e6ca-45bb-b1b5-776aee294af8",
+                "partner_store_id": "b1015bdb-e831-42ef-b6f8-720fab19321f",
+                "name": "Lula Convenience Store",
+                "status_changed_from": true
+            }
+        ],
+        "GrubHub": [
+            {
+                "success": true,
+                "is_open": true,
+                "status": "ONLINE",
+                "end_time": null,
+                "current_pause": null,
+                "description": [
+                    {
+                        "merchant_status": "PT_PREMIUM",
+                        "merchant_status_descriptor": "Premium",
+                        "pos_merchant_status": "online",
+                        "holds_active_account": true,
+                        "accepting_phone_orders": true,
+                        "accepting_online_orders": true
+                    }
+                ],
+                "id": "d0b3e829-299f-42cc-a768-2f9a908f3355",
+                "partner_store_id": "1240569280",
+                "name": "Lula Convenience Store",
+                "status_changed_from": true
+            }
+        ]
+    }
+}
+```
+
+### Onboarding Prerequisites
+
+<Accordion title="Before Starting Onboarding">
+    <ResponseField name="Store Setup Complete" type="prerequisite">
+        Ensure all basic store information is configured
+        
+        <Note>Name, addresses, contact information must be complete</Note>
+    </ResponseField>
+    
+    <ResponseField name="Menu Configuration" type="prerequisite">
+        Store menu should be configured with available items
+        
+        <Warning>Stores without menu items may not accept orders properly</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Partner Integration" type="prerequisite">
+        Delivery service partner accounts should be set up
+        
+        <Info>Partner integrations are automatically created during store creation</Info>
+    </ResponseField>
+    
+    <ResponseField name="Payment Setup" type="prerequisite">
+        Billing and payment processing should be configured
+        
+        <Tip>Verify bill_vendor_id is set during store creation</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Staff Training" type="prerequisite">
+        Ensure staff is trained on order fulfillment processes
+        
+        <Note>Orders will start coming immediately after activation</Note>
+    </ResponseField>
+</Accordion>
+
+### Post-Onboarding Actions
+
+<Accordion title="After Successful Onboarding">
+    <ResponseField name="Monitor Orders" type="action">
+        Watch for incoming orders to verify system is working
+        
+        <Tip>Orders typically start within minutes of going live</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Verify Platform Visibility" type="action">
+        Check that store appears correctly on each delivery platform
+        
+        <Note>It may take a few minutes for stores to appear in customer apps</Note>
+    </ResponseField>
+    
+    <ResponseField name="Test Order Flow" type="action">
+        Place test orders to ensure fulfillment process works smoothly
+        
+        <Warning>Use test accounts to avoid affecting real customers</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Configure Hours" type="action">
+        Set up regular operating hours if not already configured
+        
+        <Info>Initial activation may use default hours</Info>
+    </ResponseField>
+</Accordion>
+
+<Info>
+**Immediate Effect:** Once successfully activated, the store will immediately start receiving orders from customers on all platforms.
+</Info>
+
+<Warning>
+**Irreversible Process:** Onboarding makes the store live to customers. Ensure all prerequisites are met before activation.
+</Warning>
+
+<Note>
+**Support Contact:** If any platform fails to activate, contact technical support with the specific platform error details from the response.
+</Note>

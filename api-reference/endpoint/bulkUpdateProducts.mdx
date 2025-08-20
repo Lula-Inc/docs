@@ -1,0 +1,108 @@
+---
+title: "Bulk Update Products"
+api: "PATCH /companies/:companyId/products/bulk-update"
+description: "Update multiple products for a company in a single request."
+---
+
+Updates multiple products for the specified company.
+
+### Endpoint
+
+`PATCH /companies/:companyId/products/bulk-update`
+
+### Path Parameters
+
+<ParamField path="companyId" type="string" required>
+  The unique identifier of the company.
+</ParamField>
+
+### Request Body
+
+<ParamField body="products" type="array of objects" required>
+  Array of product objects to update.
+</ParamField>
+
+### Product Object Fields
+
+<ResponseField name="external_id" type="string">
+  Product identification in your internal system.
+</ResponseField>
+
+<ResponseField name="upc" type="string">
+  Product UPC.
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Product name.
+</ResponseField>
+
+<ResponseField name="size" type="string">
+  Product size.
+</ResponseField>
+
+<ResponseField name="quantity" type="number">
+  Product quantity.
+</ResponseField>
+
+<ResponseField name="price" type="number">
+  Product price.
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Product description.
+</ResponseField>
+
+<ResponseField name="image_url" type="string">
+  Product image URL.
+</ResponseField>
+
+<ResponseField name="category" type="string">
+  Product category.
+</ResponseField>
+
+<ResponseField name="brand" type="string">
+  Product brand.
+</ResponseField>
+
+<ResponseField name="location" type="string">
+  Product location.
+</ResponseField>
+
+<ResponseField name="unit_count" type="string">
+  Product unit count.
+</ResponseField>
+
+### Request Example
+
+```json Example Request
+{
+  {
+    "external_id": "prod-001",
+    "upc": "49000012521",
+    "name": "Coca Cola Classic (Updated)",
+    "size": "500ml",
+    "quantity": 120,
+    "price": 270,
+    "description": "Updated description for Coca Cola Classic.",
+    "image_url": "https://example.com/coke.jpg",
+    "category": "Beverages",
+    "brand": "Coca Cola",
+    "location": "Front Counter",
+    "unit_count": "24"
+  },
+  {
+    "external_id": "prod-002",
+    "upc": "49000012522",
+    "name": "Pepsi (Updated)",
+    "size": "500ml",
+    "quantity": 60,
+    "price": 255,
+    "description": "Updated description for Pepsi.",
+    "image_url": "https://example.com/pepsi.jpg",
+    "category": "Beverages",
+    "brand": "Pepsi",
+    "location": "Fridge",
+    "unit_count": "12"
+  }
+}
+```

@@ -1,0 +1,122 @@
+---
+title: "Create Modifier Group Linked Items"
+api: "POST {{micro_service_base_url}}/inventory/stores/{{store_id}}/modifier-groups/{{modifier_group_id}}/mappings"
+description: "This endpoint links store items to a modifier group, allowing those items to use the customization options defined in the modifier group."
+playground : "simple"
+---
+
+This endpoint creates mappings between store items and modifier groups, enabling customers to customize specific products with the options available in the modifier group. For example, linking beverages to a "Size" modifier group.
+
+<Info>
+Linked items will display the modifier group's options as customization choices for customers.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store
+</ParamField>
+
+<ParamField path="modifier_group_id" type="string" required>
+  The unique identifier of the modifier group
+</ParamField>
+
+### Body
+
+<ParamField body="linked_items" type="array" required>
+  Array of store items to link with this modifier group
+
+  <Expandable title="Linked Item Object">
+    <ParamField name="store_item_id" type="string" required>
+      ID of the store item to link to the modifier group
+    </ParamField>
+
+    <ParamField name="status" type="string" required>
+      Status of the link. Values: "active" or "inactive"
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Request Example
+
+```json
+[
+  {
+    "store_item_id": "12e14a84-ee4f-48e6-ad31-4daa956ae161",
+    "status": "active"
+  },
+  {
+    "store_item_id": "0bc5fbc2-5882-4a48-9ba5-e30997a3b027",
+    "status": "active"
+  },
+  {
+    "store_item_id": "6f040fbc-b531-42fc-8c2a-5966a03bb4cd",
+    "status": "active"
+  },
+  {
+    "store_item_id": "b2d2e7d4-619d-478d-97d7-ba72590ae4e0",
+    "status": "active"
+  }
+]
+```
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the operation was successful
+</ResponseField>
+
+<ResponseField name="linkedItems" type="array">
+  Array of successfully linked items
+
+  <Expandable title="Linked Item Response">
+    <ResponseField name="modifier_group_id" type="string">
+      ID of the modifier group
+    </ResponseField>
+
+    <ResponseField name="store_item_id" type="string">
+      ID of the linked store item
+    </ResponseField>
+
+    <ResponseField name="status" type="string">
+      Status of the link
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="alreadyExisting" type="array">
+  Array of item IDs that were already linked to this modifier group
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Success message describing the operation result
+</ResponseField>
+
+### Response Example
+
+```json
+{
+  "success": true,
+  "linkedItems": [
+    {
+      "modifier_group_id": "1000118",
+      "store_item_id": "b2d2e7d4-619d-478d-97d7-ba72590ae4e0",
+      "status": "active"
+    }
+  ],
+  "alreadyExisting": [
+    "1000025",
+    "1000089",
+    "1000024"
+  ],
+  "message": "Store item modifier group mappings created successfully"
+}
+```
+
+<Tip>
+Items that are already linked to the modifier group will be listed in the "alreadyExisting" array and won't be duplicated.
+</Tip>
+
+<Note>
+Only items with "active" status will be available for customer customization. Use "inactive" to temporarily disable customization for specific items.
+</Note>

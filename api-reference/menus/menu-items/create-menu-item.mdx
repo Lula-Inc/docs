@@ -1,0 +1,315 @@
+---
+title: "Create Menu Item"
+api: "POST /stores/{{store_id}}/menu/items?active=true"
+description: "Add items to specific menus within a store, controlling which products appear in different menu configurations through category and item-level management."
+playground : "simple"
+---
+
+This endpoint manages the association of items with specific menus, allowing precise control over which products are available in each menu configuration.
+
+<Info>
+Menu item management provides granular control over product visibility, enabling businesses to create specialized menus for different times, customer segments, or operational requirements.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store to add menu items for
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="active" type="boolean" optional default="true">
+  Whether to set the menu items as active upon creation
+</ParamField>
+
+### Request Body
+
+<ParamField body="menu_ids" type="array" required>
+  Array of menu identifiers to add items to
+</ParamField>
+
+<ParamField body="category_ids" type="array" optional>
+  Array of category identifiers to include in the menus (adds all items in these categories)
+</ParamField>
+
+<ParamField body="excluded_ids" type="array" optional>
+  Array of specific item identifiers to exclude from the menu
+</ParamField>
+
+<ParamField body="included_ids" type="array" required>
+  Array of specific item identifiers to include in the menu
+</ParamField>
+
+### Request Example
+
+```json
+{
+    "menu_ids": [
+        "813f8ac7-cae5-4d2d-92ef-d6798547f95c"
+    ],
+    "category_ids": [],
+    "excluded_ids": [],
+    "included_ids": [
+        "c81d64ff-0651-48af-ab61-9b503be9f020",
+        "3e3e0adb-5555-4832-9632-8bb71d861281"
+    ]
+}
+```
+
+### Response
+
+<ResponseField name="message" type="string">
+  Confirmation message indicating the operation result
+</ResponseField>
+
+<ResponseField name="success" type="boolean">
+  Whether the operation completed successfully
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "message": "Store item(s) menu updated",
+    "success": true
+}
+```
+
+<Accordion title="Menu Item Management Strategies">
+
+**Category-Based Management**
+- Add entire product categories to menus efficiently
+- Maintain category associations for new items
+- Simplify menu management for large inventories
+- Enable automatic inclusion of new category items
+
+**Individual Item Control**
+- Precise control over specific item visibility
+- Override category-based inclusions with specific exclusions
+- Handle special items that don't fit standard categories
+- Support custom menu configurations
+
+**Hybrid Approach**
+- Combine category and individual item management
+- Use category inclusion with specific item exclusions
+- Create complex menu structures with precise control
+- Balance efficiency with customization needs
+
+</Accordion>
+
+<Note>
+**Inclusion Priority**: Individual item inclusions and exclusions take precedence over category-based selections, allowing for fine-tuned menu control.
+</Note>
+
+<Tip>
+**Batch Operations**: Use multiple menu_ids to apply the same item configuration across several menus simultaneously, improving efficiency for multi-menu updates.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Common Menu Item Creation Scenarios">
+
+**Specialized Menu Creation**
+- Create breakfast menus with specific morning items
+- Build lunch menus excluding breakfast-only products
+- Design dinner menus with premium items
+- Develop limited-time offer menus with promotional items
+
+**Category-Based Menu Building**
+- Include entire beverage category in all menus
+- Add all dessert items to dinner menus
+- Include fresh produce in healthy eating menus
+- Add seasonal items to special event menus
+
+**Selective Item Management**
+- Exclude high-cost items from discount menus
+- Include only available items in current inventory menus
+- Add featured items to promotional menus
+- Remove discontinued items from all menus
+
+**Multi-Menu Coordination**
+- Apply consistent item sets across franchise locations
+- Coordinate promotional items across multiple menus
+- Standardize core offerings while allowing customization
+- Manage inventory-driven menu changes
+
+</Accordion>
+
+### Item Selection Logic
+
+<Accordion title="How Item Selection Works">
+
+**Processing Order**
+1. **Category Inclusion**: All items from specified categories are added
+2. **Individual Inclusion**: Specific items from included_ids are added
+3. **Exclusion Processing**: Items in excluded_ids are removed
+4. **Final Validation**: Ensure all included items are valid and available
+
+**Conflict Resolution**
+- Excluded items override category inclusions
+- Individual inclusions override category-based exclusions
+- Invalid item IDs are silently skipped
+- Empty arrays are processed without errors
+
+**Inventory Integration**
+- Only available inventory items can be included
+- Out-of-stock items may be automatically excluded
+- Seasonal availability affects item inclusion
+- Real-time inventory updates influence menu item visibility
+
+</Accordion>
+
+### Validation Rules
+
+<Accordion title="Menu Item Validation">
+
+**Menu Validation**
+- All menu IDs must exist and belong to the specified store
+- Menus must be in a valid state for item assignment
+- User must have permissions to modify the specified menus
+- Menu configuration must support the requested item types
+
+**Item Validation**
+- All item IDs must correspond to valid inventory items
+- Items must be available for the store location
+- Items must be compatible with menu requirements
+- Category IDs must exist in the store's catalog
+
+**Business Rules**
+- Alcohol items may require special menu designation
+- Age-restricted items need appropriate menu labeling
+- Seasonal items are validated for current availability
+- Promotional items require valid campaign associations
+
+</Accordion>
+
+### Error Handling
+
+<Accordion title="Common Error Scenarios">
+
+**Invalid Menu IDs**
+```json
+{
+  "error": "Invalid menu IDs",
+  "message": "One or more menu IDs do not exist or are not accessible",
+  "invalid_menus": ["invalid-menu-id"]
+}
+```
+
+**Invalid Item IDs**
+```json
+{
+  "error": "Invalid item IDs",
+  "message": "Some items could not be found in inventory",
+  "invalid_items": ["invalid-item-id-1", "invalid-item-id-2"]
+}
+```
+
+**Store Access Error**
+```json
+{
+  "error": "Store access denied",
+  "message": "Insufficient permissions to modify menus for this store"
+}
+```
+
+**Empty Request**
+```json
+{
+  "error": "Invalid request",
+  "message": "At least one of category_ids or included_ids must be specified"
+}
+```
+
+</Accordion>
+
+### Best Practices
+
+<Accordion title="Menu Item Management Best Practices">
+
+**Planning and Strategy**
+- Plan menu item associations based on business goals
+- Consider customer preferences and purchasing patterns
+- Align menu items with inventory management strategies
+- Coordinate with marketing and promotional campaigns
+
+**Efficient Operations**
+- Use category-based inclusion for large-scale menu updates
+- Leverage batch operations for multiple menu updates
+- Implement validation checks before submitting requests
+- Monitor item availability for menu accuracy
+
+**Quality Control**
+- Verify item associations after menu updates
+- Test menu functionality from customer perspective
+- Review menu performance after item changes
+- Maintain consistency across related menus
+
+**Performance Optimization**
+- Batch multiple menu updates when possible
+- Use appropriate granularity for item management
+- Monitor system performance during large updates
+- Implement proper error handling and retry logic
+
+</Accordion>
+
+### Integration Patterns
+
+<Accordion title="System Integration Approaches">
+
+**Inventory Integration**
+- Sync menu items with current inventory levels
+- Automatically update menu availability based on stock
+- Handle inventory-driven item exclusions
+- Coordinate with procurement and supply chain systems
+
+**Point-of-Sale Integration**
+- Update POS systems with current menu item associations
+- Ensure consistent item availability across all channels
+- Coordinate pricing and promotional information
+- Sync modifier and customization options
+
+**Customer-Facing Systems**
+- Update mobile apps and websites with current menu items
+- Ensure consistent customer experience across platforms
+- Coordinate with ordering and delivery systems
+- Maintain real-time accuracy for customer-facing displays
+
+**Analytics and Reporting**
+- Track menu item performance and customer preferences
+- Analyze the impact of menu changes on sales
+- Generate insights for menu optimization
+- Support data-driven menu management decisions
+
+</Accordion>
+
+### Menu Item Lifecycle
+
+<Accordion title="Managing Item Lifecycle">
+
+**Item Addition Process**
+- Validate item eligibility for menu inclusion
+- Configure item-specific menu settings
+- Update all related systems and platforms
+- Monitor customer response and performance
+
+**Ongoing Management**
+- Regular review of menu item performance
+- Adjustment based on inventory and seasonal factors
+- Coordination with promotional and marketing activities
+- Optimization based on customer feedback and analytics
+
+**Item Removal Process**
+- Plan removal strategy to minimize customer disruption
+- Update all systems and customer-facing platforms
+- Archive historical data for analysis and reporting
+- Document reasons for removal for future reference
+
+**Performance Monitoring**
+- Track individual item contribution to menu success
+- Monitor customer engagement with specific items
+- Analyze seasonal and promotional performance patterns
+- Use data insights to optimize future menu configurations
+
+</Accordion>

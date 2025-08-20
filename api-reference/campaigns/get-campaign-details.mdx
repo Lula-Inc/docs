@@ -1,0 +1,228 @@
+---
+title: "Get Campaign Details"
+api: "GET {{micro_service_base_url}}/stores/company/{{company_id}}/campaigns/{{campaign_id}}"
+description: "Retrieve comprehensive details for a specific campaign including full configuration, associated stores, and performance metrics."
+playground : "simple"
+---
+
+This endpoint provides complete details for a specific campaign, including all configuration settings, associated store information, linked promotions, and performance analytics.
+
+<Info>
+This endpoint returns the most comprehensive campaign information available, ideal for campaign editing, detailed analysis, and administrative oversight.
+</Info>
+
+### Path Parameters
+
+<ParamField path="company_id" type="string" required>
+  The unique identifier of the company that owns the campaign
+</ParamField>
+
+<ParamField path="campaign_id" type="string" required>
+  The unique identifier of the campaign to retrieve details for
+</ParamField>
+
+### Response
+
+<ResponseField name="id" type="string">
+  Unique campaign identifier
+</ResponseField>
+
+<ResponseField name="company_id" type="string">
+  Company identifier this campaign belongs to
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Campaign name
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Detailed campaign description
+</ResponseField>
+
+<ResponseField name="start_date" type="string">
+  Campaign start date (YYYY-MM-DD)
+</ResponseField>
+
+<ResponseField name="end_date" type="string">
+  Campaign end date (YYYY-MM-DD)
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current campaign status
+</ResponseField>
+
+<ResponseField name="image" type="string">
+  URL to campaign image asset
+</ResponseField>
+
+<ResponseField name="created_by" type="string">
+  ID of the user who created the campaign
+</ResponseField>
+
+<ResponseField name="updated_by" type="string">
+  ID of the user who last updated the campaign
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  Campaign creation timestamp
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  Campaign last update timestamp
+</ResponseField>
+
+<ResponseField name="deletedAt" type="string">
+  Deletion timestamp (null for active campaigns)
+</ResponseField>
+
+<ResponseField name="associated_stores" type="array">
+  List of stores linked to this campaign
+
+  <Expandable title="Store Association">
+    <ResponseField name="store_id" type="string">Store unique identifier</ResponseField>
+    <ResponseField name="store_name" type="string">Store display name</ResponseField>
+    <ResponseField name="status" type="string">Association status</ResponseField>
+    <ResponseField name="linked_at" type="string">Association timestamp</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="promotions" type="array">
+  List of promotions associated with this campaign
+
+  <Expandable title="Campaign Promotions">
+    <ResponseField name="promotion_id" type="string">Promotion unique identifier</ResponseField>
+    <ResponseField name="code" type="string">Promotional code</ResponseField>
+    <ResponseField name="type" type="string">Promotion type</ResponseField>
+    <ResponseField name="status" type="string">Promotion status</ResponseField>
+    <ResponseField name="usage_count" type="integer">Number of times used</ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="performance_metrics" type="object">
+  Campaign performance analytics
+
+  <Expandable title="Performance Data">
+    <ResponseField name="total_views" type="integer">Total campaign impressions</ResponseField>
+    <ResponseField name="total_conversions" type="integer">Total conversions generated</ResponseField>
+    <ResponseField name="conversion_rate" type="number">Conversion rate percentage</ResponseField>
+    <ResponseField name="revenue_generated" type="string">Total revenue attributed to campaign</ResponseField>
+    <ResponseField name="average_order_value" type="string">Average order value from campaign</ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Example Response
+
+Since no specific response was provided, here's the expected comprehensive structure:
+
+```json
+{
+  "id": "1000010",
+  "company_id": "1000058",
+  "name": "Spring Fresh Campaign",
+  "description": "Spring seasonal promotion featuring fresh products and outdoor essentials",
+  "start_date": "2025-03-01",
+  "end_date": "2025-05-31",
+  "status": "active",
+  "image": "https://lula-stores-service-staging.s3.amazonaws.com/company/1000058/campaigns/1000010/1744591882710.webp",
+  "created_by": "1000418",
+  "updated_by": "1000418",
+  "created_at": "2025-04-14T00:51:22.994Z",
+  "updated_at": "2025-04-14T00:51:22.994Z",
+  "deletedAt": null,
+  "associated_stores": [
+    {
+      "store_id": "store_001",
+      "store_name": "Downtown Location",
+      "status": "active",
+      "linked_at": "2025-04-14T01:00:00.000Z"
+    }
+  ],
+  "promotions": [
+    {
+      "promotion_id": "promo_001",
+      "code": "SPRING25",
+      "type": "percentage",
+      "status": "active",
+      "usage_count": 45
+    }
+  ],
+  "performance_metrics": {
+    "total_views": 1250,
+    "total_conversions": 89,
+    "conversion_rate": 7.12,
+    "revenue_generated": "4,567.89",
+    "average_order_value": "51.32"
+  }
+}
+```
+
+<Note>
+**Complete Information**: This endpoint provides the most comprehensive view of a campaign, including all related data needed for campaign management and analysis.
+</Note>
+
+<Tip>
+**Performance Monitoring**: Use the performance_metrics data to assess campaign effectiveness and make data-driven decisions about campaign optimization.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Campaign Detail Use Cases">
+
+**Campaign Editing**
+- Retrieve current campaign configuration for editing
+- View all campaign settings before making changes
+- Understand campaign scope and associations
+
+**Performance Analysis**
+- Analyze campaign effectiveness and ROI
+- Compare performance across different campaigns
+- Identify successful campaign elements
+
+**Administrative Oversight**
+- Review campaign compliance and settings
+- Audit campaign changes and history
+- Monitor campaign associations and relationships
+
+**Customer Service**
+- Answer customer questions about active campaigns
+- Understand promotion details for support inquiries
+- Verify campaign eligibility and requirements
+
+</Accordion>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Campaign Not Found**
+```json
+{
+  "error": "Campaign not found",
+  "message": "The specified campaign does not exist",
+  "code": "CAMPAIGN_NOT_FOUND"
+}
+```
+
+**Company Mismatch**
+```json
+{
+  "error": "Campaign not found",
+  "message": "Campaign does not belong to the specified company",
+  "code": "CAMPAIGN_COMPANY_MISMATCH"
+}
+```
+
+**Access Denied**
+```json
+{
+  "error": "Access denied",
+  "message": "You do not have permission to view this campaign",
+  "code": "ACCESS_DENIED"
+}
+```
+
+</Accordion>
+
+<Warning>
+**Sensitive Information**: Campaign details may include sensitive business information. Ensure proper access controls are in place when displaying this data.
+</Warning>

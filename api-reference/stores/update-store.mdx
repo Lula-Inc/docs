@@ -1,0 +1,223 @@
+---
+title: "Update Store"
+api: "PUT https://api-staging.luladelivery.store/stores/{store_id}?company_id={company_id}"
+description: "This endpoint updates an existing store's information including basic details, contact information, and addresses. You can modify store properties while maintaining operational continuity and preserving existing integrations."
+playground : "simple"
+---
+
+This endpoint allows you to update various aspects of a store's configuration including name, contact details, point of contact, and addresses. Address updates support both modifying existing addresses and adding new ones.
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+    The unique identifier of the store to update
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="company_id" type="string" required>
+    The company ID that owns this store for authorization purposes
+</ParamField>
+
+<Accordion title="Request Body Fields">
+    <ResponseField name="name" type="string" optional>
+        Updated store name. Example: "bulk ingest test #1"
+    </ResponseField>
+
+    <ResponseField name="email" type="string" optional>
+        Updated store contact email address. Example: "0001@bulkingest.com"
+    </ResponseField>
+
+    <ResponseField name="phone_number" type="string" optional>
+        Updated store contact phone number. Example: "+12679397993"
+    </ResponseField>
+
+    <ResponseField name="point_of_contact" type="number" optional>
+        Updated point of contact user ID. Example: 1000418
+    </ResponseField>
+
+    <ResponseField name="addresses" type="array" optional>
+        Updated address information. Can include existing addresses (with IDs) and new addresses (without IDs)
+        
+        <Expandable title="Address Object">
+            <ResponseField name="id" type="string" optional>
+                Existing address ID to update. Set to `null` for new addresses
+            </ResponseField>
+            
+            <ResponseField name="line_1" type="string" required>
+                Primary address line. Example: "102 W. Mission Ave."
+            </ResponseField>
+            
+            <ResponseField name="city" type="string" required>
+                City name. Example: "Escondido"
+            </ResponseField>
+            
+            <ResponseField name="state" type="string" required>
+                State or province. Example: "CA"
+            </ResponseField>
+            
+            <ResponseField name="zip" type="string" required>
+                ZIP or postal code. Example: "92025"
+            </ResponseField>
+            
+            <ResponseField name="address_type" type="number" required>
+                Type of address:
+                - `0` = Store Address (main operational address)
+                - `1` = Welcome Package Address (shipping address)
+            </ResponseField>
+        </Expandable>
+    </ResponseField>
+</Accordion>
+
+### Request Example
+
+```json
+{
+    "name": "bulk ingest test #1",
+    "email": "0001@bulkingest.com",
+    "phone_number": "+12679397993",
+    "point_of_contact": 1000418,
+    "addresses": [
+        {
+            "id": "b6197e9c-8e68-47fe-8dd7-e057d07197ea",
+            "line_1": "102 W. Mission Ave.",
+            "city": "Escondido",
+            "state": "CA",
+            "zip": "92025",
+            "address_type": 0
+        },
+        {
+            "id": null,
+            "line_1": "102 W. Mission Ave.",
+            "city": "Escondido",
+            "state": "CA",
+            "zip": "92025",
+            "address_type": 1
+        }
+    ]
+}
+```
+
+### Response
+
+<ResponseField name="success" type="boolean">
+    Indicates whether the update operation was successful
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "success": true
+}
+```
+
+### Address Update Behavior
+
+<Accordion title="Address Update Rules">
+    <ResponseField name="Existing Address" type="behavior">
+        When `id` is provided: Updates the existing address with new information
+        
+        <Note>Only the provided fields will be updated</Note>
+    </ResponseField>
+    
+    <ResponseField name="New Address" type="behavior">
+        When `id` is `null`: Creates a new address record and associates it with the store
+        
+        <Tip>New addresses will be assigned unique IDs automatically</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Address Removal" type="behavior">
+        To remove an address: Don't include it in the addresses array
+        
+        <Warning>Removing the primary store address may affect operations</Warning>
+    </ResponseField>
+</Accordion>
+
+### Update Impact
+
+<Accordion title="What Gets Updated">
+    <ResponseField name="Store Information" type="updated">
+        Basic store details like name, email, and phone number
+    </ResponseField>
+    
+    <ResponseField name="Contact Assignment" type="updated">
+        Point of contact can be reassigned to different users
+    </ResponseField>
+    
+    <ResponseField name="Address Records" type="updated">
+        Existing addresses are modified, new addresses are created
+    </ResponseField>
+    
+    <ResponseField name="Partner Integrations" type="preserved">
+        Delivery service partner configurations remain unchanged
+    </ResponseField>
+    
+    <ResponseField name="Store Status" type="preserved">
+        Store operational status and settings are maintained
+    </ResponseField>
+</Accordion>
+
+### Best Practices
+
+<Accordion title="Update Recommendations">
+    <ResponseField name="Partial Updates" type="best-practice">
+        Only include fields you want to change
+        
+        <Tip>Omitted fields will retain their current values</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Address Management" type="best-practice">
+        Always include existing address IDs when updating addresses
+        
+        <Warning>Forgetting to include an address ID may create duplicates</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Contact Validation" type="best-practice">
+        Verify that the new point_of_contact user exists and has appropriate permissions
+        
+        <Note>Invalid user IDs will result in update failure</Note>
+    </ResponseField>
+    
+    <ResponseField name="Business Hours" type="best-practice">
+        Perform updates during low-activity periods to minimize operational impact
+        
+        <Info>Store updates don't affect ongoing orders</Info>
+    </ResponseField>
+</Accordion>
+
+### Error Scenarios
+
+<Accordion title="Common Update Errors">
+    <ResponseField name="Store Not Found" type="error">
+        The specified store_id doesn't exist
+        
+        **Status Code:** 404
+    </ResponseField>
+    
+    <ResponseField name="Company Mismatch" type="error">
+        The store doesn't belong to the specified company_id
+        
+        **Status Code:** 403
+    </ResponseField>
+    
+    <ResponseField name="Invalid Contact" type="error">
+        The point_of_contact user ID doesn't exist
+        
+        **Status Code:** 400
+    </ResponseField>
+    
+    <ResponseField name="Address Validation" type="error">
+        Address information is incomplete or invalid
+        
+        **Status Code:** 400
+    </ResponseField>
+</Accordion>
+
+<Info>
+**Operational Continuity:** Store updates are designed to maintain operational continuity. Existing orders, inventory, and partner integrations continue functioning normally during and after updates.
+</Info>
+
+<Note>
+**Audit Trail:** All store updates are logged for compliance and troubleshooting purposes. Update timestamps and user information are automatically recorded.
+</Note>

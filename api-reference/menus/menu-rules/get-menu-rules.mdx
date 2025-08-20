@@ -1,0 +1,449 @@
+---
+title: "Get Menu Rules"
+api: "GET /stores/{{store_id}}/menu-rules"
+description: "Retrieve comprehensive menu rules and business logic configurations that govern menu behavior, item availability, and operational constraints for a specific store."
+playground : "simple"
+---
+
+This endpoint provides access to the complete set of menu rules that control menu behavior, item availability, pricing logic, and operational constraints, enabling sophisticated menu management and automation.
+
+<Info>
+Menu rules provide the business logic layer that automates menu management, ensuring consistent application of business policies, operational constraints, and customer experience requirements.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store to retrieve menu rules for
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="rule_type" type="string" optional>
+  Filter rules by type (availability, pricing, display, operational)
+</ParamField>
+
+<ParamField query="active_only" type="boolean" optional default="false">
+  Return only currently active rules
+</ParamField>
+
+<ParamField query="menu_id" type="string" optional>
+  Filter rules that apply to a specific menu
+</ParamField>
+
+<ParamField query="include_details" type="boolean" optional default="true">
+  Include detailed rule configuration and metadata
+</ParamField>
+
+### Response
+
+<ResponseField name="rules" type="array">
+  Array of menu rule objects with complete configuration details
+</ResponseField>
+
+<ResponseField name="total_count" type="integer">
+  Total number of rules for the store
+</ResponseField>
+
+<ResponseField name="active_count" type="integer">
+  Number of currently active rules
+</ResponseField>
+
+<ResponseField name="rule_categories" type="object">
+  Summary of rules by category and type
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "rules": [
+        {
+            "rule_id": "rule_123",
+            "rule_name": "Breakfast Hour Availability",
+            "rule_type": "availability",
+            "is_active": true,
+            "priority": 1,
+            "conditions": {
+                "time_range": {
+                    "start": "06:00",
+                    "end": "11:00"
+                },
+                "days_of_week": ["monday", "tuesday", "wednesday", "thursday", "friday"]
+            },
+            "actions": {
+                "set_availability": true,
+                "apply_to_items": ["breakfast_menu_items"]
+            },
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-15T10:30:00Z"
+        }
+    ],
+    "total_count": 15,
+    "active_count": 12,
+    "rule_categories": {
+        "availability": 8,
+        "pricing": 4,
+        "display": 2,
+        "operational": 1
+    }
+}
+```
+
+<Accordion title="Menu Rule Categories">
+
+**Availability Rules**
+- Time-based item availability controls
+- Inventory-driven availability automation
+- Seasonal and event-based availability
+- Staff and equipment availability constraints
+
+**Pricing Rules**
+- Dynamic pricing based on demand and time
+- Promotional pricing automation
+- Competitive pricing adjustments
+- Cost-based pricing calculations
+
+**Display Rules**
+- Item ordering and positioning logic
+- Promotional highlighting and featuring
+- Category and section organization
+- Customer segment-based display
+
+**Operational Rules**
+- Kitchen capacity and preparation constraints
+- Delivery and pickup availability
+- Special event and holiday modifications
+- Compliance and regulatory requirements
+
+</Accordion>
+
+<Note>
+**Rule Hierarchy**: Rules are applied in priority order, with higher priority rules taking precedence over lower priority ones when conflicts arise.
+</Note>
+
+<Tip>
+**Performance Optimization**: Use filtering parameters to retrieve only the specific rules you need, especially when dealing with stores that have extensive rule configurations.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Common Menu Rule Applications">
+
+**Automated Availability Management**
+- Automatically enable breakfast items during morning hours
+- Disable alcohol sales outside permitted hours
+- Control seasonal item availability based on calendar dates
+- Manage item availability based on inventory levels
+
+**Dynamic Pricing Strategies**
+- Implement happy hour pricing for beverages
+- Apply surge pricing during peak demand periods
+- Offer time-based discounts for slow periods
+- Automatically adjust pricing based on competitive analysis
+
+**Operational Efficiency**
+- Limit complex item availability during busy periods
+- Adjust menu based on staffing levels
+- Control delivery availability based on weather conditions
+- Manage special event menu configurations
+
+**Customer Experience Optimization**
+- Highlight popular items during peak hours
+- Feature healthy options during fitness-focused time periods
+- Promote comfort food during bad weather
+- Customize menu display based on customer preferences
+
+</Accordion>
+
+### Rule Structure Details
+
+<Accordion title="Understanding Rule Components">
+
+**Rule Metadata**
+- `rule_id`: Unique identifier for the rule
+- `rule_name`: Human-readable name for management purposes
+- `rule_type`: Category of rule (availability, pricing, display, operational)
+- `is_active`: Whether the rule is currently enabled
+- `priority`: Execution order when multiple rules apply
+
+**Condition Configuration**
+- `time_range`: Specific time periods when the rule applies
+- `days_of_week`: Specific days when the rule is active
+- `date_range`: Specific date periods for seasonal or event rules
+- `inventory_conditions`: Stock level thresholds that trigger the rule
+- `weather_conditions`: Weather-based triggers for rule activation
+- `customer_segments`: Specific customer types the rule applies to
+
+**Action Specification**
+- `set_availability`: Control item or menu availability
+- `adjust_pricing`: Modify pricing with specific calculations
+- `update_display_order`: Change item positioning and visibility
+- `apply_promotions`: Activate or modify promotional campaigns
+- `send_notifications`: Trigger staff or system notifications
+
+**Scope and Targeting**
+- `apply_to_items`: Specific items affected by the rule
+- `apply_to_categories`: Categories affected by the rule
+- `apply_to_menus`: Specific menus where the rule applies
+- `exclude_items`: Items to exclude from rule application
+
+</Accordion>
+
+### Rule Types and Examples
+
+<Accordion title="Detailed Rule Type Examples">
+
+**Availability Rules**
+```json
+{
+  "rule_type": "availability",
+  "conditions": {
+    "time_range": {"start": "23:00", "end": "06:00"},
+    "inventory_threshold": {"min": 5}
+  },
+  "actions": {
+    "set_availability": false,
+    "apply_to_categories": ["alcohol", "complex_preparations"]
+  }
+}
+```
+
+**Pricing Rules**
+```json
+{
+  "rule_type": "pricing",
+  "conditions": {
+    "time_range": {"start": "15:00", "end": "17:00"},
+    "days_of_week": ["monday", "tuesday", "wednesday"]
+  },
+  "actions": {
+    "adjust_pricing": {"type": "percentage", "value": -20},
+    "apply_to_categories": ["beverages", "appetizers"]
+  }
+}
+```
+
+**Display Rules**
+```json
+{
+  "rule_type": "display",
+  "conditions": {
+    "customer_segment": "health_conscious",
+    "time_range": {"start": "11:00", "end": "14:00"}
+  },
+  "actions": {
+    "update_display_order": {"promote": true},
+    "apply_to_items": ["salads", "low_calorie_options"]
+  }
+}
+```
+
+**Operational Rules**
+```json
+{
+  "rule_type": "operational",
+  "conditions": {
+    "weather_condition": "rain",
+    "staff_count": {"min": 3}
+  },
+  "actions": {
+    "set_availability": true,
+    "apply_to_categories": ["comfort_food", "hot_beverages"]
+  }
+}
+```
+
+</Accordion>
+
+### Rule Evaluation Process
+
+<Accordion title="How Rules Are Processed">
+
+**Evaluation Sequence**
+1. **Condition Assessment**: All rule conditions are evaluated against current context
+2. **Priority Sorting**: Applicable rules are sorted by priority (highest first)
+3. **Conflict Resolution**: Higher priority rules override lower priority ones
+4. **Action Execution**: Rule actions are applied in priority order
+5. **Result Validation**: Final menu state is validated for consistency
+
+**Context Evaluation**
+- Current date and time are compared against rule conditions
+- Inventory levels are checked against rule thresholds
+- Weather data is evaluated for weather-dependent rules
+- Customer segment information is used for targeted rules
+- Staff and operational data is considered for operational rules
+
+**Conflict Resolution**
+- Rules with the same priority are processed in creation order
+- Explicit exclusions override general inclusions
+- Availability rules take precedence over display rules
+- Safety and compliance rules have highest priority
+
+**Performance Optimization**
+- Rules are cached and evaluated efficiently
+- Only applicable rules are processed based on current context
+- Rule evaluation results are cached for consistent application
+- System monitors rule performance and execution times
+
+</Accordion>
+
+### Rule Management Insights
+
+<Accordion title="Rule Analysis and Optimization">
+
+**Rule Performance Analysis**
+- Track rule activation frequency and patterns
+- Monitor rule impact on sales and customer behavior
+- Analyze rule conflict frequency and resolution
+- Measure rule execution performance and system impact
+
+**Business Impact Assessment**
+- Evaluate rule effectiveness in achieving business goals
+- Monitor customer satisfaction impact of rule applications
+- Analyze operational efficiency improvements from automation
+- Assess revenue impact of pricing and availability rules
+
+**Rule Optimization Opportunities**
+- Identify redundant or conflicting rules
+- Optimize rule conditions for better targeting
+- Simplify complex rule hierarchies
+- Improve rule performance through better condition design
+
+**Compliance and Audit Support**
+- Track rule changes and modifications over time
+- Maintain audit trails for regulatory compliance
+- Document rule rationale and business justification
+- Support compliance reporting and verification
+
+</Accordion>
+
+### Error Handling
+
+<Accordion title="Common Error Scenarios">
+
+**Store Not Found**
+```json
+{
+  "error": "Store not found",
+  "message": "The specified store ID does not exist or is not accessible"
+}
+```
+
+**Invalid Filter Parameters**
+```json
+{
+  "error": "Invalid filter",
+  "message": "The specified rule_type is not valid",
+  "valid_types": ["availability", "pricing", "display", "operational"]
+}
+```
+
+**Permission Denied**
+```json
+{
+  "error": "Permission denied",
+  "message": "Insufficient permissions to view menu rules for this store"
+}
+```
+
+**System Error**
+```json
+{
+  "error": "System error",
+  "message": "Unable to retrieve menu rules due to system maintenance",
+  "retry_after": "2024-01-15T11:00:00Z"
+}
+```
+
+</Accordion>
+
+### Best Practices
+
+<Accordion title="Menu Rule Management Best Practices">
+
+**Rule Design Principles**
+- Keep rule conditions simple and easy to understand
+- Use descriptive names and documentation for complex rules
+- Avoid creating conflicting rules whenever possible
+- Design rules with clear business objectives in mind
+
+**Performance Considerations**
+- Use filtering to retrieve only necessary rules
+- Monitor rule execution performance and optimize as needed
+- Avoid overly complex condition logic that impacts performance
+- Cache rule results appropriately for consistent application
+
+**Maintenance and Monitoring**
+- Regularly review rule effectiveness and business impact
+- Remove or update obsolete rules that no longer serve business needs
+- Monitor for unintended rule interactions and conflicts
+- Maintain documentation of rule purpose and expected behavior
+
+**Integration Strategy**
+- Ensure rule data is used consistently across all systems
+- Coordinate rule changes with operational procedures
+- Integrate rule monitoring with business intelligence systems
+- Use rule data to inform menu optimization strategies
+
+</Accordion>
+
+### Integration Patterns
+
+<Accordion title="System Integration for Menu Rules">
+
+**Real-time Rule Application**
+- Integrate rule evaluation with menu display systems
+- Apply rules in real-time for customer-facing applications
+- Coordinate rule application across multiple channels
+- Ensure consistent rule application across all touchpoints
+
+**Business Intelligence Integration**
+- Feed rule data into analytics and reporting systems
+- Track rule performance and business impact
+- Generate insights for rule optimization
+- Support data-driven rule management decisions
+
+**Operational System Integration**
+- Connect rules with inventory management systems
+- Integrate with staff scheduling and capacity planning
+- Coordinate with weather and external data sources
+- Support compliance and regulatory reporting requirements
+
+**Customer Experience Integration**
+- Apply rules to personalize customer menu experiences
+- Use rules to optimize recommendation engines
+- Integrate with loyalty and customer segmentation systems
+- Support dynamic pricing and promotional strategies
+
+</Accordion>
+
+### Menu Rule Lifecycle
+
+<Accordion title="Managing Rule Lifecycle">
+
+**Rule Creation and Testing**
+- Design rules with clear business objectives
+- Test rules in staging environments before production deployment
+- Validate rule logic and expected outcomes
+- Document rule purpose and expected behavior
+
+**Active Rule Monitoring**
+- Monitor rule activation and performance regularly
+- Track business impact and customer response
+- Identify opportunities for rule optimization
+- Address any unintended consequences promptly
+
+**Rule Optimization and Updates**
+- Regularly review rule effectiveness and relevance
+- Update rules based on business changes and new requirements
+- Optimize rule performance and execution efficiency
+- Maintain rule documentation and rationale
+
+**Rule Retirement and Cleanup**
+- Identify and remove obsolete or redundant rules
+- Archive historical rule data for analysis
+- Document lessons learned for future rule development
+- Maintain clean and efficient rule configurations
+
+</Accordion>

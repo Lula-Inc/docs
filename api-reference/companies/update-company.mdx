@@ -1,0 +1,171 @@
+---
+title: "Update Company"
+api: "PUT https://api-staging.luladelivery.store/stores/company/{company_id}"
+description: "This endpoint updates an existing company's information in the system. You can modify any company details including business information, contact details, address, and operational status. All fields are optional - only provide the fields you want to update."
+playground : "simple"
+---
+
+This endpoint allows you to update any aspect of a company's information. You only need to include the fields you want to modify in the request body. The system will update only the provided fields while keeping other information unchanged.
+
+<Accordion title="Request Body Fields">
+    <ResponseField name="name" type="string" optional>
+        Updated company name. Example: "Salman's Company New"
+    </ResponseField>
+
+    <ResponseField name="email" type="string" optional>
+        Updated company contact email address. Example: "salmansaeedpaul@gmail.com"
+    </ResponseField>
+
+    <ResponseField name="address" type="object" optional>
+        Updated company address information
+        
+        <Expandable title="address">
+            <ResponseField name="line_1" type="string" optional>
+                Updated primary address line. Example: "39 Block Q, Phase 2 Johar Town"
+            </ResponseField>
+            
+            <ResponseField name="city" type="string" optional>
+                Updated city name. Example: "Lahore"
+            </ResponseField>
+            
+            <ResponseField name="state" type="string" optional>
+                Updated state or province. Example: "Punjab"
+            </ResponseField>
+            
+            <ResponseField name="zip" type="string" optional>
+                Updated ZIP or postal code. Example: "54782"
+            </ResponseField>
+        </Expandable>
+    </ResponseField>
+
+    <ResponseField name="phone_number" type="string" optional>
+        Updated company contact phone number. Example: "090078601"
+    </ResponseField>
+
+    <ResponseField name="website" type="string" optional>
+        Updated company website URL. Example: "https://www.lulaconvenience.com/"
+        
+        <Note>Note the correct spelling is "website" not "webiste"</Note>
+    </ResponseField>
+
+    <ResponseField name="logo" type="string" optional>
+        Updated company logo URL or base64 encoded image
+    </ResponseField>
+
+    <ResponseField name="banner" type="string" optional>
+        Updated company banner image URL or base64 encoded image
+    </ResponseField>
+
+    <ResponseField name="profile_image" type="string" optional>
+        Updated company profile image URL or base64 encoded image
+    </ResponseField>
+
+    <ResponseField name="receipt_header" type="string" optional>
+        Updated custom header text for receipts
+    </ResponseField>
+
+    <ResponseField name="ein" type="string" optional>
+        Updated Employer Identification Number. Example: "0000"
+    </ResponseField>
+
+    <ResponseField name="status" type="string" optional>
+        Updated company operational status. Example: "Churned"
+        
+        <Accordion title="Valid Status Values">
+            - On Boarding
+            - Live
+            - Off Boarding
+            - Churned
+            - Suspended
+        </Accordion>
+        
+        <Warning>Changing status to "Churned" or "Suspended" may affect store operations</Warning>
+    </ResponseField>
+
+    <ResponseField name="company_type" type="string" optional>
+        Updated type of company classification. Example: "Mid-Market"
+        
+        <Accordion title="Valid Company Types">
+            - Enterprise
+            - Mid-Market
+            - Small Business
+            - Startup
+        </Accordion>
+    </ResponseField>
+
+    <ResponseField name="active" type="number" optional>
+        Updated company active status. Use 1 for active, 0 for inactive
+        
+        <Warning>Setting to 0 will deactivate the company and all associated stores</Warning>
+    </ResponseField>
+
+    <ResponseField name="hubspot_id" type="number" optional>
+        Updated HubSpot contact ID for CRM integration. Example: 12121212121212
+    </ResponseField>
+</Accordion>
+
+### Path Parameters
+
+<ParamField path="company_id" type="string" required>
+    The unique identifier of the company to update
+</ParamField>
+
+### Request Example
+
+```json
+{
+    "name": "Salman's Company New",
+    "email": "salmansaeedpaul@gmail.com",
+    "address": {
+        "line_1": "39 Block Q, Phase 2 Johar Town",
+        "city": "Lahore",
+        "state": "Punjab",
+        "zip": "54782"
+    },
+    "phone_number": "090078601",
+    "website": "https://www.lulaconvenience.com/",
+    "logo": "",
+    "banner": "",
+    "profile_image": "",
+    "receipt_header": "",
+    "ein": "0000",
+    "status": "Churned",
+    "company_type": "Mid-Market",
+    "active": 1,
+    "hubspot_id": 12121212121212
+}
+```
+
+### Response
+
+<ResponseField name="success" type="boolean">
+    Indicates whether the update operation was successful
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "success": true
+}
+```
+
+<Info>
+**Partial Updates:** You can update individual fields without affecting others. For example, to only update the company name, send just `{"name": "New Company Name"}`.
+</Info>
+
+<Tip>
+**Address Updates:** When updating address information, you can update individual address fields without providing the complete address object.
+</Tip>
+
+<Warning>
+**Status Changes:** Be careful when changing company status, as it may affect:
+- Store operations and availability
+- Order processing capabilities
+- Integration with third-party services
+- Billing and subscription status
+</Warning>
+
+<Note>
+**Validation:** The system will validate all provided fields according to the same rules used during company creation. Invalid data will result in an error response.
+</Note>

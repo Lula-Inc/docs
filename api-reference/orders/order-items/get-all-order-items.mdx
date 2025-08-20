@@ -1,0 +1,318 @@
+---
+title: "Get All Order Items"
+api: "GET {{micro_service_base_url}}/orders/{{order_id}}/order-items"
+description: "Retrieve all items within a specific order with complete details, modifications, and fulfillment status for each item."
+playground : "simple"
+---
+
+This endpoint returns a comprehensive list of all items within an order. It's ideal for order fulfillment, kitchen display systems, packing lists, and complete order review.
+
+<Info>
+This endpoint provides complete item details for all items in an order, making it efficient for bulk operations and comprehensive order management.
+</Info>
+
+### Path Parameters
+
+<ParamField path="order_id" type="string" required>
+  The unique identifier of the order whose items you want to retrieve
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="include_modifications" type="boolean" optional default="true">
+  Whether to include detailed modification information for each item
+</ParamField>
+
+<ParamField query="status_filter" type="string" optional>
+  Filter items by fulfillment status: "pending", "preparing", "ready", "completed"
+</ParamField>
+
+<ParamField query="category_filter" type="string" optional>
+  Filter items by product category
+</ParamField>
+
+### Response
+
+<ResponseField name="order_id" type="string">
+  The order identifier these items belong to
+</ResponseField>
+
+<ResponseField name="total_items" type="integer">
+  Total number of items in the order
+</ResponseField>
+
+<ResponseField name="items" type="array">
+  Array of all order items with complete details
+
+  <Expandable title="Order Item Object">
+    <ResponseField name="id" type="string">
+      Unique order item identifier
+    </ResponseField>
+
+    <ResponseField name="quantity" type="integer">
+      Quantity of this item ordered
+    </ResponseField>
+
+    <ResponseField name="special_instructions" type="string">
+      Item-specific preparation instructions
+    </ResponseField>
+
+    <ResponseField name="store_item_price" type="string">
+      Price per unit for this item
+    </ResponseField>
+
+    <ResponseField name="store_item_total_price" type="string">
+      Total price for this item (quantity × unit price)
+    </ResponseField>
+
+    <ResponseField name="store_item_name" type="string">
+      Product name as displayed in store
+    </ResponseField>
+
+    <ResponseField name="store_item_description" type="string">
+      Product description
+    </ResponseField>
+
+    <ResponseField name="store_item_category" type="string">
+      Product category classification
+    </ResponseField>
+
+    <ResponseField name="fulfillment_status" type="string">
+      Current fulfillment status for this item
+    </ResponseField>
+
+    <ResponseField name="item" type="object">
+      Complete product information including images, UPC, and categories
+    </ResponseField>
+
+    <ResponseField name="modifications" type="array">
+      Applied modifications/customizations (when include_modifications=true)
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="order_summary" type="object">
+  Summary information for the complete order
+
+  <Expandable title="Order Summary">
+    <ResponseField name="total_quantity" type="integer">
+      Total quantity of all items
+    </ResponseField>
+
+    <ResponseField name="subtotal" type="string">
+      Subtotal of all items before taxes
+    </ResponseField>
+
+    <ResponseField name="items_by_category" type="object">
+      Count of items grouped by category
+    </ResponseField>
+
+    <ResponseField name="items_by_status" type="object">
+      Count of items grouped by fulfillment status
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+{
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "total_items": 2,
+  "items": [
+    {
+      "id": "7fbe2819-5bc6-4340-8dfe-a5605272a32b",
+      "quantity": 1,
+      "special_instructions": "Cancel this order if this item is not available.",
+      "store_item_price": "1.00",
+      "store_item_total_price": "1.00",
+      "store_item_name": "Jumbo Ring Pop - 1",
+      "store_item_description": "Jumbo Ring Pop",
+      "store_item_category": "Others",
+      "fulfillment_status": "pending",
+      "item": {
+        "images": [
+          "https://example.com/product-image.jpg"
+        ],
+        "name": "Jumbo Ring Pop",
+        "description": "Jumbo Ring Pop",
+        "upc": "4111626331",
+        "categories": [
+          {
+            "id": "12bd6794-a17a-48a2-9a14-64c44a20c232",
+            "name": "Others"
+          }
+        ],
+        "subCategories": [],
+        "storeItems": [
+          {
+            "id": "b7e9d9a6-2e3e-451a-ada9-6c001b17eaa5",
+            "price": "10",
+            "external_id": null,
+            "location": null,
+            "name": "Jumbo Ring Pop - 1",
+            "description": null,
+            "categories": [
+              {
+                "id": "12bd6794-a17a-48a2-9a14-64c44a20c232",
+                "name": "Others"
+              }
+            ],
+            "subCategories": []
+          }
+        ]
+      },
+      "modifications": []
+    },
+    {
+      "id": "651daec0-c721-4399-82c8-2ac6afcc1160",
+      "quantity": 4,
+      "special_instructions": "Cancel this order if this item is not available.",
+      "store_item_price": "10.00",
+      "store_item_total_price": "40.00",
+      "store_item_name": "test new item 1",
+      "store_item_description": "",
+      "store_item_category": "Baby",
+      "fulfillment_status": "preparing",
+      "item": {
+        "images": null,
+        "name": "test new item 1",
+        "description": "",
+        "upc": null,
+        "categories": [
+          {
+            "id": "cef965f2-5a5a-4a30-b166-1350b4c3ff55",
+            "name": "Baby"
+          }
+        ],
+        "subCategories": [
+          {
+            "id": "4a525cdb-2c2d-4d23-8764-d2c9f3c14142",
+            "name": "For Mom"
+          }
+        ],
+        "storeItems": [
+          {
+            "id": "cf61e0c0-bff4-42dd-8273-1cbf4f8f5b42",
+            "price": "10.00",
+            "external_id": null,
+            "location": null,
+            "name": "test new item 1",
+            "description": null,
+            "categories": [
+              {
+                "id": "3c185006-271c-4d1e-903f-de21ec3b4234",
+                "name": "loo"
+              }
+            ],
+            "subCategories": []
+          }
+        ]
+      },
+      "modifications": []
+    }
+  ],
+  "order_summary": {
+    "total_quantity": 5,
+    "subtotal": "41.00",
+    "items_by_category": {
+      "Others": 1,
+      "Baby": 1
+    },
+    "items_by_status": {
+      "pending": 1,
+      "preparing": 1
+    }
+  }
+}
+```
+
+<Accordion title="Filter Examples">
+
+**Get Items by Status**
+```
+GET {{micro_service_base_url}}/orders/{{order_id}}/order-items?status_filter=pending
+```
+
+**Get Items by Category**
+```
+GET {{micro_service_base_url}}/orders/{{order_id}}/order-items?category_filter=Baby
+```
+
+**Get Items Without Modifications**
+```
+GET {{micro_service_base_url}}/orders/{{order_id}}/order-items?include_modifications=false
+```
+
+</Accordion>
+
+<Note>
+**Performance Optimization**: When you only need basic item information, set include_modifications=false to reduce response size and improve performance.
+</Note>
+
+<Tip>
+**Kitchen Display**: Use status_filter=pending to show only items that need preparation, perfect for kitchen display systems.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Common Use Cases">
+
+**Order Fulfillment**
+- Generate complete packing lists
+- Kitchen preparation workflows
+- Quality control checklists
+
+**Customer Service**
+- Complete order review with customer
+- Item substitution discussions
+- Order modification consultations
+
+**Inventory Management**
+- Track item demand patterns
+- Monitor category performance
+- Identify popular product combinations
+
+**Reporting & Analytics**
+- Order composition analysis
+- Average order value calculations
+- Product performance metrics
+
+</Accordion>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Order Not Found**
+```json
+{
+  "error": "Order not found",
+  "order_id": "invalid-order-id",
+  "message": "The specified order does not exist"
+}
+```
+
+**No Items Found**
+```json
+{
+  "order_id": "35d18f08-6d54-421d-9476-8cef629111bc",
+  "total_items": 0,
+  "items": [],
+  "message": "No items found matching the specified criteria"
+}
+```
+
+**Access Denied**
+```json
+{
+  "error": "Access denied",
+  "message": "You do not have permission to view this order's items"
+}
+```
+
+</Accordion>
+
+<Warning>
+**Large Orders**: For orders with many items, consider using pagination or filters to manage response sizes and improve performance.
+</Warning>

@@ -1,0 +1,121 @@
+---
+title: "Upsert Products using JSON"
+api: "POST {{micro_service_base_url}}/inventory-service-v2/companies/1000019/products/bulk"
+description: "This endpoint allows you to create or update products in bulk using a JSON array. Send an array of product objects to add new products or update existing ones in your inventory."
+playground : "simple"
+---
+
+This endpoint processes JSON data containing product information and updates your store's inventory. Products with existing external_id values will be updated, while new external_id values will create new products.
+
+<Note>
+All products will be validated using our validation rules. Only products that pass all rules will be inserted or updated.
+</Note>
+
+### Body
+
+<ParamField body="products" type="array" required>
+  An array of product objects to be created or updated
+
+  <Expandable title="Product Object Structure">
+    <ParamField name="external_id" type="string" required>
+      Product identification in your internal system. Example: "22000006660"
+    </ParamField>
+
+    <ParamField name="name" type="string" required>
+      Product name. Example: "Wrigley's Gum Slim Pack"
+    </ParamField>
+
+    <ParamField name="price" type="number" required>
+      Product price in cents. Example: 179
+    </ParamField>
+
+    <ParamField name="quantity" type="number" required>
+      Product quantity in store's inventory. Example: 1
+    </ParamField>
+
+    <ParamField name="category" type="string" required>
+      Product category. Example: "Candy"
+    </ParamField>
+
+    <ParamField name="upc" type="string">
+      Product UPC code. Example: "022000006660"
+    </ParamField>
+
+    <ParamField name="image_url" type="string">
+      Product image URL. Example: "https://menu-item-images-bucket.s3.amazonaws.com/resized/7ff6bdd404ed31cfb89c07f2bb51043c.png"
+    </ParamField>
+
+    <ParamField name="description" type="string">
+      Product description. Example: "15 pieces"
+    </ParamField>
+
+    <ParamField name="brand" type="string">
+      Product brand name
+    </ParamField>
+
+    <ParamField name="location" type="string">
+      Product location in store
+    </ParamField>
+
+    <ParamField name="active" type="boolean" default={true}>
+      Whether the product is active
+    </ParamField>
+
+    <ParamField name="size" type="string">
+      Product size. Example: "15 pieces"
+    </ParamField>
+
+    <ParamField name="unit_count" type="string">
+      Product unit count
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Request Example
+
+```json
+[
+  {
+    "external_id": "22000006660",
+    "name": "Wrigley's Gum Slim Pack",
+    "price": 179,
+    "quantity": 1,
+    "category": "Candy",
+    "upc": "022000006660",
+    "image_url": "https://menu-item-images-bucket.s3.amazonaws.com/resized/7ff6bdd404ed31cfb89c07f2bb51043c.png",
+    "description": "15 pieces",
+    "brand": "",
+    "location": "",
+    "active": true,
+    "size": "15 pieces",
+    "unit_count": ""
+  },
+  {
+    "external_id": "22000017871",
+    "name": "Wrigley's Extra Long Lasting Flavor Sugar Free Spearmint",
+    "price": 399,
+    "quantity": 1,
+    "category": "Candy",
+    "upc": "022000017871",
+    "image_url": "https://menu-item-images-bucket.s3.amazonaws.com/resized/4ff745159f0d5e535d408b707acb7fa9.png",
+    "description": "35 count",
+    "brand": "",
+    "location": "",
+    "active": true,
+    "size": "35 count",
+    "unit_count": ""
+  }
+]
+```
+
+### Response
+
+<Note>
+This endpoint processes the data asynchronously. No immediate response body is provided.
+</Note>
+
+The system will process your product data in the background. You can monitor the processing status using the Get Job Status endpoint.
+
+<Tip>
+Products with the same external_id as existing products will be updated with the new information provided.
+</Tip>

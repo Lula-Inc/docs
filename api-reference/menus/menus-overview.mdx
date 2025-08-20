@@ -1,0 +1,150 @@
+---
+title: "Menus Service Overview"
+description: "Comprehensive guide to the Menus service for managing store menus, menu items, operating hours, and menu rules within the Lula Commerce platform."
+---
+
+# Menus Service
+
+The Menus service provides comprehensive menu management capabilities for retail stores, enabling businesses to create, manage, and optimize their product offerings across different time periods, locations, and customer segments.
+
+## Core Capabilities
+
+### Menu Management
+- **Store Menu Creation**: Create customized menus for individual store locations
+- **Menu Configuration**: Configure menu settings, operating hours, and availability
+- **Menu Synchronization**: Sync menus across multiple store locations
+- **Dynamic Menu Updates**: Real-time menu modifications and status changes
+
+### Operating Hours Management
+- **Weekly Schedules**: Configure different operating hours for each day of the week
+- **Multiple Time Slots**: Support for multiple opening/closing periods per day
+- **Holiday Management**: Special scheduling for holidays and events
+- **Time Zone Support**: Automatic time zone handling for multi-location businesses
+
+### Menu Item Control
+- **Item Inclusion/Exclusion**: Granular control over which items appear in specific menus
+- **Category Management**: Organize menu items by categories and subcategories
+- **Bulk Operations**: Efficiently manage multiple menu items simultaneously
+- **Real-time Updates**: Instant menu item availability changes
+
+### Rule-Based Menu Logic
+- **Conditional Display**: Show/hide items based on complex business rules
+- **Automated Operations**: Rules for automatically adding or removing items
+- **Multi-criteria Logic**: Rules based on categories, tags, names, and modifiers
+- **Flexible Operators**: Support for equals, contains, exists, and negation operators
+
+## Business Benefits
+
+### Operational Efficiency
+- **Centralized Management**: Single interface for managing all store menus
+- **Automated Synchronization**: Reduce manual work with bulk menu operations
+- **Real-time Updates**: Instant menu changes across all customer touchpoints
+- **Time-based Control**: Automatic menu adjustments based on operating hours
+
+### Customer Experience
+- **Accurate Availability**: Customers see only available items during operating hours
+- **Personalized Menus**: Different menu configurations for different customer segments
+- **Consistent Experience**: Synchronized menus across multiple store locations
+- **Dynamic Content**: Real-time menu updates based on inventory and business rules
+
+### Business Intelligence
+- **Menu Performance**: Track which menu configurations drive the most engagement
+- **Item Analytics**: Understand which items are most popular across different menus
+- **Operational Insights**: Analyze the impact of menu changes on business metrics
+- **Compliance Tracking**: Monitor menu rule compliance and effectiveness
+
+## Service Architecture
+
+### Menu Hierarchy
+```
+Store
+├── Multiple Menus
+    ├── Menu Configuration
+    ├── Operating Hours
+    ├── Menu Items
+    └── Menu Rules
+```
+
+### Integration Points
+- **Inventory Service**: Real-time inventory data for menu item availability
+- **Catalog Service**: Product information and categorization
+- **Store Service**: Store-specific configurations and settings
+- **Orders Service**: Menu data for order processing and validation
+
+## Key Features
+
+<Accordion title="Advanced Menu Features">
+
+**Dynamic Menu Configuration**
+- Multiple menus per store for different purposes
+- Default menu settings with override capabilities
+- Status management (active, inactive, draft)
+- External menu ID integration for third-party systems
+
+**Sophisticated Scheduling**
+- Day-of-week specific operating hours
+- Multiple time slots per day
+- Closed day handling
+- Special event scheduling
+
+**Intelligent Item Management**
+- Category-based item inclusion/exclusion
+- Individual item control
+- Bulk item operations
+- Real-time availability updates
+
+**Advanced Rule Engine**
+- Add/remove items based on conditions
+- Multiple criteria per rule
+- Logical operators (equals, contains, exists, not_equals, not_contains, not_exists)
+- Subject types (category, item_name, global_item_tag, modifier_group)
+
+</Accordion>
+
+## Use Cases
+
+### Multi-Location Management
+- **Chain Stores**: Maintain consistent menus across multiple locations
+- **Franchise Operations**: Allow individual customization within brand guidelines
+- **Regional Variations**: Adapt menus for local preferences and regulations
+- **Centralized Control**: Manage all locations from a single administrative interface
+
+### Time-Based Operations
+- **Breakfast/Lunch/Dinner**: Different menus for different meal periods
+- **Seasonal Menus**: Automatic switching based on calendar dates
+- **Limited-Time Offers**: Temporary menu items with automatic removal
+- **Holiday Specials**: Special menus for holidays and events
+
+### Inventory Integration
+- **Stock-Based Availability**: Hide items when inventory is low
+- **Automatic Updates**: Real-time menu updates based on inventory changes
+- **Bulk Adjustments**: Mass menu changes during inventory updates
+- **Compliance Management**: Ensure menu accuracy with inventory levels
+
+### Business Rules Implementation
+- **Promotional Items**: Automatically add promotional items to relevant menus
+- **Category Management**: Show/hide entire categories based on conditions
+- **Modifier Integration**: Menu rules based on available modifiers
+- **Tag-Based Logic**: Use item tags for sophisticated menu control
+
+## Technical Specifications
+
+### API Endpoints Structure
+- **Main Menu Operations**: Create, update, delete, and retrieve store menus
+- **Menu Item Management**: Control individual items within menus
+- **Menu Rules**: Configure automated menu logic and conditions
+- **Synchronization**: Bulk operations across multiple stores
+
+### Data Model
+- **Menu Objects**: Complete menu configuration with metadata
+- **Menu Hours**: Detailed scheduling information with timezone support
+- **Menu Items**: Item associations with inclusion/exclusion logic
+- **Menu Rules**: Complex rule definitions with conditional logic
+
+### Performance Considerations
+- **Caching Strategy**: Efficient caching for frequently accessed menu data
+- **Real-time Updates**: WebSocket support for instant menu changes
+- **Bulk Operations**: Optimized endpoints for large-scale menu management
+- **Query Optimization**: Efficient filtering and searching capabilities
+
+This comprehensive Menus service enables businesses to create sophisticated, dynamic menu management systems that enhance both operational efficiency and customer experience while providing the flexibility needed for complex retail operations.

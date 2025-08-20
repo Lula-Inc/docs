@@ -1,0 +1,391 @@
+---
+title: "Create Store Menu"
+api: "POST /stores/{{store_id}}/menu/"
+description: "Create a new menu for a specific store with customizable operating hours and configuration settings."
+playground : "simple"
+---
+
+This endpoint creates a new menu for a store, allowing businesses to define multiple menus with different operating hours, status settings, and configurations.
+
+<Info>
+Store menus define when and how products are available to customers. Each menu can have unique operating hours for different days of the week and can be set as default or specialized menus.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store for which to create the menu
+</ParamField>
+
+### Request Body
+
+<ParamField body="menu_name" type="string" required>
+  Display name for the menu (e.g., "Weekend Menu", "Holiday Hours")
+</ParamField>
+
+<ParamField body="is_default" type="boolean" required>
+  Whether this menu should be the default menu for the store
+</ParamField>
+
+<ParamField body="status" type="string" required>
+  Menu status: "active" or "inactive"
+</ParamField>
+
+<ParamField body="menu_hours" type="array" required>
+  Array of operating hours for each day of the week
+
+  <Expandable title="Menu Hours Object">
+    <ParamField body="day_of_week" type="integer" required>
+      Day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    </ParamField>
+
+    <ParamField body="open_time" type="string" required>
+      Opening time in HH:MM format (24-hour)
+    </ParamField>
+
+    <ParamField body="close_time" type="string" required>
+      Closing time in HH:MM format (24-hour)
+    </ParamField>
+
+    <ParamField body="is_closed" type="boolean" required>
+      Whether the store is closed on this day
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Request Example
+
+```json
+{
+    "menu_name": "menu-23",
+    "is_default": false,
+    "status": "active",
+    "menu_hours": [
+        {
+            "day_of_week": 0,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        },
+        {
+            "day_of_week": 1,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        },
+        {
+            "day_of_week": 2,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        },
+        {
+            "day_of_week": 3,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        },
+        {
+            "day_of_week": 4,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        },
+        {
+            "day_of_week": 5,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        },
+        {
+            "day_of_week": 6,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false
+        }
+    ]
+}
+```
+
+### Response
+
+<ResponseField name="id" type="string">
+  Unique identifier for the created menu
+</ResponseField>
+
+<ResponseField name="menu_name" type="string">
+  Display name of the menu
+</ResponseField>
+
+<ResponseField name="store_id" type="string">
+  Store identifier this menu belongs to
+</ResponseField>
+
+<ResponseField name="is_default" type="boolean">
+  Whether this is the default menu for the store
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current menu status (ACTIVE/INACTIVE)
+</ResponseField>
+
+<ResponseField name="created_by_id" type="string">
+  ID of the user who created the menu
+</ResponseField>
+
+<ResponseField name="external_menu_id" type="string">
+  External system menu identifier (if applicable)
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  Timestamp when the menu was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string">
+  Timestamp when the menu was last updated
+</ResponseField>
+
+<ResponseField name="menu_hours" type="array">
+  Array of operating hours with complete configuration
+
+  <Expandable title="Menu Hours Response">
+    <ResponseField name="id" type="string">Unique identifier for the menu hour entry</ResponseField>
+    <ResponseField name="day_of_week" type="integer">Day of the week</ResponseField>
+    <ResponseField name="open_time" type="string">Opening time</ResponseField>
+    <ResponseField name="close_time" type="string">Closing time</ResponseField>
+    <ResponseField name="is_closed" type="boolean">Whether closed on this day</ResponseField>
+    <ResponseField name="menu_id" type="string">Parent menu identifier</ResponseField>
+    <ResponseField name="created_by_id" type="string">Creator user ID</ResponseField>
+    <ResponseField name="createdAt" type="string">Creation timestamp</ResponseField>
+    <ResponseField name="updatedAt" type="string">Last update timestamp</ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+    "menu_name": "menu-23",
+    "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+    "is_default": false,
+    "status": "ACTIVE",
+    "created_by_id": "1000418",
+    "updatedAt": "2024-09-13T10:47:26.104Z",
+    "createdAt": "2024-09-13T10:47:26.104Z",
+    "external_menu_id": null,
+    "created_by": null,
+    "updated_by": null,
+    "updated_by_id": null,
+    "last_live_at": null,
+    "archived_at": null,
+    "deletedAt": null,
+    "menu_hours": [
+        {
+            "id": "48a18cca-f744-427b-b1bd-9e8eff7b98b1",
+            "day_of_week": 0,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.114Z",
+            "createdAt": "2024-09-13T10:47:26.114Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        },
+        {
+            "id": "a26d4683-025d-4803-8e00-1efd4bdcc5d2",
+            "day_of_week": 1,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.114Z",
+            "createdAt": "2024-09-13T10:47:26.114Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        },
+        {
+            "id": "69655f6e-3485-47a3-bfad-cd105d5b2f03",
+            "day_of_week": 2,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.114Z",
+            "createdAt": "2024-09-13T10:47:26.114Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        },
+        {
+            "id": "66d2e767-fef4-4853-a7f8-4cb9ff1cf203",
+            "day_of_week": 3,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.187Z",
+            "createdAt": "2024-09-13T10:47:26.187Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        },
+        {
+            "id": "f0f02560-5de3-4bfe-9cc6-3c64d4fc065c",
+            "day_of_week": 4,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.187Z",
+            "createdAt": "2024-09-13T10:47:26.187Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        },
+        {
+            "id": "135b483c-88f5-46e4-8454-bec28f73957d",
+            "day_of_week": 5,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.187Z",
+            "createdAt": "2024-09-13T10:47:26.187Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        },
+        {
+            "id": "4dae188e-82b6-43ac-84f8-cbf9debcde93",
+            "day_of_week": 6,
+            "open_time": "09:00",
+            "close_time": "17:00",
+            "is_closed": false,
+            "menu_id": "d4710f37-0490-4c53-a553-a907f3d202c7",
+            "created_by_id": "1000418",
+            "updatedAt": "2024-09-13T10:47:26.187Z",
+            "createdAt": "2024-09-13T10:47:26.187Z",
+            "created_by": null,
+            "updated_by": null,
+            "updated_by_id": null,
+            "deletedAt": null
+        }
+    ]
+}
+```
+
+<Accordion title="Menu Configuration Best Practices">
+
+**Operating Hours Planning**
+- Define clear opening and closing times for each day
+- Consider customer traffic patterns when setting hours
+- Use consistent time formats (24-hour) for clarity
+- Plan for different hours on weekends vs weekdays
+
+**Menu Naming Strategy**
+- Use descriptive names that indicate the menu purpose
+- Include time periods or special conditions in names
+- Maintain consistent naming conventions across stores
+- Consider seasonal or promotional menu names
+
+**Default Menu Management**
+- Only one menu per store should be set as default
+- Default menus should have the most comprehensive hours
+- Consider customer expectations when setting default hours
+- Regular review of default menu effectiveness
+
+</Accordion>
+
+<Note>
+**Day of Week Values**: Days are numbered 0-6 where 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday.
+</Note>
+
+<Tip>
+**Time Format**: All times should be provided in 24-hour format (HH:MM) for consistency and to avoid AM/PM confusion.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Common Menu Creation Scenarios">
+
+**Standard Business Hours**
+- Create menus with consistent weekday and weekend hours
+- Set appropriate opening and closing times for customer expectations
+- Configure closed days for businesses that don't operate 7 days a week
+
+**Seasonal Menus**
+- Create special menus for holiday seasons
+- Temporary menus for promotional periods
+- Limited-time menu configurations
+
+**Multi-Shift Operations**
+- Breakfast, lunch, and dinner menus with different hours
+- Late-night menus for extended operations
+- Special event menus with unique timing
+
+**Store-Specific Variations**
+- Location-based menu hours (mall vs street locations)
+- Regional preferences and local regulations
+- Franchise-specific menu configurations
+
+</Accordion>
+
+### Error Handling
+
+<Accordion title="Common Error Scenarios">
+
+**Invalid Time Format**
+```json
+{
+  "error": "Invalid time format",
+  "message": "Time must be in HH:MM format",
+  "field": "menu_hours.open_time"
+}
+```
+
+**Missing Required Fields**
+```json
+{
+  "error": "Validation failed",
+  "message": "menu_name is required",
+  "field": "menu_name"
+}
+```
+
+**Store Not Found**
+```json
+{
+  "error": "Store not found",
+  "message": "The specified store does not exist"
+}
+```
+
+**Invalid Day of Week**
+```json
+{
+  "error": "Invalid day_of_week",
+  "message": "day_of_week must be between 0 and 6"
+}
+```
+
+</Accordion>
+
+<Warning>
+**Multiple Default Menus**: Setting multiple menus as default for the same store may cause conflicts. Ensure only one menu per store is marked as default.
+</Warning>

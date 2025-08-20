@@ -1,0 +1,195 @@
+---
+title: "List All Orders"
+api: "GET {{micro_service_base_url}}/orders/"
+description: "Retrieve a comprehensive list of all orders for a specific store with filtering capabilities by status and other criteria."
+playground : "simple"
+---
+
+This endpoint provides access to all orders for a specified store, allowing you to filter by various criteria such as order status. It returns the same detailed order information as the incoming orders endpoint but with broader filtering options.
+
+<Info>
+This endpoint is ideal for building comprehensive order management dashboards and reporting systems.
+</Info>
+
+### Query Parameters
+
+<ParamField query="status" type="string" required>
+  Filter orders by their current status
+  
+  <Accordion title="Available Status Values">
+    - **incoming**: New orders waiting for acceptance
+    - **accepted**: Orders confirmed by store
+    - **preparing**: Orders being prepared
+    - **ready**: Orders ready for pickup
+    - **completed**: Successfully delivered orders
+    - **cancelled**: Cancelled orders
+    - **denied**: Orders rejected by store
+  </Accordion>
+</ParamField>
+
+<ParamField query="store_id" type="string" required>
+  The unique identifier of the store to retrieve orders for
+</ParamField>
+
+### Response
+
+<ResponseField name="orders" type="array">
+  Array of order objects matching the specified criteria
+
+  <Expandable title="Order Object Structure">
+    <ResponseField name="id" type="string">
+      Unique order identifier
+    </ResponseField>
+
+    <ResponseField name="original_subtotal" type="string">
+      Order subtotal before taxes and additional fees
+    </ResponseField>
+
+    <ResponseField name="tax_amount" type="string">
+      Total tax applied to the order
+    </ResponseField>
+
+    <ResponseField name="discount" type="string">
+      Discount amount applied (null if no discount)
+    </ResponseField>
+
+    <ResponseField name="original_price" type="string">
+      Final order total including all fees and taxes
+    </ResponseField>
+
+    <ResponseField name="createdAt" type="string">
+      Timestamp when the order was created
+    </ResponseField>
+
+    <ResponseField name="partner" type="string">
+      Name of the delivery service platform
+    </ResponseField>
+
+    <ResponseField name="special_instructions" type="string">
+      Customer-provided special instructions for the order
+    </ResponseField>
+
+    <ResponseField name="exclude_allergens_items" type="string">
+      Allergen exclusion requests (null if none)
+    </ResponseField>
+
+    <ResponseField name="is_include_disposables" type="boolean">
+      Whether disposable items should be included
+    </ResponseField>
+
+    <ResponseField name="store_id" type="string">
+      Store identifier processing this order
+    </ResponseField>
+
+    <ResponseField name="dsp_order_number" type="string">
+      Order number from the delivery service platform
+    </ResponseField>
+
+    <ResponseField name="customer" type="object">
+      Customer contact and identification information
+    </ResponseField>
+
+    <ResponseField name="fulfillments" type="array">
+      Complete fulfillment tracking with status logs and employee actions
+    </ResponseField>
+
+    <ResponseField name="orderItems" type="array">
+      Detailed list of all items in the order with pricing and specifications
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+[
+  {
+    "id": "8f40ba13-3290-496c-b08c-50e3110200d5",
+    "original_subtotal": "393.00",
+    "tax_amount": "9.77",
+    "discount": null,
+    "original_price": "393.13",
+    "createdAt": "2023-05-24T18:15:24.638Z",
+    "partner": "DoorDash",
+    "special_instructions": "",
+    "exclude_allergens_items": null,
+    "is_include_disposables": null,
+    "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+    "dsp_order_number": "",
+    "customer": {
+      "customer_name": "Lula D",
+      "contact_phone": "8559731040",
+      "phone_code": null
+    },
+    "fulfillments": [
+      {
+        "quantity": null,
+        "date_ready": "2023-05-24T18:18:26.992Z",
+        "createdAt": "2023-05-24T18:15:24.715Z",
+        "estimated_date_delivered": "2023-05-24T18:31:14.618Z",
+        "id": "5afe3291-c252-4e20-94f7-71d9c3587484",
+        "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+        "fulfillmentStatus": {
+          "delivery_status_name": "completed"
+        },
+        "fulfillmentsLogs": [
+          {
+            "date_created": "2023-05-24T18:15:24.722Z",
+            "description": "DoorDash store mock order received",
+            "order_status_title": "Order received",
+            "fulfillments_id": "5afe3291-c252-4e20-94f7-71d9c3587484",
+            "employee": null
+          },
+          {
+            "date_created": "2023-05-24T18:16:14.685Z",
+            "description": "",
+            "order_status_title": "Bagging order",
+            "fulfillments_id": "5afe3291-c252-4e20-94f7-71d9c3587484",
+            "employee": {
+              "id": "870a05c1-bbbf-48ab-a757-e28ae0a2b2a8",
+              "first_name": "Philip T",
+              "last_name": "white house "
+            }
+          }
+        ]
+      }
+    ],
+    "orderItems": [
+      {
+        "id": "77aab9bd-5543-4783-8e37-d2e9a29a00cf",
+        "quantity": 3,
+        "special_instructions": "",
+        "store_item_price": "100.00",
+        "store_item_total_price": "300.00",
+        "store_item_name": "Test 123",
+        "store_item_description": "",
+        "store_item_category": "Candy",
+        "item": {
+          "images": null,
+          "name": "Test 123",
+          "description": "",
+          "upc": null,
+          "categories": [
+            {
+              "id": "3c185006-271c-4d1e-903f-de21ec3b4234",
+              "name": "Alcohol"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
+```
+
+<Tip>
+Use different status filters to create targeted views for different operational needs - "incoming" for new order alerts, "completed" for revenue tracking.
+</Tip>
+
+<Note>
+The fulfillmentsLogs array provides a complete audit trail of all actions taken on the order, including which employee performed each action.
+</Note>
+
+<Warning>
+Large date ranges with no status filtering may return substantial amounts of data. Consider implementing pagination for high-volume stores.
+</Warning>

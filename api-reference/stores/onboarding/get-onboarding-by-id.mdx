@@ -1,0 +1,215 @@
+---
+title: "Get Onboarding by ID"
+api: "GET https://api-staging.luladelivery.store/stores/onboarding/{onboarding_id}"
+description: "This endpoint retrieves onboarding information for a specific onboarding record using its unique identifier. This is useful for tracking onboarding progress and status when you have the onboarding ID from previous operations."
+playground : "simple"
+---
+
+This endpoint allows you to fetch detailed onboarding information using a specific onboarding ID. This is typically used when tracking onboarding processes or when you need to retrieve onboarding details from a stored reference.
+
+### Path Parameters
+
+<ParamField path="onboarding_id" type="string" required>
+    The unique identifier of the onboarding record to retrieve
+</ParamField>
+
+### Response
+
+<ResponseField name="onboarding_id" type="string">
+    The unique identifier for this onboarding record
+</ResponseField>
+
+<ResponseField name="store_id" type="string">
+    The store ID associated with this onboarding
+</ResponseField>
+
+<ResponseField name="company_id" type="string">
+    The company ID that owns the store
+</ResponseField>
+
+<ResponseField name="onboarding_status" type="string">
+    Current status of the onboarding process
+    
+    <Info>Common statuses: "pending", "in_progress", "completed", "failed"</Info>
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+    When the onboarding process was initiated (ISO 8601 format)
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+    When the onboarding record was last updated
+</ResponseField>
+
+<ResponseField name="completed_at" type="string">
+    When the onboarding process was completed (null if not completed)
+</ResponseField>
+
+<ResponseField name="platform_status" type="object">
+    Status breakdown for each delivery platform
+    
+    <Expandable title="Platform Status Object">
+        <ResponseField name="UberEats" type="object">
+            UberEats onboarding status
+            
+            <Expandable title="Platform Details">
+                <ResponseField name="status" type="string">
+                    Platform-specific status
+                </ResponseField>
+                
+                <ResponseField name="activated_at" type="string">
+                    When this platform was activated
+                </ResponseField>
+                
+                <ResponseField name="partner_store_id" type="string">
+                    Platform-specific store identifier
+                </ResponseField>
+            </Expandable>
+        </ResponseField>
+        
+        <ResponseField name="DoorDash" type="object">
+            DoorDash onboarding status with similar structure
+        </ResponseField>
+        
+        <ResponseField name="GrubHub" type="object">
+            GrubHub onboarding status with similar structure
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+<ResponseField name="onboarding_steps" type="array">
+    Array of completed onboarding steps
+    
+    <Expandable title="Onboarding Step">
+        <ResponseField name="step_name" type="string">
+            Name of the onboarding step
+        </ResponseField>
+        
+        <ResponseField name="status" type="string">
+            Step completion status
+        </ResponseField>
+        
+        <ResponseField name="completed_at" type="string">
+            When this step was completed
+        </ResponseField>
+        
+        <ResponseField name="notes" type="string">
+            Additional notes or comments about this step
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "onboarding_id": "ob_7669f473-6c40-45ee-8737-43c667407b3a",
+    "store_id": "7669f473-6c40-45ee-8737-43c667407b3a",
+    "company_id": "1000022",
+    "onboarding_status": "completed",
+    "created_at": "2023-09-20T13:27:11.318Z",
+    "updated_at": "2023-09-20T14:15:22.456Z",
+    "completed_at": "2023-09-20T14:15:22.456Z",
+    "platform_status": {
+        "UberEats": {
+            "status": "active",
+            "activated_at": "2023-09-20T14:10:15.123Z",
+            "partner_store_id": "15be0357-9b4d-4f05-9a5a-9485b5f783e5"
+        },
+        "DoorDash": {
+            "status": "active",
+            "activated_at": "2023-09-20T14:12:30.789Z",
+            "partner_store_id": "b1015bdb-e831-42ef-b6f8-720fab19321f"
+        },
+        "GrubHub": {
+            "status": "active",
+            "activated_at": "2023-09-20T14:15:22.456Z",
+            "partner_store_id": "1240569280"
+        }
+    },
+    "onboarding_steps": [
+        {
+            "step_name": "store_setup_validation",
+            "status": "completed",
+            "completed_at": "2023-09-20T13:30:00.000Z",
+            "notes": "All required store information validated"
+        },
+        {
+            "step_name": "menu_configuration",
+            "status": "completed",
+            "completed_at": "2023-09-20T13:45:00.000Z",
+            "notes": "Initial menu items configured"
+        },
+        {
+            "step_name": "platform_activation",
+            "status": "completed",
+            "completed_at": "2023-09-20T14:15:22.456Z",
+            "notes": "All platforms successfully activated"
+        }
+    ]
+}
+```
+
+### Use Cases
+
+<Accordion title="When to Use This Endpoint">
+    <ResponseField name="Progress Tracking" type="use-case">
+        Monitor the progress of ongoing onboarding processes
+        
+        <Tip>Check status periodically during onboarding to track progress</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Troubleshooting" type="use-case">
+        Investigate onboarding issues or failures
+        
+        <Note>Step-by-step status helps identify where problems occurred</Note>
+    </ResponseField>
+    
+    <ResponseField name="Audit Trail" type="use-case">
+        Maintain records of when stores were onboarded and activated
+        
+        <Info>Useful for compliance and business analytics</Info>
+    </ResponseField>
+    
+    <ResponseField name="Integration Sync" type="use-case">
+        Synchronize onboarding status with external systems
+        
+        <Warning>Ensure external systems reflect current onboarding state</Warning>
+    </ResponseField>
+</Accordion>
+
+### Error Scenarios
+
+<Accordion title="Common Errors">
+    <ResponseField name="Onboarding Not Found" type="error">
+        The specified onboarding_id doesn't exist
+        
+        **Status Code:** 404
+        
+        **Solution:** Verify the onboarding ID or check if onboarding was initiated
+    </ResponseField>
+    
+    <ResponseField name="Access Denied" type="error">
+        User doesn't have permission to view this onboarding record
+        
+        **Status Code:** 403
+        
+        **Solution:** Ensure user has appropriate permissions for the associated company
+    </ResponseField>
+    
+    <ResponseField name="Onboarding Corrupted" type="error">
+        Onboarding record exists but data is inconsistent
+        
+        **Status Code:** 500
+        
+        **Solution:** Contact support for data recovery
+    </ResponseField>
+</Accordion>
+
+<Info>
+**Real-time Data:** Onboarding information is updated in real-time as processes complete, providing accurate current status.
+</Info>
+
+<Note>
+**Data Retention:** Onboarding records are preserved for audit and troubleshooting purposes, even after completion.
+</Note>

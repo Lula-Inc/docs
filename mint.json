@@ -20,23 +20,197 @@
   ],
   "navigation": [
     {
-      "group": "Home",
-      "pages": ["introduction", "migrating_v1_v2"]
-    },
-    {
-      "group": "API Documentation",
+      "group": "Documentation",
       "pages": [
-        "api-reference/csvItemsIngestion",
-        "api-reference/jsonItemsIngestion"
+        "documentation/Welcome-Intro",
+        "documentation/Get-Started",
+        "documentation/High-level-Architecture",
+        "documentation/Integrations",
+        "documentation/Lula-Direct-SDK"
       ]
     },
+
     {
-      "group": "Endpoints",
+      "group": "API Reference",
       "pages": [
-        "api-reference/endpoint/uploadJSON",
-        "api-reference/endpoint/postItemsForIngestion",
-        "api-reference/endpoint/uploadCSV",
-        "api-reference/endpoint/getJob"
+        {
+          "group": "API Reference (Legacy)",
+          "pages": [
+            "api-reference/v1/csvItemsIngestion",
+            "api-reference/v1/jsonItemsIngestion"
+          ]
+        },
+        {
+          "group": "Companies",
+          "pages": [
+            "api-reference/companies/create-company",
+            "api-reference/companies/get-company-details",
+            "api-reference/companies/update-company",
+            "api-reference/companies/delete-company",
+            "api-reference/companies/offboard-company"
+          ]
+        },
+        {
+          "group": "Stores",
+          "pages": [
+            "api-reference/stores/create-store",
+            "api-reference/stores/update-store",
+            "api-reference/stores/get-store-status",
+            "api-reference/stores/change-store-status",
+            "api-reference/stores/get-store-tax-rate",
+            {
+              "group": "Onboarding",
+              "pages": [
+                "api-reference/stores/onboarding/start-onboarding",
+                "api-reference/stores/onboarding/get-onboarding-by-id",
+                "api-reference/stores/onboarding/get-onboarding-by-store-id",
+                "api-reference/stores/onboarding/get-onboarding-by-company-id"
+              ]
+            },
+            {
+              "group": "Store Employees",
+              "pages": [
+                "api-reference/stores/store-employees/link-user-to-store",
+                "api-reference/stores/store-employees/link-store-to-employee"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Catalog",
+          "pages": [
+            "api-reference/catalog/updates",
+            "api-reference/catalog/upsert-products-csv",
+            "api-reference/catalog/upsert-products-json",
+            "api-reference/catalog/upsert-inventory",
+            "api-reference/catalog/get-store-inventory",
+            "api-reference/catalog/get-job-status",
+            "api-reference/catalog/recommended-products",
+            {
+              "group": "Modifiers",
+              "pages": [
+                "api-reference/catalog/modifiers",
+                "api-reference/catalog/modifiers/create-modifier-group",
+                "api-reference/catalog/modifiers/create-modifier-group-options",
+                "api-reference/catalog/modifiers/create-modifier-group-linked-items",
+                "api-reference/catalog/modifiers/delete-modifier-group-option",
+                "api-reference/catalog/modifiers/delete-linked-items-from-modifier-group",
+                "api-reference/catalog/modifiers/delete-modifier-group",
+                "api-reference/catalog/modifiers/update-modifier-group",
+                "api-reference/catalog/modifiers/get-list-of-modifier-groups",
+                "api-reference/catalog/modifiers/get-modifier-group-details"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Inventory",
+          "pages": ["api-reference/inventory/inventory"]
+        },
+        {
+          "group": "Menus",
+          "pages": [
+            "api-reference/menus/menus-overview",
+            "api-reference/menus/create-store-menu",
+            "api-reference/menus/upsert-store-menu",
+            "api-reference/menus/delete-store-menu",
+            "api-reference/menus/get-menu-list",
+            "api-reference/menus/sync-menu-for-all-stores",
+            "api-reference/menus/get-all-active-menu-of-store",
+            "api-reference/menus/get-store-menu-timings",
+            {
+              "group": "Menu Items",
+              "pages": [
+                "api-reference/menus/menu-items/create-menu-item",
+                "api-reference/menus/menu-items/delete-menu",
+                "api-reference/menus/menu-items/update-menu-item"
+              ]
+            },
+            {
+              "group": "Menu Rules",
+              "pages": [
+                "api-reference/menus/menu-rules/get-menu-rules",
+                "api-reference/menus/menu-rules/upsert-menu-rules",
+                "api-reference/menus/menu-rules/get-menu-rules-by-id"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Campaigns",
+          "pages": [
+            "api-reference/campaigns/campaigns-overview",
+            "api-reference/campaigns/create-campaign",
+            "api-reference/campaigns/get-campaigns",
+            "api-reference/campaigns/get-campaign-details",
+            "api-reference/campaigns/update-campaign",
+            "api-reference/campaigns/delete-campaign",
+            "api-reference/campaigns/bulk-update-campaign",
+            "api-reference/campaigns/link-campaign-to-stores",
+            {
+              "group": "Promotions",
+              "pages": [
+                "api-reference/campaigns/promotions/create-promotion",
+                "api-reference/campaigns/promotions/get-promotion",
+                "api-reference/campaigns/promotions/update-promotion",
+                "api-reference/campaigns/promotions/delete-promotion",
+                "api-reference/campaigns/promotions/get-all-promotions"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Sales Channels",
+          "pages": ["api-reference/sales-channels/sales"]
+        },
+        {
+          "group": "Orders",
+          "pages": [
+            "api-reference/orders/orders-overview",
+            "api-reference/orders/get-incoming-orders",
+            "api-reference/orders/list-all-orders",
+            "api-reference/orders/get-orders-count",
+            "api-reference/orders/get-order-details",
+            "api-reference/orders/accept-incoming-order",
+            "api-reference/orders/cancel-order",
+            "api-reference/orders/get-store-orders",
+            "api-reference/orders/get-orders-history",
+            "api-reference/orders/create-new-order",
+            "api-reference/orders/patch-order-cart",
+            {
+              "group": "Order Items",
+              "pages": [
+                "api-reference/orders/order-items/get-order-items",
+                "api-reference/orders/order-items/get-all-order-items",
+                "api-reference/orders/order-items/update-order-items"
+              ]
+            },
+            {
+              "group": "Order Issues",
+              "pages": [
+                "api-reference/orders/order-issues/create-order-issue",
+                "api-reference/orders/order-issues/update-order-issue"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Customers",
+          "pages": ["api-reference/customers/customers"]
+        },
+        {
+          "group": "Reporting",
+          "pages": ["api-reference/reporting/reporting"]
+        },
+        {
+          "group": "Legacy Endpoints",
+          "pages": [
+            "api-reference/endpoint/upload-json",
+            "api-reference/endpoint/post-items-for-ingestion",
+            "api-reference/endpoint/upload-csv",
+            "api-reference/endpoint/get-job"
+          ]
+        }
       ]
     }
   ],
