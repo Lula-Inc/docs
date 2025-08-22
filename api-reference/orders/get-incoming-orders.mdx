@@ -1,0 +1,176 @@
+---
+title: "Get Incoming Orders"
+api: "GET {{orders_api_base_url}}/orders/"
+description: "Retrieve incoming orders for a specific store that are waiting for processing. This endpoint returns orders with their complete details including customer information, items, and fulfillment status."
+playground : "simple"
+---
+
+This endpoint retrieves all incoming orders for a specified store. It includes comprehensive order details, customer information, order items, and fulfillment tracking information.
+
+<Info>
+Incoming orders represent new orders that have been received from delivery platforms and are waiting for store confirmation and processing.
+</Info>
+
+### Query Parameters
+
+<ParamField query="store_id" type="string" required>
+  The unique identifier of the store to retrieve orders for
+</ParamField>
+
+<ParamField query="status" type="string" default="completed">
+  Filter orders by status. Common values: "incoming", "accepted", "completed", "cancelled"
+</ParamField>
+
+### Response
+
+<ResponseField name="orders" type="array">
+  Array of order objects with complete details
+
+  <Expandable title="Order Object">
+    <ResponseField name="id" type="string">
+      Unique order identifier
+    </ResponseField>
+
+    <ResponseField name="original_subtotal" type="string">
+      Order subtotal before taxes and fees
+    </ResponseField>
+
+    <ResponseField name="tax_amount" type="string">
+      Tax amount for the order
+    </ResponseField>
+
+    <ResponseField name="discount" type="string">
+      Applied discount amount (null if no discount)
+    </ResponseField>
+
+    <ResponseField name="original_price" type="string">
+      Total order price including tax
+    </ResponseField>
+
+    <ResponseField name="createdAt" type="string">
+      Order creation timestamp
+    </ResponseField>
+
+    <ResponseField name="partner" type="string">
+      Delivery platform name (e.g., "DoorDash", "UberEats")
+    </ResponseField>
+
+    <ResponseField name="special_instructions" type="string">
+      Customer-provided special instructions
+    </ResponseField>
+
+    <ResponseField name="store_id" type="string">
+      Store identifier for this order
+    </ResponseField>
+
+    <ResponseField name="dsp_order_number" type="string">
+      Delivery platform's order number
+    </ResponseField>
+
+    <ResponseField name="customer" type="object">
+      Customer information
+      
+      <Expandable title="Customer Object">
+        <ResponseField name="customer_name" type="string">Customer's name</ResponseField>
+        <ResponseField name="contact_phone" type="string">Customer's phone number</ResponseField>
+        <ResponseField name="phone_code" type="string">Phone country code (null if not provided)</ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="fulfillments" type="array">
+      Array of fulfillment tracking information
+      
+      <Expandable title="Fulfillment Object">
+        <ResponseField name="id" type="string">Fulfillment identifier</ResponseField>
+        <ResponseField name="date_ready" type="string">Timestamp when order was marked ready</ResponseField>
+        <ResponseField name="estimated_date_delivered" type="string">Estimated delivery time</ResponseField>
+        
+        <ResponseField name="fulfillmentStatus" type="object">
+          <ResponseField name="delivery_status_name" type="string">Current delivery status</ResponseField>
+        </ResponseField>
+
+        <ResponseField name="fulfillmentsLogs" type="array">
+          Array of status change logs with timestamps and employee information
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+
+    <ResponseField name="orderItems" type="array">
+      Array of items in the order
+      
+      <Expandable title="Order Item Object">
+        <ResponseField name="id" type="string">Order item identifier</ResponseField>
+        <ResponseField name="quantity" type="number">Quantity ordered</ResponseField>
+        <ResponseField name="special_instructions" type="string">Item-specific instructions</ResponseField>
+        <ResponseField name="store_item_price" type="string">Price per item</ResponseField>
+        <ResponseField name="store_item_total_price" type="string">Total price for this item</ResponseField>
+        <ResponseField name="store_item_name" type="string">Product name</ResponseField>
+        <ResponseField name="store_item_description" type="string">Product description</ResponseField>
+        <ResponseField name="store_item_category" type="string">Product category</ResponseField>
+        
+        <ResponseField name="item" type="object">
+          Complete item details including images, categories, and store item variations
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+[
+  {
+    "id": "8f40ba13-3290-496c-b08c-50e3110200d5",
+    "original_subtotal": "393.00",
+    "tax_amount": "9.77",
+    "discount": null,
+    "original_price": "393.13",
+    "createdAt": "2023-05-24T18:15:24.638Z",
+    "partner": "DoorDash",
+    "special_instructions": "",
+    "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+    "customer": {
+      "customer_name": "Lula D",
+      "contact_phone": "8559731040",
+      "phone_code": null
+    },
+    "fulfillments": [
+      {
+        "id": "5afe3291-c252-4e20-94f7-71d9c3587484",
+        "date_ready": "2023-05-24T18:18:26.992Z",
+        "estimated_date_delivered": "2023-05-24T18:31:14.618Z",
+        "fulfillmentStatus": {
+          "delivery_status_name": "completed"
+        },
+        "fulfillmentsLogs": [
+          {
+            "date_created": "2023-05-24T18:15:24.722Z",
+            "description": "DoorDash store mock order received",
+            "order_status_title": "Order received",
+            "employee": null
+          }
+        ]
+      }
+    ],
+    "orderItems": [
+      {
+        "id": "77aab9bd-5543-4783-8e37-d2e9a29a00cf",
+        "quantity": 3,
+        "store_item_price": "100.00",
+        "store_item_total_price": "300.00",
+        "store_item_name": "Test 123",
+        "store_item_category": "Candy"
+      }
+    ]
+  }
+]
+```
+
+<Tip>
+Use this endpoint to build real-time order dashboards and notify staff when new orders arrive.
+</Tip>
+
+<Note>
+The fulfillments array contains detailed tracking information showing the complete order journey from receipt to delivery.
+</Note>

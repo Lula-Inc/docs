@@ -1,0 +1,75 @@
+---
+title: "Delete Linked Items From Modifier Group"
+api: "DELETE {{micro_service_base_url}}/inventory/stores/{{store_id}}/modifier-groups/{{modifier_group_id}}/mappings"
+description: "This endpoint removes the association between store items and a modifier group, preventing those items from using the modifier group's customization options."
+playground : "simple"
+---
+
+This endpoint removes the link between store items and a modifier group. After unlinking, customers will no longer see the modifier group's customization options for those specific items.
+
+<Warning>
+Removing item mappings will immediately affect customer ordering experience. Ensure this change aligns with your menu strategy.
+</Warning>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store
+</ParamField>
+
+<ParamField path="modifier_group_id" type="string" required>
+  The unique identifier of the modifier group
+</ParamField>
+
+### Body
+
+<ParamField body="mapping_ids" type="array" required>
+  Array of mapping IDs to delete from the modifier group
+</ParamField>
+
+### Request Example
+
+```json
+[1000024, 1000025]
+```
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the operation was successful
+</ResponseField>
+
+<ResponseField name="deletedLinkedItems" type="array">
+  Array of mapping IDs that were successfully deleted
+</ResponseField>
+
+<ResponseField name="notDeletedLinkedItems" type="array">
+  Array of mapping IDs that could not be deleted (may not exist or have dependencies)
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Success message describing the operation result
+</ResponseField>
+
+### Response Example
+
+```json
+{
+  "success": true,
+  "deletedLinkedItems": [
+    1000025
+  ],
+  "notDeletedLinkedItems": [
+    1000024
+  ],
+  "message": "Store item modifier group mapping deleted successfully"
+}
+```
+
+<Info>
+Mappings that couldn't be deleted may be referenced by pending orders or have other active dependencies.
+</Info>
+
+<Tip>
+Before deleting mappings, consider if any active orders depend on these customization options. This helps prevent order fulfillment issues.
+</Tip>

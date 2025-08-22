@@ -1,0 +1,300 @@
+---
+title: "Link Campaign to Stores"
+api: "GET {{stores_service_api_base_url}}/stores/company/{{company_id}}/campaigns/{{campaign_id}}/stores"
+description: "Retrieve and manage the association between campaigns and store locations, including store-specific campaign configurations."
+playground : "simple"
+---
+
+This endpoint manages the relationship between campaigns and store locations, allowing you to see which stores are associated with a campaign and manage store-specific campaign configurations.
+
+<Info>
+Campaign-store associations determine where campaigns are active and visible to customers. Each association can have store-specific settings and configurations.
+</Info>
+
+### Path Parameters
+
+<ParamField path="company_id" type="string" required>
+  The unique identifier of the company that owns the campaign
+</ParamField>
+
+<ParamField path="campaign_id" type="string" required>
+  The unique identifier of the campaign to retrieve store associations for
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="status" type="string" optional>
+  Filter associations by status: "active", "inactive", "pending"
+</ParamField>
+
+<ParamField query="store_type" type="string" optional>
+  Filter by store type: "retail", "online", "franchise", "corporate"
+</ParamField>
+
+<ParamField query="region" type="string" optional>
+  Filter stores by geographical region
+</ParamField>
+
+<ParamField query="include_config" type="boolean" optional default="false">
+  Include store-specific campaign configurations in the response
+</ParamField>
+
+### Response
+
+<ResponseField name="campaign_id" type="string">
+  The campaign identifier
+</ResponseField>
+
+<ResponseField name="campaign_name" type="string">
+  Name of the campaign
+</ResponseField>
+
+<ResponseField name="total_associated_stores" type="integer">
+  Total number of stores associated with this campaign
+</ResponseField>
+
+<ResponseField name="store_associations" type="array">
+  Array of store association details
+
+  <Expandable title="Store Association Object">
+    <ResponseField name="store_id" type="string">
+      Unique store identifier
+    </ResponseField>
+
+    <ResponseField name="store_name" type="string">
+      Store display name
+    </ResponseField>
+
+    <ResponseField name="store_type" type="string">
+      Store classification (retail, online, franchise, corporate)
+    </ResponseField>
+
+    <ResponseField name="region" type="string">
+      Geographical region of the store
+    </ResponseField>
+
+    <ResponseField name="association_status" type="string">
+      Status of the campaign-store association
+    </ResponseField>
+
+    <ResponseField name="linked_at" type="string">
+      Timestamp when the association was created
+    </ResponseField>
+
+    <ResponseField name="last_updated" type="string">
+      Timestamp of the last association update
+    </ResponseField>
+
+    <ResponseField name="store_specific_config" type="object">
+      Store-specific campaign configuration (if include_config=true)
+
+      <Expandable title="Store Configuration">
+        <ResponseField name="custom_messaging" type="string">Store-specific campaign messaging</ResponseField>
+        <ResponseField name="local_promotions" type="array">Store-specific promotions</ResponseField>
+        <ResponseField name="display_settings" type="object">Store-specific display preferences</ResponseField>
+        <ResponseField name="scheduling_overrides" type="object">Store-specific timing adjustments</ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="association_summary" type="object">
+  Summary statistics for campaign-store associations
+
+  <Expandable title="Association Summary">
+    <ResponseField name="by_status" type="object">
+      Count of associations by status
+    </ResponseField>
+
+    <ResponseField name="by_store_type" type="object">
+      Count of associations by store type
+    </ResponseField>
+
+    <ResponseField name="by_region" type="object">
+      Count of associations by region
+    </ResponseField>
+
+    <ResponseField name="performance_overview" type="object">
+      High-level performance metrics across associated stores
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+{
+  "campaign_id": "1000010",
+  "campaign_name": "Spring Fresh Campaign",
+  "total_associated_stores": 15,
+  "store_associations": [
+    {
+      "store_id": "store_001",
+      "store_name": "Downtown Location",
+      "store_type": "retail",
+      "region": "Northeast",
+      "association_status": "active",
+      "linked_at": "2025-04-14T01:00:00.000Z",
+      "last_updated": "2025-04-14T01:00:00.000Z",
+      "store_specific_config": {
+        "custom_messaging": "Spring Fresh - Now Available Downtown!",
+        "local_promotions": ["LOCAL10", "DOWNTOWN15"],
+        "display_settings": {
+          "banner_position": "header",
+          "highlight_color": "#00FF00"
+        },
+        "scheduling_overrides": {
+          "extended_hours": true,
+          "weekend_only": false
+        }
+      }
+    },
+    {
+      "store_id": "store_002",
+      "store_name": "Mall Location",
+      "store_type": "retail",
+      "region": "Northeast",
+      "association_status": "active",
+      "linked_at": "2025-04-14T01:15:00.000Z",
+      "last_updated": "2025-04-14T01:15:00.000Z"
+    }
+  ],
+  "association_summary": {
+    "by_status": {
+      "active": 12,
+      "inactive": 2,
+      "pending": 1
+    },
+    "by_store_type": {
+      "retail": 10,
+      "online": 3,
+      "franchise": 2
+    },
+    "by_region": {
+      "Northeast": 8,
+      "Southeast": 4,
+      "West": 3
+    },
+    "performance_overview": {
+      "total_campaign_views": 5420,
+      "total_conversions": 324,
+      "average_conversion_rate": 5.97
+    }
+  }
+}
+```
+
+<Accordion title="Association Management">
+
+**Store Selection Strategies:**
+- **Geographic Targeting**: Associate campaigns with stores in specific regions
+- **Store Type Targeting**: Target specific store formats (retail, online, franchise)
+- **Performance-Based**: Associate with high-performing store locations
+- **Test Markets**: Use select stores for campaign testing before full rollout
+
+**Configuration Options:**
+- **Custom Messaging**: Store-specific campaign messaging and branding
+- **Local Promotions**: Store-exclusive promotional codes and offers
+- **Display Settings**: Store-specific visual presentation preferences
+- **Scheduling**: Store-specific timing and duration adjustments
+
+</Accordion>
+
+<Note>
+**Store-Specific Configurations**: Each store can have unique campaign settings while maintaining the overall campaign structure. This allows for localized marketing while maintaining brand consistency.
+</Note>
+
+<Tip>
+**Performance Tracking**: Use the association summary data to identify which store types or regions are performing best with the campaign, helping optimize future campaign targeting.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Campaign-Store Association Use Cases">
+
+**Regional Campaign Management**
+- Roll out campaigns to specific geographical regions
+- Test campaigns in select markets before wider deployment
+- Customize campaigns for local preferences and regulations
+
+**Store Performance Analysis**
+- Identify which stores are most effective for campaigns
+- Compare campaign performance across store types
+- Optimize store selection for future campaigns
+
+**Localized Marketing**
+- Create store-specific messaging and promotions
+- Adjust campaign timing for local events and preferences
+- Customize visual presentation for different store formats
+
+**Campaign Optimization**
+- Monitor real-time performance across associated stores
+- Adjust store associations based on performance data
+- Scale successful campaigns to additional store locations
+
+</Accordion>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Campaign Not Found**
+```json
+{
+  "error": "Campaign not found",
+  "message": "The specified campaign does not exist",
+  "code": "CAMPAIGN_NOT_FOUND"
+}
+```
+
+**No Store Associations**
+```json
+{
+  "campaign_id": "1000010",
+  "campaign_name": "Spring Fresh Campaign",
+  "total_associated_stores": 0,
+  "store_associations": [],
+  "message": "No stores are currently associated with this campaign"
+}
+```
+
+**Access Denied**
+```json
+{
+  "error": "Access denied",
+  "message": "You do not have permission to view store associations for this campaign",
+  "code": "ACCESS_DENIED"
+}
+```
+
+</Accordion>
+
+<Warning>
+**Privacy Considerations**: Store association data may include sensitive business information about store performance and configurations. Ensure appropriate access controls are in place.
+</Warning>
+
+### Managing Associations
+
+<Accordion title="Association Management Operations">
+
+**Adding Store Associations**
+- Use POST endpoint to create new campaign-store associations
+- Specify store-specific configurations during creation
+- Bulk association operations for multiple stores
+
+**Updating Associations**
+- Modify store-specific campaign settings
+- Update association status (activate/deactivate)
+- Adjust scheduling and display preferences
+
+**Removing Associations**
+- Deactivate campaign for specific stores
+- Remove associations while preserving historical data
+- Bulk removal operations for campaign cleanup
+
+**Monitoring Performance**
+- Track campaign effectiveness per store
+- Identify underperforming associations
+- Optimize based on store-specific analytics
+
+</Accordion>

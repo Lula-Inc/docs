@@ -1,0 +1,247 @@
+---
+title: "Update Campaign"
+api: "PUT {{stores_service_api_base_url}}/stores/company/{{company_id}}/campaigns/{{campaign_id}}/stores"
+description: "Update an existing campaign's configuration including name, description, schedule, and targeting parameters."
+playground : "simple"
+---
+
+This endpoint allows you to modify existing campaign settings including basic information, scheduling, targeting criteria, and promotional parameters. Updates are applied immediately and affect all associated stores and promotions.
+
+<Info>
+Campaign updates are immediately effective and will impact any active promotions or store associations. Consider the timing of updates for campaigns that are currently running.
+</Info>
+
+### Path Parameters
+
+<ParamField path="company_id" type="string" required>
+  The unique identifier of the company that owns the campaign
+</ParamField>
+
+<ParamField path="campaign_id" type="string" required>
+  The unique identifier of the campaign to update
+</ParamField>
+
+### Request Body
+
+<ParamField body="name" type="string" optional>
+  Updated campaign name
+</ParamField>
+
+<ParamField body="description" type="string" optional>
+  Updated campaign description
+</ParamField>
+
+<ParamField body="campaign_identifier" type="string" optional>
+  Unique campaign identifier for internal tracking
+</ParamField>
+
+<ParamField body="starts_at" type="string" optional>
+  Updated campaign start time (ISO 8601 format)
+</ParamField>
+
+<ParamField body="ends_at" type="string" optional>
+  Updated campaign end time (ISO 8601 format)
+</ParamField>
+
+<ParamField body="status" type="string" optional>
+  Updated campaign status: "active", "inactive", "scheduled", "expired"
+</ParamField>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  Indicates whether the update was successful
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message or error details
+</ResponseField>
+
+<ResponseField name="campaign_id" type="string">
+  The ID of the updated campaign
+</ResponseField>
+
+<ResponseField name="updated_fields" type="array">
+  List of fields that were successfully updated
+</ResponseField>
+
+<ResponseField name="effective_immediately" type="boolean">
+  Whether changes take effect immediately
+</ResponseField>
+
+<ResponseField name="timestamp" type="string">
+  Timestamp when the update was applied
+</ResponseField>
+
+### Request Example
+
+```json
+{
+  "name": "Bi-Yearly Specials",
+  "description": "Bi-yearly promotions and special offers for customers",
+  "campaign_identifier": "BI_YEARLY_SPECIALS",
+  "starts_at": "2024-01-01T00:00:00.000Z",
+  "ends_at": "2999-12-31T23:59:59.000Z",
+  "status": "active"
+}
+```
+
+### Response Example
+
+```json
+{
+  "success": true,
+  "message": "Campaign successfully updated",
+  "campaign_id": "1000010",
+  "updated_fields": [
+    "name",
+    "description",
+    "campaign_identifier",
+    "starts_at",
+    "ends_at",
+    "status"
+  ],
+  "effective_immediately": true,
+  "timestamp": "2024-01-15T14:30:00Z"
+}
+```
+
+<Accordion title="Update Impact Analysis">
+When a campaign is updated, the following components are affected:
+
+**Immediate Changes:**
+- Campaign visibility in customer applications
+- Promotion availability and application
+- Store association effectiveness
+- Marketing material display
+
+**Scheduling Changes:**
+- Start/end time modifications affect promotion windows
+- Status changes immediately activate or deactivate campaigns
+- Future scheduling adjustments plan automatic activation
+
+**Store Impact:**
+- All associated stores receive updated campaign information
+- POS systems sync new campaign parameters
+- Customer-facing displays update automatically
+
+</Accordion>
+
+<Note>
+**Timing Considerations**: Updates to active campaigns take effect immediately. For scheduled changes, consider creating new campaigns or using the scheduling features instead of updating active campaigns.
+</Note>
+
+<Tip>
+**Version Control**: The system maintains an audit trail of all campaign changes. You can track who made changes and when for compliance and analysis purposes.
+</Tip>
+
+### Update Scenarios
+
+<Accordion title="Common Update Use Cases">
+
+**Campaign Extension**
+- Extend successful campaigns beyond original end date
+- Adjust start dates for delayed campaign launches
+- Modify timing based on performance data
+
+**Status Management**
+- Activate scheduled campaigns early
+- Pause active campaigns temporarily
+- Reactivate previously inactive campaigns
+
+**Content Updates**
+- Update campaign descriptions for clarity
+- Modify campaign names for better recognition
+- Adjust campaign identifiers for tracking
+
+**Performance Optimization**
+- Modify campaigns based on analytics data
+- Adjust targeting based on customer response
+- Update promotional parameters for better results
+
+</Accordion>
+
+### Error Responses
+
+<Accordion title="Common Error Scenarios">
+
+**Campaign Not Found**
+```json
+{
+  "success": false,
+  "message": "Campaign not found",
+  "error_code": "CAMPAIGN_NOT_FOUND",
+  "campaign_id": "invalid-id"
+}
+```
+
+**Invalid Date Range**
+```json
+{
+  "success": false,
+  "message": "End date must be after start date",
+  "error_code": "INVALID_DATE_RANGE"
+}
+```
+
+**Campaign Not Modifiable**
+```json
+{
+  "success": false,
+  "message": "Campaign cannot be modified in current status",
+  "error_code": "CAMPAIGN_NOT_MODIFIABLE",
+  "current_status": "expired"
+}
+```
+
+**Validation Error**
+```json
+{
+  "success": false,
+  "message": "Field validation failed",
+  "error_code": "VALIDATION_ERROR",
+  "validation_errors": [
+    {
+      "field": "name",
+      "error": "Campaign name must be unique within company"
+    }
+  ]
+}
+```
+
+</Accordion>
+
+<Warning>
+**Active Campaign Updates**: Modifying active campaigns affects real-time promotions and customer experience. Consider the impact on current customers and orders in progress.
+</Warning>
+
+### Field Validation
+
+<Accordion title="Update Validation Rules">
+
+**name**
+- Maximum length: 200 characters
+- Must be unique within the company
+- Cannot be empty if provided
+
+**description**
+- Maximum length: 1000 characters
+- Supports basic formatting
+- Optional field
+
+**campaign_identifier**
+- Must be unique across all campaigns
+- Alphanumeric and underscore characters only
+- Used for API and system integration
+
+**starts_at / ends_at**
+- Must be valid ISO 8601 timestamp
+- End time must be after start time
+- Past dates allowed for historical campaigns
+
+**status**
+- Must be valid status value
+- Status transitions must follow business rules
+- Some status changes may require additional permissions
+
+</Accordion>

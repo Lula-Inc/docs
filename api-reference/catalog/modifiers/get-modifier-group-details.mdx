@@ -1,0 +1,173 @@
+---
+title: "Get Modifier Group Details"
+api: "GET {{micro_service_base_url}}/inventory/stores/{{store_id}}/modifier-groups/{{modifier_group_id}}"
+description: "This endpoint retrieves comprehensive details about a specific modifier group, including all its options, linked items, and complete configuration."
+playground : "simple"
+---
+
+This endpoint provides detailed information about a specific modifier group, including all associated options, linked store items, and complete configuration details. This is useful for reviewing or auditing modifier group setups.
+
+<Info>
+This endpoint returns the complete structure of a modifier group, making it ideal for detailed analysis or debugging configuration issues.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store
+</ParamField>
+
+<ParamField path="modifier_group_id" type="string" required>
+  The unique identifier of the modifier group
+</ParamField>
+
+### Response
+
+<ResponseField name="modifier_group" type="array">
+  Array containing the modifier group details (typically one object)
+
+  <Expandable title="Detailed Modifier Group Object">
+    <ResponseField name="id" type="string">
+      Unique identifier for the modifier group
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      Name of the modifier group
+    </ResponseField>
+
+    <ResponseField name="min_quantity" type="number">
+      Minimum number of options customer must select
+    </ResponseField>
+
+    <ResponseField name="max_quantity" type="number">
+      Maximum number of options customer can select
+    </ResponseField>
+
+    <ResponseField name="precedence" type="number">
+      Display order precedence
+    </ResponseField>
+
+    <ResponseField name="option_type" type="string">
+      Type of options in this group
+    </ResponseField>
+
+    <ResponseField name="store_id" type="string">
+      Associated store identifier
+    </ResponseField>
+
+    <ResponseField name="max_free_options" type="number">
+      Maximum number of free options allowed
+    </ResponseField>
+
+    <ResponseField name="max_options_qty" type="number">
+      Maximum quantity for each option
+    </ResponseField>
+
+    <ResponseField name="status" type="string">
+      Current status of the modifier group
+    </ResponseField>
+
+    <ResponseField name="external_id" type="string">
+      External identifier for the modifier group
+    </ResponseField>
+
+    <ResponseField name="createdAt" type="string">
+      Creation timestamp
+    </ResponseField>
+
+    <ResponseField name="updatedAt" type="string">
+      Last update timestamp
+    </ResponseField>
+
+    <ResponseField name="deletedAt" type="string">
+      Deletion timestamp (null if not deleted)
+    </ResponseField>
+
+    <ResponseField name="description" type="string">
+      Description of the modifier group
+    </ResponseField>
+
+    <ResponseField name="linked_items_count" type="string">
+      Number of items linked to this modifier group
+    </ResponseField>
+
+    <ResponseField name="options_count" type="string">
+      Number of options in this modifier group
+    </ResponseField>
+
+    <ResponseField name="store_item_modifier_groups_mapping" type="array">
+      Array of linked store items with full details
+    </ResponseField>
+
+    <ResponseField name="options" type="array">
+      Array of all options in this modifier group with full details
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Response Example
+
+```json
+[
+  {
+    "id": "1000124",
+    "name": "MG Test 3 - Updated",
+    "min_quantity": 0,
+    "max_quantity": 2,
+    "precedence": 0,
+    "option_type": "Customization",
+    "store_id": "449235c1-3d04-4519-998b-40d2a621e5e0",
+    "max_free_options": 0,
+    "max_options_qty": 2,
+    "status": "active",
+    "external_id": "5606aa02-34ce-4ed1-819b-b76bc81151c0",
+    "createdAt": "2024-05-02T00:57:35.628Z",
+    "updatedAt": "2024-05-02T00:58:01.654Z",
+    "deletedAt": null,
+    "description": "Modifier group for drinks",
+    "linked_items_count": "2",
+    "options_count": "3",
+    "store_item_modifier_groups_mapping": [
+      {
+        "id": "1000094",
+        "store_item_id": "3dbe1e78-c746-4940-8db8-ef468c738324",
+        "modifier_group_id": "1000124",
+        "createdAt": "2024-05-02T00:57:36.280Z",
+        "updatedAt": "2024-05-02T00:57:36.280Z",
+        "deletedAt": null,
+        "storeItem": {
+          "id": "3dbe1e78-c746-4940-8db8-ef468c738324",
+          "name": "Build Your Own Sandwich",
+          "description": "With your choice of bread, meat, cheese and toppings.",
+          "price": "6.99"
+        }
+      }
+    ],
+    "options": [
+      {
+        "id": "1000346",
+        "modifier_group_id": "1000124",
+        "price": "0.00",
+        "store_item_id": "2edc15af-2552-45a2-a149-d670279e27f3",
+        "status": "active",
+        "precedence": 0,
+        "external_id": "22b222b1-a5ed-4907-a4e5-71f52e2ab7ab",
+        "default_qty": 0,
+        "storeItem": {
+          "id": "2edc15af-2552-45a2-a149-d670279e27f3",
+          "name": "Small",
+          "price": "0.0"
+        }
+      }
+    ]
+  }
+]
+```
+
+<Tip>
+Use this endpoint to get a complete overview of a modifier group's configuration, including all linked items and available options.
+</Tip>
+
+<Note>
+The response includes nested objects for linked store items and options, providing complete details without requiring additional API calls.
+</Note>

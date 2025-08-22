@@ -1,0 +1,405 @@
+---
+title: "Update Menu Item"
+api: "PUT /stores/{{store_id}}/menus/{{menu_id}}/items/{{item_id}}"
+description: "Modify menu item properties, availability, and configuration within specific menus to maintain accurate and optimized menu offerings."
+playground : "simple"
+---
+
+This endpoint provides comprehensive menu item update capabilities, allowing businesses to adjust item properties, pricing, availability, and other menu-specific configurations while maintaining system consistency.
+
+<Info>
+Menu item updates enable dynamic menu management, allowing businesses to respond to inventory changes, promotional requirements, and operational needs in real-time.
+</Info>
+
+### Path Parameters
+
+<ParamField path="store_id" type="string" required>
+  The unique identifier of the store containing the menu
+</ParamField>
+
+<ParamField path="menu_id" type="string" required>
+  The unique identifier of the menu containing the item to update
+</ParamField>
+
+<ParamField path="item_id" type="string" required>
+  The unique identifier of the item to update
+</ParamField>
+
+### Request Body
+
+<ParamField body="is_available" type="boolean" optional>
+  Controls whether the item is available for ordering in this menu
+</ParamField>
+
+<ParamField body="menu_specific_price" type="number" optional>
+  Custom pricing for this item within this specific menu (overrides base item price)
+</ParamField>
+
+<ParamField body="display_order" type="integer" optional>
+  Controls the display order of the item within the menu
+</ParamField>
+
+<ParamField body="menu_item_description" type="string" optional>
+  Menu-specific description that overrides the default item description
+</ParamField>
+
+<ParamField body="promotional_tags" type="array" optional>
+  Array of promotional tags specific to this menu item association
+</ParamField>
+
+<ParamField body="menu_item_modifiers" type="object" optional>
+  Menu-specific modifier configurations for this item
+</ParamField>
+
+### Request Example
+
+```json
+{
+    "is_available": true,
+    "menu_specific_price": 12.99,
+    "display_order": 5,
+    "menu_item_description": "Fresh grilled salmon with seasonal vegetables",
+    "promotional_tags": ["featured", "healthy"],
+    "menu_item_modifiers": {
+        "cooking_preferences": ["medium", "well-done"],
+        "side_options": ["rice", "vegetables", "salad"]
+    }
+}
+```
+
+### Response
+
+<ResponseField name="message" type="string">
+  Confirmation message indicating the operation result
+</ResponseField>
+
+<ResponseField name="success" type="boolean">
+  Whether the update operation completed successfully
+</ResponseField>
+
+<ResponseField name="updated_item" type="object">
+  Details of the updated menu item configuration
+</ResponseField>
+
+### Response Example
+
+```json
+{
+    "message": "Menu item updated successfully",
+    "success": true,
+    "updated_item": {
+        "item_id": "c81d64ff-0651-48af-ab61-9b503be9f020",
+        "menu_id": "813f8ac7-cae5-4d2d-92ef-d6798547f95c",
+        "is_available": true,
+        "menu_specific_price": 12.99,
+        "display_order": 5,
+        "last_updated": "2024-01-15T10:30:00Z"
+    }
+}
+```
+
+<Accordion title="Menu Item Update Strategies">
+
+**Availability Management**
+- Control item availability without removing from menu
+- Handle temporary shortages or supply chain issues
+- Manage seasonal item availability
+- Support time-based availability controls
+
+**Pricing Optimization**
+- Implement menu-specific pricing strategies
+- Support promotional pricing for specific menus
+- Test price points across different menu configurations
+- Maintain competitive pricing while maximizing margins
+
+**Display and Ordering**
+- Optimize item positioning within menus
+- Highlight popular or promoted items through ordering
+- Create logical groupings and flow
+- Enhance customer discovery and selection experience
+
+**Content Customization**
+- Tailor descriptions for specific menu contexts
+- Highlight different features for different customer segments
+- Support localization and customization requirements
+- Enhance marketing and promotional messaging
+
+</Accordion>
+
+<Note>
+**Menu-Specific Settings**: Updates apply only to the specific menu-item association. The base item properties remain unchanged unless specifically modified through item management endpoints.
+</Note>
+
+<Tip>
+**Batch Updates**: For updating multiple items with similar changes, consider implementing batch update logic in your application to reduce API calls and improve performance.
+</Tip>
+
+### Use Cases
+
+<Accordion title="Common Menu Item Update Scenarios">
+
+**Dynamic Availability Management**
+- Toggle item availability based on inventory levels
+- Handle equipment maintenance affecting specific items
+- Manage staffing limitations for complex preparations
+- Control availability during special events or promotions
+
+**Promotional Campaigns**
+- Update pricing for limited-time offers
+- Add promotional tags and descriptions
+- Adjust display order to feature promoted items
+- Configure special modifiers for promotional periods
+
+**Seasonal Adjustments**
+- Update descriptions to reflect seasonal ingredients
+- Adjust pricing for seasonal cost variations
+- Modify availability based on seasonal supply
+- Update promotional tags for seasonal marketing
+
+**Menu Optimization**
+- Reorder items based on performance data
+- Update descriptions based on customer feedback
+- Adjust pricing based on market analysis
+- Optimize modifier configurations for efficiency
+
+</Accordion>
+
+### Update Field Details
+
+<Accordion title="Understanding Update Fields">
+
+**Availability Control**
+- `is_available`: Controls immediate customer access to the item
+- Affects all customer-facing systems and ordering platforms
+- Does not remove the item from the menu structure
+- Enables quick response to operational changes
+
+**Pricing Management**
+- `menu_specific_price`: Overrides base item pricing for this menu
+- Supports menu-specific pricing strategies
+- Enables promotional pricing without affecting other menus
+- Maintains pricing flexibility across different contexts
+
+**Display Optimization**
+- `display_order`: Controls item position within menu sections
+- Lower numbers appear first in the display order
+- Enables strategic positioning of high-margin or popular items
+- Supports logical grouping and customer flow optimization
+
+**Content Customization**
+- `menu_item_description`: Menu-specific item description
+- Overrides base item description for this menu context
+- Supports targeted messaging for specific customer segments
+- Enables localization and customization
+
+**Promotional Enhancement**
+- `promotional_tags`: Array of tags for marketing and display
+- Supports visual highlighting in customer interfaces
+- Enables filtering and categorization for promotions
+- Provides metadata for analytics and reporting
+
+**Modifier Configuration**
+- `menu_item_modifiers`: Menu-specific modifier settings
+- Allows different modifier options per menu
+- Supports context-appropriate customization options
+- Enables menu-specific operational workflows
+
+</Accordion>
+
+### Validation Rules
+
+<Accordion title="Update Validation Requirements">
+
+**Menu and Item Validation**
+- Menu ID must exist and belong to the specified store
+- Item ID must exist and be associated with the specified menu
+- User must have appropriate permissions for menu modifications
+- Menu must be in a valid state for updates
+
+**Data Validation**
+- Pricing values must be positive numbers with appropriate precision
+- Display order must be a valid integer
+- Description length must be within system limits
+- Promotional tags must be from approved tag sets
+
+**Business Rule Validation**
+- Price changes must comply with business pricing policies
+- Availability changes must consider inventory and operational constraints
+- Display order changes must maintain menu structure integrity
+- Modifier configurations must be valid for the item type
+
+**System Validation**
+- All referenced modifiers and options must exist
+- Promotional tags must be valid and active
+- Price formats must match system requirements
+- Description content must meet content policy requirements
+
+</Accordion>
+
+### Error Handling
+
+<Accordion title="Common Error Scenarios">
+
+**Invalid Menu Item Association**
+```json
+{
+  "error": "Menu item not found",
+  "message": "The specified item is not associated with this menu",
+  "details": {
+    "menu_id": "813f8ac7-cae5-4d2d-92ef-d6798547f95c",
+    "item_id": "invalid-item-id"
+  }
+}
+```
+
+**Invalid Price Value**
+```json
+{
+  "error": "Invalid price",
+  "message": "Menu specific price must be a positive number",
+  "provided_value": -5.99
+}
+```
+
+**Permission Denied**
+```json
+{
+  "error": "Permission denied",
+  "message": "Insufficient permissions to update items in this menu"
+}
+```
+
+**Business Rule Violation**
+```json
+{
+  "error": "Business rule violation",
+  "message": "Price change exceeds maximum allowed variance from base price",
+  "details": {
+    "base_price": 10.99,
+    "requested_price": 25.99,
+    "max_variance": "50%"
+  }
+}
+```
+
+</Accordion>
+
+### Best Practices
+
+<Accordion title="Menu Item Update Best Practices">
+
+**Planning and Strategy**
+- Plan updates during low-traffic periods when possible
+- Consider the impact on customer experience and ordering patterns
+- Coordinate updates with marketing and promotional campaigns
+- Document reasons for changes for future analysis
+
+**Data Management**
+- Validate data before sending update requests
+- Use appropriate data types and formats
+- Maintain consistency across related menu items
+- Implement proper error handling and retry logic
+
+**Performance Optimization**
+- Batch related updates when possible
+- Use targeted updates rather than full item replacement
+- Monitor system performance during large-scale updates
+- Implement efficient caching strategies
+
+**Quality Assurance**
+- Verify updates are reflected in customer-facing systems
+- Test ordering functionality after significant changes
+- Monitor customer feedback and ordering patterns
+- Implement rollback procedures for problematic updates
+
+</Accordion>
+
+### Integration Patterns
+
+<Accordion title="System Integration for Updates">
+
+**Real-time Synchronization**
+- Ensure immediate propagation to all customer-facing systems
+- Update point-of-sale systems with current item configurations
+- Synchronize with mobile apps and online ordering platforms
+- Coordinate with third-party delivery and ordering services
+
+**Inventory Integration**
+- Sync availability updates with inventory management systems
+- Automatically adjust availability based on stock levels
+- Coordinate pricing updates with cost management systems
+- Integrate with procurement and supply chain systems
+
+**Analytics and Reporting**
+- Track update patterns and their impact on sales
+- Monitor customer response to pricing and availability changes
+- Generate insights for menu optimization strategies
+- Support data-driven decision making
+
+**Customer Experience Integration**
+- Ensure consistent presentation across all customer touchpoints
+- Update search and recommendation algorithms with new configurations
+- Maintain accurate nutritional and allergen information
+- Support personalization and customer preference systems
+
+</Accordion>
+
+### Menu Item Lifecycle Management
+
+<Accordion title="Managing Item Lifecycle Through Updates">
+
+**Introduction Phase**
+- Set initial availability and pricing
+- Configure promotional tags for new item launches
+- Optimize display order for customer discovery
+- Monitor performance and adjust configuration accordingly
+
+**Growth and Optimization**
+- Adjust pricing based on demand and cost analysis
+- Optimize display order based on customer behavior
+- Update descriptions based on customer feedback
+- Fine-tune modifier configurations for operational efficiency
+
+**Maturity Management**
+- Maintain optimal pricing and positioning
+- Adjust availability based on inventory optimization
+- Update promotional strategies based on market position
+- Monitor competitive positioning and adjust accordingly
+
+**Decline and Phase-out**
+- Gradually reduce visibility through display order adjustments
+- Implement clearance pricing strategies
+- Manage availability during inventory depletion
+- Plan removal strategy while maintaining customer satisfaction
+
+</Accordion>
+
+### Performance Monitoring
+
+<Accordion title="Monitoring Update Impact">
+
+**Customer Impact Analysis**
+- Track ordering patterns before and after updates
+- Monitor customer feedback and satisfaction scores
+- Analyze impact on average order value and frequency
+- Measure customer discovery and selection rates
+
+**Operational Impact Assessment**
+- Monitor kitchen efficiency and preparation times
+- Track inventory turnover and waste reduction
+- Analyze staff efficiency with updated configurations
+- Measure overall operational performance changes
+
+**Business Performance Metrics**
+- Track revenue impact of pricing and availability changes
+- Monitor profit margin improvements from optimization
+- Analyze competitive positioning and market share
+- Measure ROI of menu management activities
+
+**System Performance Monitoring**
+- Track API response times and system performance
+- Monitor integration effectiveness across platforms
+- Analyze data consistency and synchronization success
+- Measure customer experience quality across touchpoints
+
+</Accordion>

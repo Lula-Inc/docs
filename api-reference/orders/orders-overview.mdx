@@ -1,0 +1,143 @@
+---
+title: "Orders Management"
+description: "Comprehensive order management system for handling incoming orders, order processing, item management, and issue resolution across all delivery platforms."
+playground : "simple"
+---
+
+The Orders service provides complete order lifecycle management, from initial receipt through fulfillment and issue resolution. This system handles orders from multiple delivery service platforms (DSPs) like DoorDash, UberEats, and Grub Hub.
+
+## Order Management
+
+### Core Order Operations
+- **Get Incoming Orders**: Retrieve new orders waiting for processing
+- **List All Orders**: View all orders with filtering and status options
+- **Get Orders Count**: Monitor active and completed order volumes
+- **Get Order Details**: Access comprehensive order information
+- **Accept Incoming Order**: Confirm and begin order preparation
+- **Cancel Order**: Cancel orders with reason codes and messaging
+- **Get Store Orders**: Retrieve orders specific to a store
+- **Get Orders History**: Access historical order data and analytics
+
+### Advanced Order Features
+- **Create New Order**: Generate new orders programmatically
+- **Patch Order Cart**: Modify existing orders by adding/removing items
+
+## Order Items Management
+
+Detailed management of individual items within orders:
+
+### Item Operations
+- **Get Order Items**: Retrieve specific item details within an order
+- **Get All Order Items**: Access all items for a given order
+- **Update Order Items**: Modify item details, descriptions, and special instructions
+
+## Order Issues Management
+
+Comprehensive issue tracking and resolution system:
+
+### Issue Handling
+- **Create Order Issue**: Report problems with orders or items
+- **Update Order Issue**: Manage issue status, priority, and resolution
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Multi-Platform Support" icon="truck-fast">
+    Handle orders from DoorDash, UberEats, Grub Hub, and LulaDirect seamlessly
+  </Card>
+  
+  <Card title="Real-time Processing" icon="clock">
+    Monitor incoming orders and process them with real-time status updates
+  </Card>
+  
+  <Card title="Order Modification" icon="edit">
+    Modify orders after receipt with item additions, removals, and quantity changes
+  </Card>
+  
+  <Card title="Issue Resolution" icon="exclamation-triangle">
+    Track and resolve customer issues with comprehensive logging and attachments
+  </Card>
+</CardGroup>
+
+## Order Lifecycle
+
+### 1. Order Receipt
+Orders arrive from delivery platforms and are automatically ingested into the system with complete item details, customer information, and special instructions.
+
+### 2. Order Processing
+Store employees can accept orders, modify preparation times, and begin the fulfillment process with real-time status tracking.
+
+### 3. Fulfillment Tracking
+Complete visibility into order progress from preparation through pickup/delivery with detailed logging of each status change.
+
+### 4. Issue Management
+Handle customer complaints, wrong items, missing products, and refund requests with structured issue tracking.
+
+## Order Status Management
+
+<AccordionGroup>
+  <Accordion title="Order Statuses">
+    - **incoming**: New order waiting for acceptance
+    - **accepted**: Order confirmed and being prepared
+    - **bagging**: Items being packaged
+    - **ready**: Order ready for pickup
+    - **picked_up**: Driver has collected the order
+    - **completed**: Order successfully delivered
+    - **cancelled**: Order cancelled by store or customer
+    - **denied**: Order rejected by store
+  </Accordion>
+
+  <Accordion title="Issue Types">
+    - **wrong_items**: Incorrect products delivered
+    - **missing_items**: Items not included in order
+    - **quality_issues**: Product quality problems
+    - **delivery_issues**: Problems with delivery process
+    - **pricing_discrepancies**: Price-related concerns
+  </Accordion>
+
+  <Accordion title="Priority Levels">
+    - **low**: Minor issues that can be addressed during normal operations
+    - **medium**: Moderate issues requiring timely attention
+    - **high**: Critical issues requiring immediate resolution
+    - **urgent**: Emergency situations requiring instant action
+  </Accordion>
+</AccordionGroup>
+
+## Integration Points
+
+### Delivery Service Platforms
+- **DoorDash**: Direct API integration for order management
+- **UberEats**: Real-time order sync and status updates
+- **Grub Hub**: Automated order processing and fulfillment
+- **LulaDirect**: Native platform orders with full feature support
+
+### Internal Systems
+- **Inventory Management**: Real-time stock updates during order processing
+- **Employee Management**: Associate actions with specific employees
+- **Customer Management**: Track customer information and preferences
+- **Analytics**: Order performance and business intelligence
+
+## Business Benefits
+
+### Operational Efficiency
+- **Centralized Management**: Handle all platform orders from one interface
+- **Automated Processing**: Reduce manual work with automated order ingestion
+- **Real-time Visibility**: Monitor order flow and identify bottlenecks
+
+### Customer Experience
+- **Faster Processing**: Quick order acceptance and preparation times
+- **Issue Resolution**: Structured approach to handling customer problems
+- **Accurate Fulfillment**: Detailed item management reduces errors
+
+### Business Intelligence
+- **Performance Metrics**: Track order volumes, completion rates, and revenue
+- **Issue Analytics**: Identify recurring problems and improvement opportunities
+- **Historical Data**: Access complete order history for analysis
+
+<Warning>
+Order modifications should be handled carefully to maintain customer satisfaction and delivery platform compliance.
+</Warning>
+
+<Tip>
+Use the order count endpoints to monitor business performance and identify peak operating hours for staffing decisions.
+</Tip>
