@@ -1,0 +1,65 @@
+### Getting started
+
+This guide walks you through the fastest path to value: loading your products, creating a menu, and syncing to your sales channels.
+
+### Before you begin
+
+- A Lula account and access to your company and stores
+- Your product list (CSV or JSON) with names, prices, and UPCs/SKUs
+- The delivery channels you plan to use (DoorDash, Uber Eats, Grubhub, LulaDirect)
+
+If you are missing access, request credentials from your Lula representative.
+
+### Step 1: Create your company and store
+
+If your organization is not yet in Lula, your Lula contact will create it. Otherwise, confirm your store details are correct. Developers can use the API to create these records:
+
+- Create a company: see [Create company](/api-reference/companies/create-company)
+- Create a store: see [Create store](/api-reference/stores/create-store)
+
+### Step 2: Load your products
+
+Choose the format that’s easiest for you today—you can always change later:
+
+- CSV import: see [Upload CSV](/api-reference/catalog/upsert-products-csv)
+- JSON import: see [Upload JSON](/api-reference/catalog/upsert-products-json)
+- Update inventory and prices: see [Upsert inventory](/api-reference/catalog/upsert-inventory)
+
+After import, you can verify items with [Get store inventory](/api-reference/catalog/get-store-inventory).
+
+### Step 3: Build your menu
+
+Create a store menu and link the right items. You can do this in the dashboard or via API:
+
+- Create or update a store menu: [Create menu](/api-reference/menus/create-store-menu) and [Upsert menu](/api-reference/menus/upsert-store-menu)
+- Manage menu items: [Create menu item](/api-reference/menus/menu-items/create-menu-item)
+- Set menu schedules: [Get menu timings](/api-reference/menus/get-store-menu-timings)
+
+### Step 4: Sync to channels
+
+When your menu looks right, publish it to your connected channels:
+
+- Sync menus for all stores: [Sync menus](/api-reference/menus/sync-menu-for-all-stores)
+
+You can confirm the active menus with [Get active menus](/api-reference/menus/get-all-active-menu-of-store) and [Get menu list](/api-reference/menus/get-menu-list).
+
+### Step 5: Test an order
+
+Use a marketplace sandbox or place a small real order to validate the full flow:
+
+- Watch incoming orders: [Get incoming orders](/api-reference/orders/get-incoming-orders)
+- Accept and fulfill: [Accept order](/api-reference/orders/accept-incoming-order)
+- See order details: [Get order details](/api-reference/orders/get-order-details)
+
+### Environments
+
+Lula supports sandbox and production environments. Confirm which you are using before sharing links or placing orders. Ask your Lula contact for sandbox access if you don’t have it yet.
+
+### What’s next
+
+- Fine‑tune item availability and modifiers
+- Set taxes and fees: [Get store tax rate](/api-reference/stores/get-store-tax-rate)
+- Launch promotions and campaigns: [Campaigns overview](/api-reference/campaigns/campaigns-overview)
+
+If you prefer to automate your setup end‑to‑end, browse the API Documentation and copy sample requests from each page.
+
