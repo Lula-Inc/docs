@@ -20,6 +20,16 @@
   ],
   "navigation": [
     {
+      "group": "Documentation",
+      "pages": [
+        "documentation/welcome-intro",
+        "documentation/get-started",
+        "documentation/high-level-architecture",
+        "documentation/integrations",
+        "documentation/lula-direct-sdk"
+      ]
+    },
+    {
       "group": "Home",
       "pages": ["introduction", "migrating_v1_v2"]
     },
