@@ -13,7 +13,7 @@ This endpoint allows you to create a new company with all necessary business inf
     </ResponseField>
 
     <ResponseField name="email" type="string" required>
-        Company contact email address. Example: "salmansaeedpaul.esketchers@gmail.com"
+        Company contact email address. Example: "test@company.com"
     </ResponseField>
 
     <ResponseField name="address" type="object" required>
@@ -21,19 +21,19 @@ This endpoint allows you to create a new company with all necessary business inf
         
         <Expandable title="address">
             <ResponseField name="line_1" type="string" required>
-                Primary address line. Example: "39 Block Q, Phase 2 Johar Town"
+                Primary address line. Example: "123 Main Street"
             </ResponseField>
             
             <ResponseField name="city" type="string" required>
-                City name. Example: "Lahore"
+                City name. Example: "Philadelphia"
             </ResponseField>
             
             <ResponseField name="state" type="string" required>
-                State or province. Example: "Punjab"
+                State or province. Example: "PA"
             </ResponseField>
             
             <ResponseField name="zip" type="string" required>
-                ZIP or postal code. Example: "54782"
+                ZIP or postal code. Example: "19104"
             </ResponseField>
         </Expandable>
     </ResponseField>
@@ -107,12 +107,12 @@ This endpoint allows you to create a new company with all necessary business inf
 ```json
 {
     "name": "Salman's Company",
-    "email": "salmansaeedpaul.esketchers@gmail.com",
+    "email": "test@company.com",
     "address": {
-        "line_1": "39 Block Q, Phase 2 Johar Town",
-        "city": "Lahore",
-        "state": "Punjab",
-        "zip": "54782"
+        "line_1": "123 Main Street",
+        "city": "Philadelphia",
+        "state": "PA",
+        "zip": "19104"
     },
     "phone_number": "090078601",
     "website": "https://www.lulaconvenience.com/",
@@ -217,7 +217,7 @@ This endpoint allows you to create a new company with all necessary business inf
     "id": "1000003",
     "address_id": "480c9c0c-50b8-4911-89db-e63d68c6f58a",
     "name": "Salman's Company",
-    "email": "salmansaeedpaul.esketchers@gmail.com",
+    "email": "test@company.com",
     "phone_number": "090078601",
     "logo": "",
     "banner": "",
