@@ -1,41 +1,233 @@
-### Lula at a glance
+---
+title: "High-Level Architecture"
+description: "Understanding Lula Commerce's architecture, core components, data flow, and how we connect your stores to every delivery channel."
+---
 
-Lula Commerce sits between your stores and every delivery channel, acting as a single source of truth for products, menus, and orders. You manage items and pricing once in Lula; we publish consistent data everywhere and consolidate activity back into one place.
 
-### Core components
+## Lula at a Glance
 
-- Catalog service: stores products, prices, inventory, and attributes
-- Menu service: builds store‑specific menus, schedules, and availability windows
-- Orders service: receives, acknowledges, and tracks orders end‑to‑end
-- Campaigns & promotions: applies discounts and offers across channels
-- Connectors: synchronize menus and orders with DoorDash, Uber Eats, Grubhub, and LulaDirect
-- Webhooks & notifications: push updates to your systems in real time
-- Reporting: combines data from all channels for performance insights
+Lula Commerce sits between your stores and every delivery channel, acting as a **single source of truth** for products, menus, and orders. You manage items and pricing once in Lula; we publish consistent data everywhere and consolidate activity back into one place.
 
-### Typical data flow
+<Info>
+This centralized approach eliminates data inconsistencies and reduces the operational overhead of managing multiple delivery platforms independently.
+</Info>
 
-1) Ingest products via CSV/JSON or API
-2) Create or update menus and schedules per store
-3) Lula publishes menus to connected channels
-4) Customers place orders on a marketplace or via LulaDirect
-5) Orders flow into Lula; you accept and fulfill from a single queue
-6) Status updates and receipts are propagated back to the channel
+## Core Components
 
-### Security at a glance
+Lula Commerce is built on a microservices architecture with specialized services handling different aspects of your digital commerce operations:
 
-- Encryption in transit using TLS
-- Data access controlled by role‑based permissions
-- Scoped API keys for server‑to‑server integrations
-- Least‑privilege access for internal operations
-- Optional IP allowlisting on request
+<Accordion title="Platform Services">
+    <ResponseField name="Catalog Service" type="service">
+        Stores products, prices, inventory, and attributes
+        
+        <Note>Central repository for all product information across channels</Note>
+    </ResponseField>
+    
+    <ResponseField name="Menu Service" type="service">
+        Builds store-specific menus, schedules, and availability windows
+        
+        <Info>Handles time-based menu variations and channel-specific customizations</Info>
+    </ResponseField>
+    
+    <ResponseField name="Orders Service" type="service">
+        Receives, acknowledges, and tracks orders end-to-end
+        
+        <Tip>Provides unified order management regardless of originating channel</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Campaigns & Promotions" type="service">
+        Applies discounts and offers across channels
+        
+        <Warning>Promotions are synchronized across all connected platforms</Warning>
+    </ResponseField>
+    
+    <ResponseField name="Connectors" type="service">
+        Synchronize menus and orders with DoorDash, Uber Eats, Grubhub, and Lula Direct
+        
+        <Note>Each connector handles platform-specific integration requirements</Note>
+    </ResponseField>
+    
+    <ResponseField name="Webhooks & Notifications" type="service">
+        Push updates to your systems in real time
+        
+        <Info>Enables real-time integration with POS systems and other tools</Info>
+    </ResponseField>
+    
+    <ResponseField name="Reporting" type="service">
+        Combines data from all channels for performance insights
+        
+        <Tip>Provides unified analytics across all sales channels</Tip>
+    </ResponseField>
+</Accordion>
 
+## Typical Data Flow
+
+Understanding how data moves through the Lula Commerce platform helps you optimize your operations and integrations:
+
+<Steps>
+    <Step title="Product Ingestion">
+        **Ingest products** via CSV/JSON upload or API integration
+        
+        Products are validated, categorized, and stored in the central catalog service.
+    </Step>
+    
+    <Step title="Menu Creation">
+        **Create or update menus** and schedules per store
+        
+        Store-specific menus are built from catalog products with custom availability and pricing.
+    </Step>
+    
+    <Step title="Channel Publishing">
+        **Lula publishes menus** to connected channels
+        
+        Menus are automatically synchronized to DoorDash, Uber Eats, Grubhub, and Lula Direct.
+    </Step>
+    
+    <Step title="Order Placement">
+        **Customers place orders** on a marketplace or via Lula Direct
+        
+        Orders are received from any connected channel and normalized into a standard format.
+    </Step>
+    
+    <Step title="Order Management">
+        **Orders flow into Lula**; you accept and fulfill from a single queue
+        
+        Unified order management regardless of the originating sales channel.
+    </Step>
+    
+    <Step title="Status Updates">
+        **Status updates and receipts** are propagated back to the channel
+        
+        Real-time synchronization ensures customers receive accurate order status information.
+    </Step>
+</Steps>
+
+<Info>
+**Key Benefit**: This flow ensures **data** consistency across all platforms while providing you with a single interface to manage all operations.
+</Info>
+
+## Security at a Glance
+
+Lula Commerce implements enterprise-grade security measures to protect your business data and customer information:
+
+<CardGroup cols={2}>
+    <Card title="Data Protection" icon="shield-halved">
+        - **Encryption in transit** using TLS
+        - **Data access controlled** by role-based permissions
+        - **Least-privilege access** for internal operations
+    </Card>
+    
+    <Card title="API Security" icon="key">
+        - **Scoped API keys** for server-to-server integrations
+        - **Optional IP allowlisting** on request
+        - **Industry best practices** for data protection
+    </Card>
+</CardGroup>
+
+<Note>
 Lula follows industry best practices for protecting data. If you need a security review or have a questionnaire, contact your Lula representative.
+</Note>
 
-### Reliability and scale
+## Reliability and Scale
 
-- Built to support retailers from single stores to large chains
-- Resilient connectors to handle upstream rate limits and retries
-- Health monitoring and alerting across all integrations
+Our platform is designed to grow with your business, from single-location operations to large multi-store chains:
 
-If you are planning a high‑volume launch or migration, let us know so we can align capacity and support.
+<Accordion title="Scalability Features">
+    <ResponseField name="Multi-Store Support" type="feature">
+        Built to support retailers from single stores to large chains
+        
+        <Info>Architecture scales horizontally to handle increased load</Info>
+    </ResponseField>
+    
+    <ResponseField name="Resilient Connectors" type="feature">
+        Handle upstream rate limits and retries automatically
+        
+        <Note>Smart retry logic ensures reliable integration with delivery partners</Note>
+    </ResponseField>
+    
+    <ResponseField name="Monitoring & Alerting" type="feature">
+        Health monitoring and alerting across all integrations
+        
+        <Tip>Proactive monitoring prevents issues before they affect operations</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Capacity Planning" type="feature">
+        Scalable infrastructure to handle traffic spikes and growth
+        
+        <Warning>High-volume launches require advance coordination with our team</Warning>
+    </ResponseField>
+</Accordion>
 
+<Info>
+**Planning a high-volume launch or migration?** Let us know so we can align capacity and support to ensure a smooth transition.
+</Info>
+
+## Integration Patterns
+
+Lula Commerce supports multiple integration approaches to fit your technical requirements:
+
+<CardGroup cols={2}>
+    <Card title="Real-time APIs" icon="bolt" href="/api-reference">
+        Direct API integration for real-time data exchange and custom workflows
+    </Card>
+    
+    <Card title="Bulk Operations" icon="upload" href="/api-reference/endpoint/upload-csv">
+        CSV/JSON uploads for bulk product updates and initial setup
+    </Card>
+    
+    <Card title="Webhooks" icon="webhook" href="/api-reference/orders/orders-overview">
+        Push notifications for order updates and inventory changes
+    </Card>
+    
+    <Card title="Scheduled Sync" icon="clock" href="/api-reference/menus/sync-menu-for-all-stores">
+        Automated synchronization for regular data updates
+    </Card>
+</CardGroup>
+
+## Performance Characteristics
+
+<Accordion title="Platform Performance">
+    <ResponseField name="API Response Times" type="metric">
+        Typical response times under 200ms for standard operations
+        
+        <Note>Performance may vary based on request complexity and data volume</Note>
+    </ResponseField>
+    
+    <ResponseField name="Menu Sync Speed" type="metric">
+        Menu updates propagate to delivery channels within 5-15 minutes
+        
+        <Info>Sync times depend on individual platform processing speeds</Info>
+    </ResponseField>
+    
+    <ResponseField name="Order Processing" type="metric">
+        Orders are received and normalized in real-time (under 5 seconds)
+        
+        <Tip>Fast order processing ensures quick customer confirmation</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Uptime" type="metric">
+        99.9% uptime SLA with redundant infrastructure
+        
+        <Warning>Planned maintenance windows are communicated in advance</Warning>
+    </ResponseField>
+</Accordion>
+
+## Getting Started with Architecture
+
+<CardGroup cols={3}>
+    <Card title="API Documentation" icon="code" href="/api-reference">
+        Explore our comprehensive API reference
+    </Card>
+    
+    <Card title="Integration Guide" icon="plug" href="/documentation/integrations">
+        Learn about integration options and best practices
+    </Card>
+    
+    <Card title="Get Started" icon="rocket" href="/documentation/get-started">
+        Follow our step-by-step setup guide
+    </Card>
+</CardGroup>
+
+<Note>
+**Need technical support?** Our engineering team is available to help with architecture questions, integration planning, and performance optimization. Contact your Lula representative for technical consultation.
+</Note>

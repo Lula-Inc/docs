@@ -159,10 +159,6 @@
           ]
         },
         {
-          "group": "Sales Channels",
-          "pages": ["api-reference/sales-channels/sales"]
-        },
-        {
           "group": "Orders",
           "pages": [
             "api-reference/orders/orders-overview",
@@ -192,14 +188,6 @@
               ]
             }
           ]
-        },
-        {
-          "group": "Customers",
-          "pages": ["api-reference/customers/customers"]
-        },
-        {
-          "group": "Reporting",
-          "pages": ["api-reference/reporting/reporting"]
         },
         {
           "group": "Legacy Endpoints",

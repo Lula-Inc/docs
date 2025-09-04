@@ -1,65 +1,427 @@
-### Getting started
+---
+title: "Get Started"
+description: "This guide walks you through the fastest path to value: loading your products, creating a menu, and syncing to your sales channels with Lula Commerce."
+---
 
-This guide walks you through the fastest path to value: loading your products, creating a menu, and syncing to your sales channels.
+# Getting Started with Lula Commerce
 
-### Before you begin
+Welcome to Lula Commerce! This guide will help you set up your digital commerce platform and get your store operational across multiple sales channels quickly and efficiently.
 
-- A Lula account and access to your company and stores
-- Your product list (CSV or JSON) with names, prices, and UPCs/SKUs
-- The delivery channels you plan to use (DoorDash, Uber Eats, Grubhub, LulaDirect)
+Lula Commerce is a world-class digital commerce platform that helps retailers win online without the operational burden. Our platform integrates with major delivery services like DoorDash, Uber Eats, and Grubhub, while also providing enterprise-grade direct ordering capabilities.
 
-If you are missing access, request credentials from your Lula representative.
+<Info>
+This guide assumes you're working with both our dashboard interface and API. If you prefer to automate your setup end-to-end, browse our [API Documentation](/api-reference) and copy sample requests from each page.
+</Info>
 
-### Step 1: Create your company and store
+## Before You Begin
 
-If your organization is not yet in Lula, your Lula contact will create it. Otherwise, confirm your store details are correct. Developers can use the API to create these records:
+Before starting your Lula Commerce journey, ensure you have the following:
 
-- Create a company: see [Create company](/api-reference/companies/create-company)
-- Create a store: see [Create store](/api-reference/stores/create-store)
+<Accordion title="Prerequisites Checklist">
+    <ResponseField name="Lula Account Access" type="required">
+        A Lula account with access to your company and stores
+        
+        <Note>If you don't have access, request credentials from your Lula representative</Note>
+    </ResponseField>
+    
+    <ResponseField name="Product Data" type="required">
+        Your product list in CSV or JSON format including:
+        - Product names
+        - Prices
+        - UPCs/SKUs
+        - Categories
+        - Descriptions (optional)
+        
+        <Tip>Having high-quality product images will improve customer experience</Tip>
+    </ResponseField>
+    
+    <ResponseField name="Sales Channels" type="required">
+        Know which delivery channels you plan to use:
+        - **DoorDash** - Popular food delivery platform
+        - **Uber Eats** - Ride-sharing company's delivery service
+        - **Grubhub** - Established food delivery network
+        - **Lula Direct** - Your own branded ordering platform
+        
+        <Info>You can start with one channel and add others later</Info>
+    </ResponseField>
+    
+    <ResponseField name="Store Information" type="required">
+        Complete store details including:
+        - Store name and contact information
+        - Physical address
+        - Operating hours
+        - Tax rates for your jurisdiction
+    </ResponseField>
+</Accordion>
 
-### Step 2: Load your products
+## Step 1: Create Your Company and Store
 
-Choose the format that’s easiest for you today—you can always change later:
+Your organization needs to be set up in Lula before you can start selling. This involves creating a company record and at least one store location.
 
-- CSV import: see [Upload CSV](/api-reference/catalog/upsert-products-csv)
-- JSON import: see [Upload JSON](/api-reference/catalog/upsert-products-json)
-- Update inventory and prices: see [Upsert inventory](/api-reference/catalog/upsert-inventory)
+### Company Setup
 
-After import, you can verify items with [Get store inventory](/api-reference/catalog/get-store-inventory).
+If your organization isn't in Lula yet, your Lula contact will create it for you. For developers or those with API access:
 
-### Step 3: Build your menu
+<CodeGroup>
+```bash Create Company
+curl -X POST "https://api.lulacommerce.com/stores/company" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Your Company Name",
+    "email": "contact@yourcompany.com",
+    "phone_number": "+1234567890",
+    "address": {
+      "line_1": "123 Main Street",
+      "city": "Your City",
+      "state": "Your State",
+      "zip": "12345"
+    }
+  }'
+```
+</CodeGroup>
 
-Create a store menu and link the right items. You can do this in the dashboard or via API:
+📖 **Learn more:** [Create Company API](/api-reference/companies/create-company)
 
-- Create or update a store menu: [Create menu](/api-reference/menus/create-store-menu) and [Upsert menu](/api-reference/menus/upsert-store-menu)
-- Manage menu items: [Create menu item](/api-reference/menus/menu-items/create-menu-item)
-- Set menu schedules: [Get menu timings](/api-reference/menus/get-store-menu-timings)
+### Store Setup
 
-### Step 4: Sync to channels
+Each physical location needs its own store record:
 
-When your menu looks right, publish it to your connected channels:
+<CodeGroup>
+```bash Create Store
+curl -X POST "https://api.lulacommerce.com/stores/store/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Your Store Name",
+    "email": "store@yourcompany.com", 
+    "phone_number": "+1234567890",
+    "company_id": 1000001,
+    "addresses": [
+      {
+        "line_1": "123 Store Street",
+        "city": "Store City",
+        "state": "Store State", 
+        "zip": "54321",
+        "address_type": 0
+      }
+    ]
+  }'
+```
+</CodeGroup>
 
-- Sync menus for all stores: [Sync menus](/api-reference/menus/sync-menu-for-all-stores)
+📖 **Learn more:** [Create Store API](/api-reference/stores/create-store)
 
-You can confirm the active menus with [Get active menus](/api-reference/menus/get-all-active-menu-of-store) and [Get menu list](/api-reference/menus/get-menu-list).
+<Warning>
+Make sure your store details are accurate before proceeding. Incorrect addresses can affect delivery zones and tax calculations.
+</Warning>
 
-### Step 5: Test an order
+## Step 2: Load Your Products
 
-Use a marketplace sandbox or place a small real order to validate the full flow:
+Choose the import method that works best for your current data format. You can always change formats or update products later.
 
-- Watch incoming orders: [Get incoming orders](/api-reference/orders/get-incoming-orders)
-- Accept and fulfill: [Accept order](/api-reference/orders/accept-incoming-order)
-- See order details: [Get order details](/api-reference/orders/get-order-details)
+### CSV Import (Recommended for Spreadsheet Users)
 
-### Environments
+If you manage your products in Excel or Google Sheets, CSV import is the fastest option:
 
-Lula supports sandbox and production environments. Confirm which you are using before sharing links or placing orders. Ask your Lula contact for sandbox access if you don’t have it yet.
+<CodeGroup>
+```bash Upload CSV
+curl -X POST "https://api.lulacommerce.com/inventory/ingestion/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "file=@your-products.csv" \
+  -F "store_id=YOUR_STORE_ID"
+```
+</CodeGroup>
 
-### What’s next
+**CSV Format Requirements:**
+```csv
+name,category,size,quantity,price,external_id,upc,image_url
+"Coca Cola Classic","Beverages","12 oz",99,265,"CC12OZ","049000012521","https://example.com/coke.jpg"
+```
 
-- Fine‑tune item availability and modifiers
-- Set taxes and fees: [Get store tax rate](/api-reference/stores/get-store-tax-rate)
-- Launch promotions and campaigns: [Campaigns overview](/api-reference/campaigns/campaigns-overview)
+📖 **Learn more:** [Upload CSV](/api-reference/endpoint/upload-csv)
 
-If you prefer to automate your setup end‑to‑end, browse the API Documentation and copy sample requests from each page.
+### JSON Import (Recommended for Developers)
 
+For programmatic integration or complex product data:
+
+<CodeGroup>
+```bash Upload JSON
+curl -X POST "https://api.lulacommerce.com/inventory/ingestion/" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "items": [
+      {
+        "name": "Coca Cola Classic",
+        "category": "Beverages", 
+        "size": "12 oz",
+        "quantity": 99,
+        "price": 265,
+        "external_id": "CC12OZ",
+        "upc": "049000012521"
+      }
+    ]
+  }'
+```
+</CodeGroup>
+
+📖 **Learn more:** [Upload JSON](/api-reference/endpoint/upload-json)
+
+### Update Inventory and Prices
+
+After your initial import, you can update inventory levels and prices:
+
+<CodeGroup>
+```bash Update Inventory
+curl -X POST "https://api.lulacommerce.com/catalog/upsert-inventory" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "store_id": "YOUR_STORE_ID",
+    "items": [
+      {
+        "external_id": "CC12OZ",
+        "quantity": 75,
+        "price": 275
+      }
+    ]
+  }'
+```
+</CodeGroup>
+
+📖 **Learn more:** [Upsert Inventory](/api-reference/catalog/upsert-inventory)
+
+### Verify Your Import
+
+After importing, verify your products loaded correctly:
+
+<CodeGroup>
+```bash Get Store Inventory
+curl -X GET "https://api.lulacommerce.com/catalog/store-inventory/YOUR_STORE_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+</CodeGroup>
+
+📖 **Learn more:** [Get Store Inventory](/api-reference/catalog/get-store-inventory)
+
+## Step 3: Build Your Menu
+
+Menus organize your products for customer-facing ordering. You can create different menus for different channels or times of day.
+
+### Create a Store Menu
+
+<CodeGroup>
+```bash Create Menu
+curl -X POST "https://api.lulacommerce.com/menus/store-menu" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "store_id": "YOUR_STORE_ID",
+    "menu_name": "Main Menu",
+    "description": "Our complete product selection"
+  }'
+```
+</CodeGroup>
+
+📖 **Learn more:** [Create Store Menu](/api-reference/menus/create-store-menu)
+
+### Add Menu Items
+
+Link your products to menu categories:
+
+<CodeGroup>
+```bash Create Menu Item
+curl -X POST "https://api.lulacommerce.com/menus/menu-items" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "menu_id": "YOUR_MENU_ID",
+    "product_id": "YOUR_PRODUCT_ID", 
+    "category": "Beverages",
+    "display_order": 1
+  }'
+```
+</CodeGroup>
+
+📖 **Learn more:** [Create Menu Item](/api-reference/menus/menu-items/create-menu-item)
+
+### Set Menu Schedules
+
+Configure when your menu is available:
+
+<CodeGroup>
+```bash Get Menu Timings
+curl -X GET "https://api.lulacommerce.com/menus/store-menu-timings/YOUR_STORE_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+</CodeGroup>
+
+📖 **Learn more:** [Get Store Menu Timings](/api-reference/menus/get-store-menu-timings)
+
+## Step 4: Sync to Sales Channels
+
+Once your menu is ready, publish it to your connected delivery channels.
+
+### Sync All Channels
+
+<CodeGroup>
+```bash Sync Menus for All Stores
+curl -X POST "https://api.lulacommerce.com/menus/sync-all-stores" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "company_id": "YOUR_COMPANY_ID"
+  }'
+```
+</CodeGroup>
+
+📖 **Learn more:** [Sync Menu for All Stores](/api-reference/menus/sync-menu-for-all-stores)
+
+### Verify Active Menus
+
+Confirm your menus are live on all channels:
+
+<CodeGroup>
+```bash Get Active Menus
+curl -X GET "https://api.lulacommerce.com/menus/active-menus/YOUR_STORE_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+</CodeGroup>
+
+📖 **Learn more:** [Get All Active Menu of Store](/api-reference/menus/get-all-active-menu-of-store)
+
+## Step 5: Test Your Setup
+
+Before going live, test the complete order flow to ensure everything works correctly.
+
+### Monitor Incoming Orders
+
+<CodeGroup>
+```bash Get Incoming Orders
+curl -X GET "https://api.lulacommerce.com/orders/incoming" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d "store_id=YOUR_STORE_ID"
+```
+</CodeGroup>
+
+📖 **Learn more:** [Get Incoming Orders](/api-reference/orders/get-incoming-orders)
+
+### Accept and Process Orders
+
+<CodeGroup>
+```bash Accept Order
+curl -X POST "https://api.lulacommerce.com/orders/accept" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "order_id": "ORDER_ID",
+    "estimated_pickup_time": "2024-01-15T14:30:00Z"
+  }'
+```
+</CodeGroup>
+
+📖 **Learn more:** [Accept Incoming Order](/api-reference/orders/accept-incoming-order)
+
+### View Order Details
+
+<CodeGroup>
+```bash Get Order Details  
+curl -X GET "https://api.lulacommerce.com/orders/ORDER_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+</CodeGroup>
+
+📖 **Learn more:** [Get Order Details](/api-reference/orders/get-order-details)
+
+<Tip>
+**Testing Strategy**: Use marketplace sandbox environments when available, or place a small real order to validate the complete flow from order placement to fulfillment.
+</Tip>
+
+## Environments
+
+Lula supports both sandbox and production environments to ensure safe testing and reliable operations.
+
+<Accordion title="Environment Information">
+    <ResponseField name="Sandbox Environment" type="environment">
+        Safe testing environment for development and testing
+        - Test API calls without affecting real data
+        - Practice order fulfillment workflows
+        - Validate integrations before going live
+        
+        <Note>Ask your Lula contact for sandbox access if you don't have it yet</Note>
+    </ResponseField>
+    
+    <ResponseField name="Production Environment" type="environment">
+        Live environment for actual business operations
+        - Real customer orders and payments
+        - Live inventory management
+        - Actual delivery partner integration
+        
+        <Warning>Always test thoroughly in sandbox before deploying to production</Warning>
+    </ResponseField>
+</Accordion>
+
+## What's Next?
+
+Once your basic setup is complete, you can enhance your store with advanced features:
+
+### Fine-tune Your Operations
+
+<CardGroup cols={2}>
+  <Card title="Modifiers & Options" icon="sliders" href="/api-reference/catalog/modifiers">
+    Add size options, toppings, and customizations to your products
+  </Card>
+  
+  <Card title="Tax Configuration" icon="calculator" href="/api-reference/stores/get-store-tax-rate">
+    Set up accurate tax rates for your jurisdiction
+  </Card>
+  
+  <Card title="Promotions & Campaigns" icon="tags" href="/api-reference/campaigns/campaigns-overview">
+    Launch marketing campaigns to drive sales
+  </Card>
+  
+  <Card title="Analytics & Reporting" icon="chart-line" href="/api-reference/reporting/reporting">
+    Monitor performance and gain insights
+  </Card>
+</CardGroup>
+
+### Advanced Store Management
+
+<CardGroup cols={2}>
+  <Card title="Multi-Store Operations" icon="store" href="/api-reference/stores/create-store">
+    Manage multiple locations from one platform
+  </Card>
+  
+  <Card title="Employee Management" icon="users" href="/api-reference/stores/store-employees/link-user-to-store">
+    Set up staff access and permissions
+  </Card>
+  
+  <Card title="Inventory Automation" icon="boxes" href="/api-reference/catalog/upsert-inventory">
+    Automate inventory updates and management
+  </Card>
+  
+  <Card title="Order Management" icon="clipboard-list" href="/api-reference/orders/orders-overview">
+    Advanced order processing and fulfillment
+  </Card>
+</CardGroup>
+
+## Getting Help
+
+<CardGroup cols={3}>
+  <Card title="API Documentation" icon="code" href="/api-reference">
+    Complete API reference with examples
+  </Card>
+  
+  <Card title="Support Center" icon="life-ring" href="https://help.lulacommerce.com/en/">
+    Help articles and troubleshooting guides
+  </Card>
+  
+  <Card title="Contact Support" icon="phone" href="https://www.lulacommerce.com/contact/get-started">
+    Get in touch with our team
+  </Card>
+</CardGroup>
+
+<Info>
+**Need personalized assistance?** Your Lula representative is available to help with setup questions, best practices, and optimization strategies. Don't hesitate to reach out!
+</Info>
