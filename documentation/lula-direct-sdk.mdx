@@ -1,405 +1,1016 @@
 ---
 title: "Lula Direct SDK"
-description: "Build branded shopping experiences with Lula Direct SDK - offering complete control over your digital storefront while leveraging Lula's powerful commerce platform."
+description: "Integrate Lula Direct's first-party eCommerce delivery platform into your React Native, iOS, and Android applications with our comprehensive SDK."
 ---
 
-## Platform Overview
+## Overview
 
-Lula Direct lets you offer a **branded shopping experience** on your own website or app while benefiting from the same catalog, pricing, and order orchestration that power your marketplace channels. This AI-powered, first-party ordering platform is purpose-built to help retailers take control of their digital storefronts.
-
-<Info>
-Unlike traditional e-commerce tools, Lula Direct takes a hands-on, outcome-driven approach to help retailers save time and cut costs while driving profitable growth.
-</Info>
-
-## When to Use Lula Direct
-
-<CardGroup cols={2}>
-    <Card title="Direct Channel Control" icon="store">
-        **No marketplace commissions**
-        - Keep 100% of your revenue
-        - Own the customer relationship
-        - Control pricing and promotions
-    </Card>
-    
-    <Card title="Rapid Deployment" icon="rocket">
-        **Fast launch capabilities**
-        - Set up branded ordering in under a week
-        - Pre-built components and flows
-        - Minimal development overhead
-    </Card>
-    
-    <Card title="Brand Authority" icon="paintbrush">
-        **Full branding control**
-        - Custom design and styling
-        - White-label experience
-        - Your brand, your data
-    </Card>
-    
-    <Card title="Unified Operations" icon="layers">
-        **Integrated platform benefits**
-        - Same catalog across all channels
-        - Unified order management
-        - Consolidated reporting
-    </Card>
-</CardGroup>
-
-## What Lula Direct Provides
-
-<Accordion title="Core SDK Components">
-    <ResponseField name="Prebuilt Storefront Components" type="component">
-        **Ready-to-use UI components for web and mobile**
-        
-        - Product catalog displays
-        - Category navigation
-        - Search and filtering
-        - Responsive design templates
-        
-        <Note>Customizable components that match your brand identity</Note>
-    </ResponseField>
-    
-    <ResponseField name="Cart & Checkout Flows" type="component">
-        **Complete shopping experience**
-        
-        - Shopping cart management
-        - Secure checkout process
-        - Payment processing integration
-        - Guest and member checkout options
-        
-        <Info>Optimized conversion flows with 22% average basket size increase</Info>
-    </ResponseField>
-    
-    <ResponseField name="Order Tracking" type="component">
-        **Real-time order management**
-        
-        - Order status updates
-        - Delivery tracking
-        - Customer notifications
-        - Order history access
-        
-        <Tip>Unified order queue alongside marketplace channels</Tip>
-    </ResponseField>
-    
-    <ResponseField name="Real-time Availability" type="component">
-        **Live inventory integration**
-        
-        - Item availability tied to Lula catalog
-        - Stock level synchronization
-        - Out-of-stock handling
-        - Pricing updates
-        
-        <Warning>Prevents overselling with real-time inventory management</Warning>
-    </ResponseField>
-</Accordion>
-
-## Platform Benefits
-
-<Steps>
-    <Step title="Cost Savings">
-        **60+ hours saved in setup**
-        
-        Lula handles menu digitization, compliance, delivery setup, and branding automatically.
-    </Step>
-    
-    <Step title="Operational Efficiency">
-        **$250K+ saved in annual labor**
-        
-        14+ AI Operators replace manual tasks across operations, finance, marketing, and support.
-    </Step>
-    
-    <Step title="Reduced Activation Costs">
-        **$10K+ saved in activation costs**
-        
-        Streamlined setup process eliminates traditional e-commerce implementation overhead.
-    </Step>
-    
-    <Step title="Enhanced Performance">
-        **22% average basket size increase**
-        
-        Personalized recommendations based on consumer behavior boost cart conversion.
-    </Step>
-</Steps>
-
-## Key Features
-
-<CardGroup cols={2}>
-    <Card title="Automated Compliance" icon="shield-check">
-        **Tax & regulatory compliance**
-        - Automatic tax registration and calculation
-        - Built-in ID verification for restricted products
-        - Geo-fencing for compliance requirements
-        - Automated tax filing
-    </Card>
-    
-    <Card title="Customer Data Ownership" icon="user-check">
-        **Your brand, your data**
-        - Full access to order history
-        - Customer purchasing trends
-        - Detailed customer insights
-        - First-party data collection
-    </Card>
-    
-    <Card title="Customizable Experience" icon="palette">
-        **Fully branded storefront**
-        - Embeds directly with your app
-        - Real-time menu customization
-        - Dynamic pricing control
-        - Promotional campaign management
-    </Card>
-    
-    <Card title="Loyalty Integration" icon="heart">
-        **Guest engagement tools**
-        - Integrated loyalty programs
-        - Personalized recommendations
-        - Customer retention features
-        - Engagement analytics
-    </Card>
-</CardGroup>
-
-## Getting SDK Access
-
-<Steps>
-    <Step title="Contact Lula">
-        **Request SDK access from your Lula representative**
-        
-        Our team will evaluate your requirements and business needs.
-    </Step>
-    
-    <Step title="Credential Provisioning">
-        **Receive development credentials**
-        
-        Secure API keys and SDK packages for your chosen platform.
-    </Step>
-    
-    <Step title="Implementation Guidance">
-        **Get platform-specific documentation**
-        
-        Detailed guides for web, iOS, or Android implementation.
-    </Step>
-    
-    <Step title="Technical Support">
-        **Access ongoing development support**
-        
-        Our engineering team provides guidance throughout implementation.
-    </Step>
-</Steps>
+The Lula Direct SDK provides everything you need to embed a **branded shopping experience** directly into your mobile or web applications. Built for React Native, iOS (Swift), and Android (Kotlin), the SDK offers complete control over your digital storefront while leveraging Lula's powerful commerce platform.
 
 <Info>
-**Platform Options**: SDK packages available for web (JavaScript/React), iOS (Swift), and Android (Kotlin/Java) development.
+The SDK handles authentication, deep linking, order processing, and native payment integration automatically - allowing you to launch a branded ordering experience in under a week.
 </Info>
 
-## Implementation Overview
-
-<Accordion title="Setup Process">
-    <ResponseField name="Initial Configuration" type="step">
-        **Configure your company and store IDs in Lula**
-        
-        - Set up your business profile
-        - Define store locations and settings
-        - Configure catalog and menu structure
-        
-        <Note>This foundational setup enables all SDK functionality</Note>
-    </ResponseField>
-    
-    <ResponseField name="SDK Initialization" type="step">
-        **Initialize the SDK with your credentials**
-        
-        ```javascript
-        import { LulaSDK } from '@lula/direct-sdk';
-        
-        const lula = new LulaSDK({
-          apiKey: 'your-api-key',
-          storeId: 'your-store-id',
-          environment: 'production' // or 'sandbox'
-        });
-        ```
-        
-        <Info>Secure credential management with environment-specific configurations</Info>
-    </ResponseField>
-    
-    <ResponseField name="Component Integration" type="step">
-        **Render storefront components and test end-to-end**
-        
-        - Integrate catalog components
-        - Implement cart and checkout flows
-        - Test order processing
-        - Validate payment integration
-        
-        <Tip>Use sandbox environment for thorough testing before launch</Tip>
-    </ResponseField>
-    
-    <ResponseField name="Production Launch" type="step">
-        **Launch with your preferred payments and fulfillment settings**
-        
-        - Configure payment processors
-        - Set up fulfillment workflows
-        - Enable customer notifications
-        - Monitor performance metrics
-        
-        <Warning>Coordinate launch timing with your Lula representative</Warning>
-    </ResponseField>
-</Accordion>
-
-## API Integration Alternative
-
-For businesses requiring custom implementations or advanced functionality:
+## When to Use Lula Direct SDK
 
 <CardGroup cols={2}>
-    <Card title="Direct API Integration" icon="code" href="/api-reference">
-        **Custom frontend development**
-        - Full control over user experience
-        - Custom business logic implementation
-        - Advanced integration patterns
-        - Flexible architecture
+    <Card title="Mobile App Integration" icon="mobile">
+        **Native mobile experiences**
+        - Embed storefront in React Native apps
+        - Native iOS (Swift) integration
+        - Native Android (Kotlin) integration
+        - Seamless in-app shopping
     </Card>
-    
-    <Card title="Hybrid Approach" icon="puzzle">
-        **Combine SDK and APIs**
-        - Use SDK for core functionality
-        - API integration for custom features
-        - Best of both worlds
-        - Gradual migration path
+
+    <Card title="Rapid Development" icon="rocket">
+        **Pre-built components**
+        - Complete WebView-based storefront
+        - Automatic JWT authentication
+        - Ready-to-use order flows
+        - Launch in under a week
     </Card>
-</CardGroup>
 
-<Info>
-**Custom Integration**: If you already manage a custom front end, you can integrate directly with the Lula APIs for catalog, menus, and orders instead of using the SDK components.
-</Info>
-
-## SDK Platform Support
-
-<Accordion title="Platform-Specific Implementation">
-    <ResponseField name="Web SDK" type="platform">
-        **JavaScript/React components**
-        
-        - Responsive web components
-        - Modern framework support
-        - Progressive Web App capabilities
-        - SEO-optimized rendering
-        
-        <Note>Compatible with React, Vue, Angular, and vanilla JavaScript</Note>
-    </ResponseField>
-    
-    <ResponseField name="iOS SDK" type="platform">
-        **Native iOS integration**
-        
-        - Swift package manager support
-        - SwiftUI and UIKit compatibility
-        - Apple Pay integration
-        - Push notification support
-        
-        <Info>Minimum iOS 12.0 requirement for optimal performance</Info>
-    </ResponseField>
-    
-    <ResponseField name="Android SDK" type="platform">
-        **Native Android integration**
-        
-        - Gradle dependency management
-        - Kotlin and Java support
-        - Google Pay integration
-        - Firebase Cloud Messaging support
-        
-        <Tip>Supports Android API level 21 (Android 5.0) and higher</Tip>
-    </ResponseField>
-</Accordion>
-
-## System Integrations
-
-<CardGroup cols={3}>
-    <Card title="Back-office Systems" icon="building">
-        **POS and inventory integration**
-        - Real-time stock synchronization
-        - Pricing updates
-        - Order routing
-        - Financial reconciliation
+    <Card title="Branded Experience" icon="paintbrush">
+        **White-label control**
+        - Your app, your brand
+        - Custom WebView configuration
+        - Deep linking to products
+        - Native payment integration
     </Card>
-    
-    <Card title="Payment Processors" icon="credit-card">
-        **Secure payment handling**
-        - Multiple payment methods
-        - PCI compliance
-        - Fraud protection
-        - Subscription billing
-    </Card>
-    
-    <Card title="Third-party Tools" icon="plug">
-        **Extended ecosystem**
-        - Loyalty platforms
-        - Marketing automation
-        - Analytics tools
-        - Customer support systems
+
+    <Card title="Simplified Integration" icon="code">
+        **Minimal code required**
+        - Single component implementation
+        - Handles authentication automatically
+        - Built-in order management
+        - Real-time inventory sync
     </Card>
 </CardGroup>
-
-## Performance & Reliability
-
-<Accordion title="Platform Performance">
-    <ResponseField name="Load Times" type="metric">
-        **Optimized component performance**
-        
-        Sub-second component load times with lazy loading and caching
-        
-        <Note>Performance optimized for mobile and desktop experiences</Note>
-    </ResponseField>
-    
-    <ResponseField name="Uptime" type="metric">
-        **99.9% platform availability**
-        
-        Redundant infrastructure ensures consistent service availability
-        
-        <Info>Global CDN distribution for optimal performance worldwide</Info>
-    </ResponseField>
-    
-    <ResponseField name="Scalability" type="metric">
-        **Enterprise-grade scaling**
-        
-        Handles traffic spikes and growing transaction volumes automatically
-        
-        <Tip>Auto-scaling infrastructure adapts to demand patterns</Tip>
-    </ResponseField>
-</Accordion>
 
 ## Getting Started
 
+Follow these steps to integrate Lula Direct SDK into your application:
+
 <Steps>
-    <Step title="Evaluate Requirements">
-        **Assess your technical needs and business goals**
-        
-        Determine platform requirements, integration scope, and timeline.
+    <Step title="Install Dependencies">
+        **Add the SDK and required packages**
+
+        <CodeGroup>
+        ```bash npm
+        npm install @lula/direct-sdk react-native-webview @react-native-async-storage/async-storage expo-jwt
+        ```
+
+        ```bash yarn
+        yarn add @lula/direct-sdk react-native-webview @react-native-async-storage/async-storage expo-jwt
+        ```
+        </CodeGroup>
+
+        <Note>
+        For native iOS/Android integration, you'll also need:
+        - iOS: JWTKit library
+        - Android: Auth0 JWT library
+        </Note>
     </Step>
-    
-    <Step title="Request Access">
-        **Contact your Lula representative for SDK access**
-        
-        Discuss implementation approach and receive development credentials.
+
+    <Step title="Configure Credentials">
+        **Provide your application credentials**
+
+        Required:
+        - `secretKey` - JWT signing key (≥32 characters)
+        - `appBundleId` - Your app's bundle identifier
+        - `memberId` - Your Lula member ID
+
+        <Warning>
+        Store your secret key securely. Never commit it to version control.
+        </Warning>
     </Step>
-    
-    <Step title="Development Setup">
-        **Initialize your development environment**
-        
-        Follow platform-specific setup guides and begin integration.
+
+    <Step title="Initialize SDK">
+        **Configure the SDK when your app starts**
+
+        <CodeGroup>
+        ```javascript Production
+        import { initLulaSDK } from "@lula/direct-sdk";
+
+        initLulaSDK({
+          secretKey: process.env.LULA_SECRET_KEY,
+          appBundleId: "com.yourcompany.app"
+        }, true);
+        ```
+
+        ```javascript Development
+        import { initLulaSDK } from "@lula/direct-sdk";
+
+        initLulaSDK({
+          secretKey: "dev-secret-key-at-least-32-characters-long",
+          appBundleId: "com.yourcompany.app.dev",
+          baseUrl: "http://localhost:3000" // Optional
+        });
+        ```
+        </CodeGroup>
+
+        <Warning>Store secret keys securely using environment variables</Warning>
     </Step>
-    
-    <Step title="Testing & Launch">
-        **Test thoroughly and launch your branded experience**
-        
-        Comprehensive testing followed by coordinated production deployment.
+
+    <Step title="Embed Storefront">
+        **Add LulaDirectView component to your app**
+
+        <CodeGroup>
+        ```javascript React Native
+        import { LulaDirectView } from "@lula/direct-sdk";
+
+        function StoreScreen() {
+          return (
+            <LulaDirectView
+              memberId="YOUR_MEMBER_ID"
+              storeId="STORE_123"
+              customerInfo={{
+                name: "Jane Doe",
+                email: "jane@example.com",
+                age21: true
+              }}
+              onOrderComplete={(order) => {
+                console.log("Order:", order);
+                // Navigate to confirmation
+              }}
+              enableApplePay={true}
+              enableGooglePay={true}
+            />
+          );
+        }
+        ```
+        </CodeGroup>
+    </Step>
+
+    <Step title="Test & Deploy">
+        **Validate your integration**
+
+        - Test order flows end-to-end
+        - Verify payment methods (Apple Pay/Google Pay)
+        - Test deep linking to products/categories
+        - Validate error handling
+        - Deploy to production
+
+        <Tip>Use development environment for testing before production deployment</Tip>
     </Step>
 </Steps>
 
-<CardGroup cols={3}>
-    <Card title="API Documentation" icon="book" href="/api-reference">
-        Comprehensive API reference for custom integrations
+## Core Concepts
+
+### How It Works
+
+The Lula Direct SDK uses a WebView-based approach to embed the Lula storefront into your native application. Here's how the key components work together:
+
+<Steps>
+    <Step title="JWT Authentication">
+        The SDK generates secure JWT tokens using your `secretKey` and `appBundleId`. These tokens authenticate API requests and contain customer information for personalized experiences.
+    </Step>
+
+    <Step title="WebView Integration">
+        `LulaDirectView` renders the Lula storefront in a React Native WebView with automatic authentication, deep linking support, and bi-directional message passing.
+    </Step>
+
+    <Step title="Token Caching">
+        JWT tokens are cached in AsyncStorage for 24 hours (configurable) to minimize regeneration and improve performance. When a cached token expires, the SDK automatically generates a new token and caches it.
+    </Step>
+
+    <Step title="Event Communication">
+        The WebView sends events (order completion, missing data) to your app via `postMessage`, triggering your callback functions.
+    </Step>
+</Steps>
+
+### Key Features
+
+<CardGroup cols={2}>
+    <Card title="WebView Integration" icon="window">
+        **Seamless embedding**
+        - React Native WebView component
+        - Automatic authentication
+        - Deep linking support
+        - Native payment methods
     </Card>
-    
-    <Card title="Integration Guide" icon="puzzle" href="/documentation/integrations">
-        Learn about platform integrations and capabilities
+
+    <Card title="JWT Authentication" icon="key">
+        **Secure token-based auth**
+        - Automatic token generation
+        - Token caching with expiration
+        - HS256 signing algorithm
+        - 24-hour default expiry
     </Card>
-    
-    <Card title="Get Started" icon="rocket" href="/documentation/get-started">
-        Follow our step-by-step platform setup guide
+
+    <Card title="Order Management" icon="box">
+        **Complete order handling**
+        - Order completion callbacks
+        - Real-time status updates
+        - Cart modification support
+        - Order history access
+    </Card>
+
+    <Card title="Native Payments" icon="credit-card">
+        **Platform-specific payments**
+        - Apple Pay (iOS)
+        - Google Pay (Android)
+        - Secure payment processing
+        - PCI compliance built-in
     </Card>
 </CardGroup>
 
+## API Reference
+
+### Component Props
+
+#### `LulaDirectView`
+
+The main React Native component for embedding the Lula Direct storefront. It handles WebView initialization, JWT authentication, URL construction, and message passing between the native app and the web storefront.
+
+| Prop | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| `memberId` | string | **Yes** | - | Your Lula member ID for authentication. Used in URL construction and JWT payload. |
+| `storeId` | string | No | - | Specific store ID to display. If omitted, the storefront may show all stores for the member or a default store. |
+| `hideNav` | boolean | No | `true` | Controls visibility of the Lula navigation bar in the embedded storefront. |
+| `customerInfo` | object | No | `{}` | Customer details used for JWT authentication and pre-filling checkout information. See CustomerInfo interface below. |
+| `deepLinkPath` | string | No | - | Path to navigate to within the storefront (e.g., `/product/123`, `/category/beer`). Encoded as both a JWT claim and URL parameter. |
+| `onOrderComplete` | function | No | - | Callback fired when an order is successfully completed. Receives order data parsed from WebView message with type `ORDER_COMPLETE`. |
+| `onMissingData` | function | No | - | Callback fired when the storefront requires additional customer information. Receives field names from WebView message with type `MISSING_DATA`. |
+| `enableApplePay` | boolean | No | `false` | Enables Apple Pay support on iOS. Sets `allowsBackForwardNavigationGestures` to true. |
+| `enableGooglePay` | boolean | No | `false` | Enables Google Pay support on Android. Reserved for future Google Pay-specific WebView settings. |
+| `sdkConfig` | object | No | - | Partial SDK configuration to override global settings for this instance. See LulaSDKConfig below. |
+| `storeUrl` | string | No | - | **Deprecated**. Base URL override for the Lula service. Use `sdkConfig.baseUrl` instead. |
+
+#### `CustomerInfo` Interface
+
+Customer information object passed to `LulaDirectView`. All fields are optional and used to pre-populate the storefront and generate the JWT token.
+
+<Accordion title="CustomerInfo Properties">
+    <ResponseField name="name" type="string">
+        Customer's full name. Included in JWT payload as `member.name` for pre-filling checkout forms.
+    </ResponseField>
+
+    <ResponseField name="email" type="string">
+        Customer's email address. Included in JWT payload as `member.email` for account identification and order confirmations.
+    </ResponseField>
+
+    <ResponseField name="phone" type="string">
+        Customer's phone number. Included in JWT payload as `member.phone` for delivery updates and customer service.
+    </ResponseField>
+
+    <ResponseField name="address" type="object">
+        Customer's address object. Included in JWT payload as `member.address` for delivery and billing purposes.
+
+        <Expandable title="address">
+            <ResponseField name="line1" type="string">
+                Primary address line (street address)
+            </ResponseField>
+
+            <ResponseField name="line2" type="string">
+                Secondary address line (apartment, suite, etc.)
+            </ResponseField>
+
+            <ResponseField name="city" type="string">
+                City name
+            </ResponseField>
+
+            <ResponseField name="state" type="string">
+                State or province code
+            </ResponseField>
+
+            <ResponseField name="postalCode" type="string">
+                ZIP or postal code
+            </ResponseField>
+
+            <ResponseField name="country" type="string">
+                Country code or name
+            </ResponseField>
+        </Expandable>
+    </ResponseField>
+
+    <ResponseField name="age21" type="boolean">
+        Age verification flag indicating if customer is 21 years or older. Required for purchasing restricted products like alcohol. Included in JWT payload as `member.age21`.
+
+        <Warning>Setting this to false or omitting it may prevent purchase of age-restricted items</Warning>
+    </ResponseField>
+</Accordion>
+
+<CodeGroup>
+```typescript TypeScript Interface
+interface CustomerInfo {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: {
+    line1?: string;
+    line2?: string;
+    city?: string;
+    state?: string;
+    postalCode?: string;
+    country?: string;
+  };
+  age21?: boolean;
+}
+```
+</CodeGroup>
+
+#### WebView Message Events
+
+The component listens for messages from the WebView and triggers callbacks based on the message type:
+
+<Accordion title="Message Event Types">
+    <ResponseField name="ORDER_COMPLETE" type="event">
+        **Fired when**: An order is successfully completed in the storefront
+
+        **Callback**: `onOrderComplete(order)`
+
+        **Payload**: Order object containing order details (structure determined by Lula backend)
+
+        <CodeGroup>
+        ```javascript Example Handler
+        onOrderComplete={(order) => {
+          console.log("Order ID:", order.id);
+          console.log("Total:", order.total);
+          // Navigate to confirmation screen
+          navigation.navigate('OrderConfirmation', { orderId: order.id });
+        }}
+        ```
+        </CodeGroup>
+    </ResponseField>
+
+    <ResponseField name="MISSING_DATA" type="event">
+        **Fired when**: The storefront requires additional customer information
+
+        **Callback**: `onMissingData(fields)`
+
+        **Payload**: Array or object containing field names that need to be provided
+
+        <CodeGroup>
+        ```javascript Example Handler
+        onMissingData={(fields) => {
+          console.log("Required fields:", fields);
+          // Show form to collect missing information
+          setMissingFields(fields);
+          setShowDataModal(true);
+        }}
+        ```
+        </CodeGroup>
+    </ResponseField>
+</Accordion>
+
+### SDK Configuration
+
+#### `initLulaSDK(config, isProd?)`
+
+Initialize the SDK with configuration options. This should be called once when your application starts, before using `LulaDirectView`.
+
+**Parameters:**
+- `config` (Partial\<LulaSDKConfig\>) - Configuration object with properties to override
+- `isProd` (boolean, optional) - If `true`, uses production defaults; otherwise uses development defaults
+
+**Returns:** Complete `LulaSDKConfig` object with merged configuration
+
+<Accordion title="LulaSDKConfig Properties">
+    <ResponseField name="baseUrl" type="string" required>
+        Base URL for the Lula Direct service. All storefront URLs are constructed by appending paths to this base.
+
+        **Default Values:**
+        - Development: `https://dev.lulacommerce.com`
+        - Production: `https://client.lulacommerce.com`
+
+        <Note>Can be overridden for local development (e.g., `http://localhost:8000`)</Note>
+    </ResponseField>
+
+    <ResponseField name="secretKey" type="string" required>
+        Secret key used for JWT signing with HS256 algorithm. **Must be at least 32 characters long.**
+
+        **Security Requirements:**
+        - Store securely using environment variables
+        - Never hardcode in client-side code for production
+        - Consider backend JWT generation for sensitive applications
+
+        **Default Values:**
+        - Development: `dev-secret-key-at-least-32-characters-long`
+        - Production: **Must be provided** (no default)
+
+        <Warning>Production apps must provide a secure secret key</Warning>
+    </ResponseField>
+
+    <ResponseField name="appBundleId" type="string" required>
+        Your application's bundle identifier (iOS) or package name (Android). Used as the JWT `iss` (issuer) claim.
+
+        **Examples:**
+        - iOS: `com.yourcompany.yourapp`
+        - Android: `com.yourcompany.yourapp`
+
+        **Default Values:**
+        - Development: `com.yourapp.dev`
+        - Production: **Must be provided** (no default)
+    </ResponseField>
+
+    <ResponseField name="jwtExpiry" type="number">
+        JWT token expiration time in minutes. Tokens are cached and reused until expiration.
+
+        **Default:** `1440` (24 hours)
+
+        **Considerations:**
+        - Longer expiry = fewer token regenerations but potential security concerns
+        - Shorter expiry = more frequent regenerations but better security
+        - Cached tokens are automatically cleared on user logout via `clearLulaJWTCache()`
+    </ResponseField>
+
+    <ResponseField name="defaultPath" type="string">
+        Default deep link path used when no `deepLinkPath` is specified in `generateLulaJWT()`.
+
+        **Default:** `/store/default`
+
+        **Examples:**
+        - `/store/123`
+        - `/category/featured`
+        - `/product/new-arrivals`
+    </ResponseField>
+</Accordion>
+
+<CodeGroup>
+```javascript Development Setup
+import { initLulaSDK } from "@lula/direct-sdk";
+
+initLulaSDK({
+  secretKey: "your-dev-secret-key-at-least-32-chars",
+  appBundleId: "com.yourcompany.app.dev",
+  baseUrl: "http://localhost:3000", // Optional: for local testing
+});
+```
+
+```javascript Production Setup
+import { initLulaSDK } from "@lula/direct-sdk";
+
+initLulaSDK(
+  {
+    secretKey: process.env.LULA_SECRET_KEY,
+    appBundleId: "com.yourcompany.app",
+  },
+  true // Use production defaults
+);
+```
+</CodeGroup>
+
+### Utility Functions
+
+#### `generateLulaJWT(config)`
+
+Generates a JWT token for Lula Direct authentication using the HS256 algorithm. The token is automatically cached in AsyncStorage and reused until expiration.
+
+**Parameters:** `LulaJWTConfig` object
+
+**Returns:** `Promise<string>` - The JWT token
+
+**Behavior:**
+1. Checks AsyncStorage for a valid cached token
+2. If cached token exists and hasn't expired, returns it immediately
+3. Otherwise, generates a new token with the current timestamp
+4. Caches the new token with its expiration timestamp
+5. Returns the token
+
+**JWT Payload Structure:**
+```json
+{
+  "iss": "com.yourapp.bundle",     // From sdkConfig.appBundleId
+  "aud": "lula-direct",             // Fixed audience
+  "exp": 1234567890,                // Expiration timestamp
+  "iat": 1234567890,                // Issued at timestamp
+  "member": {
+    "id": "memberId",               // From config.memberId
+    "name": "John Doe",             // From config.userName
+    "email": "john@example.com",    // From config.userEmail
+    "phone": "5551234567",          // From config.userPhone
+    "address": {...},               // From config.userAddress
+    "age21": true                   // From config.isAdult
+  },
+  "hideNav": true,                  // From config.hideNav
+  "path": "/category/beer"          // From config.deepLinkPath
+}
+```
+
+<Accordion title="LulaJWTConfig Parameters">
+    <ResponseField name="memberId" type="string">
+        Member ID for authentication. If not provided, defaults to `"user123"` (not recommended for production).
+    </ResponseField>
+
+    <ResponseField name="userName" type="string">
+        User's display name. Included in JWT `member.name` claim.
+    </ResponseField>
+
+    <ResponseField name="userEmail" type="string">
+        User's email address. Included in JWT `member.email` claim.
+    </ResponseField>
+
+    <ResponseField name="userPhone" type="string">
+        User's phone number. Included in JWT `member.phone` claim.
+    </ResponseField>
+
+    <ResponseField name="userAddress" type="object">
+        User's address object. Included in JWT `member.address` claim. Structure is flexible.
+    </ResponseField>
+
+    <ResponseField name="isAdult" type="boolean" default="false">
+        Age verification flag. Included in JWT `member.age21` claim.
+    </ResponseField>
+
+    <ResponseField name="hideNav" type="boolean" default="true">
+        Whether to hide navigation in the storefront. Included in JWT `hideNav` claim.
+    </ResponseField>
+
+    <ResponseField name="deepLinkPath" type="string">
+        Path to navigate to. Included in JWT `path` claim. Falls back to `sdkConfig.defaultPath` if not provided.
+    </ResponseField>
+</Accordion>
+
+<CodeGroup>
+```javascript Basic Usage
+import { generateLulaJWT } from "@lula/direct-sdk";
+
+const jwt = await generateLulaJWT({
+  memberId: "YOUR_MEMBER_ID",
+  userName: "Jane Doe",
+  userEmail: "jane@example.com",
+  isAdult: true
+});
+```
+
+```javascript With Deep Linking
+const jwt = await generateLulaJWT({
+  memberId: "MEMBER_123",
+  userName: "John Smith",
+  userEmail: "john@example.com",
+  userPhone: "5551234567",
+  isAdult: true,
+  deepLinkPath: "/category/beer"
+});
+```
+</CodeGroup>
+
+#### `getLulaUrl(path)`
+
+Constructs a full URL by combining the configured `baseUrl` with the provided path. Automatically handles path formatting.
+
+**Parameters:**
+- `path` (string) - Relative path (e.g., `/product/123`)
+
+**Returns:** `string` - Complete URL
+
+**Behavior:**
+- Ensures path starts with `/`
+- Handles company-specific subdomains (`.lulacommerce.com`)
+- Works with custom development URLs
+
+<CodeGroup>
+```javascript Example
+import { getLulaUrl } from "@lula/direct-sdk";
+
+// With production config (baseUrl: https://client.lulacommerce.com)
+const url = getLulaUrl("/product/XYZ789");
+// Returns: "https://client.lulacommerce.com/product/XYZ789"
+
+// With custom config (baseUrl: http://localhost:3000)
+const localUrl = getLulaUrl("store/123");
+// Returns: "http://localhost:3000/store/123"
+```
+</CodeGroup>
+
+#### `clearLulaJWTCache()`
+
+Clears the cached JWT token and its expiration timestamp from AsyncStorage. Should be called when the user logs out or switches accounts to ensure a fresh token is generated on next login.
+
+**Parameters:** None
+
+**Returns:** `Promise<void>`
+
+**Storage Keys Cleared:**
+- `lula_jwt_token` - The cached JWT token string
+- `lula_jwt_expiry` - The token expiration timestamp
+
+<CodeGroup>
+```javascript On Logout
+import { clearLulaJWTCache } from "@lula/direct-sdk";
+
+async function handleLogout() {
+  // Clear user session
+  await clearUserSession();
+
+  // Clear Lula JWT cache
+  await clearLulaJWTCache();
+
+  // Navigate to login
+  navigation.navigate('Login');
+}
+```
+
+```javascript On User Switch
+async function switchUser(newUserId) {
+  // Clear cached token for previous user
+  await clearLulaJWTCache();
+
+  // Load new user data
+  const userData = await loadUserData(newUserId);
+
+  // SDK will generate new token with new user's info
+  setCurrentUser(userData);
+}
+```
+</CodeGroup>
+
+## Advanced Usage
+
+### Manual URL Generation
+
+For custom WebView setups or external browser opening:
+
+<CodeGroup>
+```javascript Example
+import { generateLulaJWT, getLulaUrl } from "@lula/direct-sdk";
+
+async function getAuthenticatedStoreUrl() {
+  const jwt = await generateLulaJWT({
+    memberId: "YOUR_MEMBER_ID",
+    userName: "Jane Doe",
+    userEmail: "jane@example.com",
+    deepLinkPath: "/category/beer"
+  });
+
+  const storePath = `/us/q?memberID=YOUR_MEMBER_ID&storeID=STORE_123&hideNav=true&token=${jwt}`;
+  const fullUrl = getLulaUrl(storePath);
+
+  return fullUrl;
+}
+```
+</CodeGroup>
+
 <Note>
-**Ready to build your branded experience?** Contact your Lula representative to get started with the SDK. Our team will provide the technical guidance and support needed to launch your direct-to-consumer channel successfully.
+The JWT token is appended as a `token` query parameter for authentication.
 </Note>
+
+## Native Platform Integration
+
+### iOS (Swift) Implementation
+
+#### Configuration
+
+<CodeGroup>
+```swift Swift
+struct LulaConfig {
+    static let BASE_URL = "https://client.lulacommerce.com"
+    static let SECRET_KEY = "YOUR_SECRET_KEY"
+    static let APP_BUNDLE_ID = "com.yourcompany.yourapp"
+    static let JWT_EXPIRY = 1440 // 24 hours in minutes
+}
+```
+</CodeGroup>
+
+#### JWT Generation
+
+<CodeGroup>
+```swift Swift
+import JWTKit
+
+func generateLulaJWT(
+    memberId: String,
+    customerInfo: [String: Any],
+    deepLinkPath: String? = nil
+) throws -> String {
+    let now = Date()
+    let expiryDate = Calendar.current.date(
+        byAdding: .minute,
+        value: LulaConfig.JWT_EXPIRY,
+        to: now
+    ) ?? now
+
+    let payload = LulaJWTPayload(
+        iss: IssuerClaim(value: LulaConfig.APP_BUNDLE_ID),
+        aud: AudienceClaim(value: "lula-direct"),
+        exp: ExpirationClaim(value: expiryDate),
+        iat: IssuedAtClaim(value: now),
+        member: MemberClaim(
+            id: memberId,
+            name: customerInfo["name"] as? String,
+            email: customerInfo["email"] as? String,
+            phone: customerInfo["phone"] as? String,
+            age21: customerInfo["age21"] as? Bool ?? false
+        ),
+        hideNav: true,
+        path: deepLinkPath ?? "/store/default"
+    )
+
+    let signers = JWTSigners()
+    signers.use(.hs256(key: LulaConfig.SECRET_KEY.data(using: .utf8)!))
+    return try signers.sign(payload)
+}
+```
+</CodeGroup>
+
+#### WebView Integration
+
+<CodeGroup>
+```swift Swift
+import WebKit
+
+class LulaWebViewController: UIViewController, WKScriptMessageHandler {
+    private var webView: WKWebView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let config = WKWebViewConfiguration()
+        let contentController = WKUserContentController()
+        contentController.add(self, name: "lulaBridge")
+        config.userContentController = contentController
+
+        webView = WKWebView(frame: view.bounds, configuration: config)
+        view.addSubview(webView)
+
+        do {
+            let jwt = try generateLulaJWT(
+                memberId: "YOUR_MEMBER_ID",
+                customerInfo: [
+                    "name": "John Doe",
+                    "email": "john@example.com",
+                    "age21": true
+                ]
+            )
+            let url = "\(LulaConfig.BASE_URL)/us/q?memberID=YOUR_MEMBER_ID&hideNav=true&token=\(jwt)"
+            webView.load(URLRequest(url: URL(string: url)!))
+        } catch {
+            print("Error generating JWT: \(error)")
+        }
+    }
+
+    func userContentController(_ userContentController: WKUserContentController,
+                               didReceive message: WKScriptMessage) {
+        guard let body = message.body as? [String: Any],
+              let type = body["type"] as? String else { return }
+
+        switch type {
+        case "orderComplete":
+            if let order = body["order"] as? [String: Any] {
+                print("Order completed: \(order)")
+            }
+        case "missingData":
+            if let fields = body["fields"] as? [String] {
+                print("Missing data: \(fields)")
+            }
+        default:
+            break
+        }
+    }
+}
+```
+</CodeGroup>
+
+### Android (Kotlin) Implementation
+
+#### Configuration
+
+<CodeGroup>
+```kotlin Kotlin
+object LulaConfig {
+    const val BASE_URL = "https://client.lulacommerce.com"
+    const val SECRET_KEY = "YOUR_SECRET_KEY"
+    const val APP_BUNDLE_ID = "com.yourcompany.yourapp"
+    const val JWT_EXPIRY = 1440 // 24 hours in minutes
+}
+```
+</CodeGroup>
+
+#### JWT Generation
+
+<CodeGroup>
+```kotlin Kotlin
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
+import java.util.Date
+
+fun generateLulaJWT(
+    memberId: String,
+    customerInfo: Map<String, Any>,
+    deepLinkPath: String? = null
+): String {
+    val nowMillis = System.currentTimeMillis()
+    val expiryMillis = nowMillis + (LulaConfig.JWT_EXPIRY * 60 * 1000)
+
+    val algorithm = Algorithm.HMAC256(LulaConfig.SECRET_KEY)
+
+    val memberClaim = mapOf(
+        "id" to memberId,
+        "name" to (customerInfo["name"] as? String),
+        "email" to (customerInfo["email"] as? String),
+        "phone" to (customerInfo["phone"] as? String),
+        "age21" to (customerInfo["age21"] as? Boolean ?: false)
+    )
+
+    return JWT.create()
+        .withIssuer(LulaConfig.APP_BUNDLE_ID)
+        .withAudience("lula-direct")
+        .withIssuedAt(Date(nowMillis))
+        .withExpiresAt(Date(expiryMillis))
+        .withClaim("member", memberClaim)
+        .withClaim("hideNav", true)
+        .withClaim("path", deepLinkPath ?: "/store/default")
+        .sign(algorithm)
+}
+```
+</CodeGroup>
+
+#### WebView Integration
+
+<CodeGroup>
+```kotlin Kotlin
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
+
+class LulaWebViewActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val webView = WebView(this)
+        setContentView(webView)
+
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+        }
+        webView.webViewClient = WebViewClient()
+        webView.addJavascriptInterface(LulaBridge(), "lulaBridge")
+
+        val jwt = generateLulaJWT(
+            memberId = "YOUR_MEMBER_ID",
+            customerInfo = mapOf(
+                "name" to "John Doe",
+                "email" to "john@example.com",
+                "age21" to true
+            )
+        )
+        val url = "${LulaConfig.BASE_URL}/us/q?memberID=YOUR_MEMBER_ID&hideNav=true&token=$jwt"
+        webView.loadUrl(url)
+    }
+
+    inner class LulaBridge {
+        @JavascriptInterface
+        fun postMessage(json: String) {
+            // Parse JSON and handle orderComplete/missingData events
+        }
+    }
+}
+```
+</CodeGroup>
+
+## Security Considerations
+
+<Warning>
+**Important Security Guidelines**
+</Warning>
+
+### Secret Key Management
+
+1. **Never hardcode production keys** in client-side code
+2. **Use environment variables** for configuration
+3. **Consider backend JWT generation** for production apps
+4. **Use secure storage**:
+   - iOS: Keychain
+   - Android: EncryptedSharedPreferences
+   - React Native: react-native-encrypted-storage
+
+### WebView Security
+
+<CodeGroup>
+```javascript React Native
+// WebView security settings
+<WebView
+  javaScriptEnabled={true}
+  domStorageEnabled={true}
+  allowsInlineMediaPlayback={true}
+  mediaPlaybackRequiresUserAction={false}
+  onError={(syntheticEvent) => {
+    const { nativeEvent } = syntheticEvent;
+    console.error('WebView error: ', nativeEvent);
+  }}
+/>
+```
+</CodeGroup>
+
+### JWT Best Practices
+
+- Monitor token expiration (default: 24 hours)
+- Clear tokens on user logout
+- Implement token refresh mechanisms
+- Validate token structure and claims
+
+## Troubleshooting
+
+### Common Issues
+
+<AccordionGroup>
+    <Accordion title="WebView not rendering / Blank Screen">
+        **Possible causes and solutions:**
+
+        - Verify `react-native-webview` is correctly installed and linked
+        - Check `baseUrl` in `initLulaSDK` is correct and reachable
+        - Ensure `memberId` is provided in `initLulaSDK` or `LulaDirectView`
+        - Check console for errors during initialization or JWT generation
+    </Accordion>
+
+    <Accordion title="Authentication Errors / Invalid Token">
+        **Token validation issues:**
+
+        - Verify `secretKey` matches your Lula Direct account
+        - Ensure `appBundleId` is correctly configured
+        - Confirm `secretKey` is at least 32 characters long
+        - Check JWT expiration (default: 24 hours)
+        - Call `clearLulaJWTCache()` to refresh token
+    </Accordion>
+
+    <Accordion title="Deep Linking Not Working">
+        **Navigation problems:**
+
+        - Ensure `deepLinkPath` is a valid Lula Direct path:
+          - `/store/STORE_ID`
+          - `/product/PRODUCT_ID`
+          - `/category/CATEGORY_ID`
+        - Verify JWT generation includes the `deepLinkPath`
+        - Check path format matches Lula's routing structure
+    </Accordion>
+
+    <Accordion title="Missing Data Prompts">
+        **Insufficient customer information:**
+
+        - Provide complete `customerInfo` in `LulaDirectView`
+        - Include required fields: `name`, `email`, `phone`
+        - Add `age21` verification for restricted products
+        - Check `onMissingData` callback for specific requirements
+    </Accordion>
+
+    <Accordion title="Native Payment Methods Not Working">
+        **Apple Pay / Google Pay issues:**
+
+        - Verify `enableApplePay` is set on iOS devices
+        - Verify `enableGooglePay` is set on Android devices
+        - Check device supports the payment method
+        - Ensure payment credentials are configured in Lula
+    </Accordion>
+</AccordionGroup>
+
+### Native Integration Issues
+
+<AccordionGroup>
+    <Accordion title="iOS Troubleshooting">
+        **WebView not loading:**
+        - Verify generated URL is correct
+        - Check network connectivity and SSL certificates
+        - Enable required WebView settings
+        - Review WKWebView console logs
+
+        **JWT generation errors:**
+        - Verify JWTKit library is installed
+        - Check secret key length (≥32 characters)
+        - Ensure proper date handling for expiration
+        - Validate payload structure
+    </Accordion>
+
+    <Accordion title="Android Troubleshooting">
+        **WebView not loading:**
+        - Enable JavaScript and DOM storage
+        - Check network permissions in manifest
+        - Verify URL format and accessibility
+        - Review WebView client logs
+
+        **JWT generation errors:**
+        - Verify Auth0 JWT library dependency
+        - Check algorithm configuration (HS256)
+        - Ensure proper time calculation
+        - Validate claim structure
+    </Accordion>
+</AccordionGroup>
+
+## Additional Resources
+
+<CardGroup cols={3}>
+    <Card title="API Documentation" icon="book" href="/api-reference">
+        REST API reference for custom integrations
+    </Card>
+
+    <Card title="Integration Guide" icon="puzzle" href="/documentation/integrations">
+        Platform integrations and capabilities
+    </Card>
+
+    <Card title="Platform Setup" icon="rocket" href="/documentation/get-started">
+        Complete getting started guide
+    </Card>
+</CardGroup>
+
+## Support
+
+<Info>
+**Need help?** Contact your Lula representative for:
+- SDK access and credentials
+- Technical implementation support
+- Production deployment coordination
+- Troubleshooting assistance
+
+The SDK is licensed under the MIT License.
+</Info>
